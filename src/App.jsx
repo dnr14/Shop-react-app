@@ -1,9 +1,17 @@
 import Header from "components/Header";
+import Home from "components/Home";
+import HouseholdledgerInset from "components/HouseholdledgerInset";
+import { BrowserRouter, Route } from "react-router-dom";
 
 function App() {
   return (
     <>
-      <Header />
+      <BrowserRouter>
+        <Header />
+
+        <Route path="/" exact component={Home} />
+        <Route path="/insert" component={HouseholdledgerInset} />
+      </BrowserRouter>
     </>
   );
 }

@@ -1,3 +1,4 @@
+import { memo } from "react";
 import styled, { createGlobalStyle, css } from "styled-components";
 const BREAK_POINT_MOBILE = 768;
 const BREAK_POINT_TABLET = 992;
@@ -28,7 +29,7 @@ const GlobalStyled = createGlobalStyle`
     }
 
     html{
-      min-width: 375px;
+      min-width: 320px;
 
       ${maxWidthByBreakPointTable(css`
         font-size: 13px;
@@ -37,8 +38,6 @@ const GlobalStyled = createGlobalStyle`
       ${maxWidthByBreakPointMobile(css`
         font-size: 12px;
       `)}
-        
-   
 
     }
 
@@ -59,21 +58,29 @@ const GlobalStyled = createGlobalStyle`
       color: rgba(236, 240, 241, 1);
     }
 
+    img{
+      display: inline-block;
+    }
+
+    h1{
+      font-size: inherit;
+    }
+
 `;
 
 export default GlobalStyled;
 
 // ===== row =====
-export const StyledRow = styled.div`
+export const StyledRow = memo(styled.div`
   &::after {
     content: "";
     clear: both;
     display: table;
   }
-`;
+`);
 
 // ===== col =====
-export const StyledCol = styled.div`
+export const StyledCol = memo(styled.div`
   float: left;
   width: ${({ xs }) => (xs ? `${calcWidthPercent(xs)}%` : `100%`)};
   @media only screen and (min-width: ${BREAK_POINT_MOBILE}px) {
@@ -85,7 +92,7 @@ export const StyledCol = styled.div`
   @media only screen and (min-width: ${BREAK_POINT_PC}px) {
     width: ${({ lg }) => lg && `${calcWidthPercent(lg)}%`};
   }
-`;
+`);
 StyledCol.defaultProps = {
   xs: 12,
   sm: 12,
@@ -94,14 +101,13 @@ StyledCol.defaultProps = {
 };
 const calcWidthPercent = (span) => {
   if (!span) return;
-  console.log(span);
 
   const width = (span / 12) * 100;
   return width;
 };
 
 // ========= MaxWidthContainer ===========
-export const MaxWidthContainer = styled.div`
+export const MaxWidthContainer = memo(styled.div`
   max-width: 1200px;
   margin: 0 auto;
-`;
+`);

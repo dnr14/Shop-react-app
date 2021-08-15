@@ -107,7 +107,7 @@ const StyledHeader = styled.header`
       overflow: hidden;
       height: 0;
       padding: 0;
-      transition: 0.5s;
+      transition: 1s;
       .nav-item {
         width: 100%;
         a {
@@ -117,6 +117,12 @@ const StyledHeader = styled.header`
             color: rgba(44, 62, 80, 1);
             font-weight: bold;
           }
+        }
+
+        .active {
+          font-weight: bold;
+          background-color: #fff;
+          color: #000;
         }
       }
     }

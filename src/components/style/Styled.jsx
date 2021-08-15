@@ -71,17 +71,45 @@ const GlobalStyled = createGlobalStyle`
 export default GlobalStyled;
 
 // ===== row =====
-export const StyledRow = memo(styled.div`
+export const StyledRow = styled.div`
+  ${({ margin }) =>
+    margin &&
+    css`
+      margin: ${margin};
+    `}
+
+  ${({ height }) =>
+    height &&
+    css`
+      height: ${height};
+    `}
+
+
   &::after {
     content: "";
     clear: both;
     display: table;
   }
-`);
+`;
 
 // ===== col =====
-export const StyledCol = memo(styled.div`
+export const StyledCol = styled.div`
   float: left;
+  height: inherit;
+
+  ${({ display }) =>
+    display &&
+    css`
+      display: ${display};
+      align-items: center;
+    `}
+
+  ${({ gap }) =>
+    gap &&
+    css`
+      gap: ${gap};
+    `}
+
   width: ${({ xs }) => (xs ? `${calcWidthPercent(xs)}%` : `100%`)};
   @media only screen and (min-width: ${BREAK_POINT_MOBILE}px) {
     width: ${({ sm }) => sm && `${calcWidthPercent(sm)}%`};
@@ -92,7 +120,7 @@ export const StyledCol = memo(styled.div`
   @media only screen and (min-width: ${BREAK_POINT_PC}px) {
     width: ${({ lg }) => lg && `${calcWidthPercent(lg)}%`};
   }
-`);
+`;
 StyledCol.defaultProps = {
   xs: 12,
   sm: 12,

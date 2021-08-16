@@ -1,5 +1,5 @@
 import styled, { css } from "styled-components";
-import { maxWidthByBreakPointTable } from "./Styled";
+import { maxWidthByBreakPointTable, minWidthByBreakPointTable } from "./Styled";
 
 // ========= HEADER ===========
 const flex_postion_center = css`
@@ -17,6 +17,10 @@ const innerHeight = css`
   height: 100px;
 `;
 
+const headAnchorColor = css`
+  color: #fff;
+`;
+
 const StyledHeader = styled.header`
   background-color: rgba(46, 204, 113, 1);
   letter-spacing: 0.2rem;
@@ -27,6 +31,7 @@ const StyledHeader = styled.header`
     
 
     a {
+      ${headAnchorColor}
       padding: 15px 0.625rem;
       font-size: 1.2rem;
     }
@@ -41,6 +46,33 @@ const StyledHeader = styled.header`
       a {
         padding: 15px 0.625rem;
         font-size: 1.2rem;
+        position: relative;
+        ${headAnchorColor}
+        &:after {
+          display: none;
+          content: "";
+          position: absolute;
+          border-bottom: 1px solid;
+          height: 1px;
+          bottom: 0.625rem;
+          right: 0;
+          left: 0;
+        }
+      }
+
+      .active {
+        font-weight: bold;
+        &:after {
+          display: inline-block;
+          content: "";
+          position: absolute;
+          border-bottom: 1px solid;
+          height: 1px;
+          bottom: 0.625rem;
+          right: 0;
+          left: 0;
+          box-shadow: 2px 2px 3px rgba(34, 47, 62, 1);
+        }
       }
     }
   }

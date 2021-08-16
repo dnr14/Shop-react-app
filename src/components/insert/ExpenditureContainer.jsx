@@ -1,12 +1,12 @@
-import React, { useCallback, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { getyymmddHHMMSS, isfillWithZero } from "util/DateUtil";
-import { addItem } from "util/LocalStorageUtil";
+import { addItem, setItem } from "util/LocalStorageUtil";
 import { setThreeComma } from "util/NumberUtil";
 import { dateValidation, isEmpty, priceValidation } from "util/Validation";
 import Category from "./Category";
-import Date from "../date/Date";
+import DateInput from "components/date/DateInput";
 import Error from "./Error";
-import Form from "../Form";
+import Form from "components/layout/Form";
 import Input from "./Input";
 import Submit from "./Submit";
 
@@ -18,9 +18,12 @@ const INITIAL_STATE = {
   priceError: "",
   categoryError: "",
 };
+const itemKey = "expenditureData";
 
 const ExpenditureContainer = () => {
   const [state, setState] = useState(INITIAL_STATE);
+
+  useEffect(() => setItem(itemKey), []);
 
   const handleChange = useCallback(
     (e) => {
@@ -96,11 +99,11 @@ const ExpenditureContainer = () => {
 
       // 모두 에러가 없을 때
       if (!isDateValidation.result && !isPriceValidation.result && !isCategoryValidation) {
-        const itemKey = "expenditureData";
-        const date = `${state.dates.halfDate} ${isfillWithZero(state.dates.hours)}-${isfillWithZero(state.dates.minutes)}-00`;
+        const date = `${state.dates.halfDate} ${isfillWithZero(state.dates.hours)}:${isfillWithZero(state.dates.minutes)}:00`;
+        const time = new Date(date).getTime();
         const price = `${setThreeComma(state.price)}원`;
         const category = `${state.category}`;
-        addItem(itemKey, { date, price, category });
+        addItem(itemKey, { date, price, category, time });
         setState(INITIAL_STATE);
         return;
       }
@@ -112,7 +115,7 @@ const ExpenditureContainer = () => {
 
   return (
     <Form handleSubmit={handleSubmit}>
-      <Date state={state} text={"지출 날짜"} handleChange={handleChange} />
+      <DateInput state={state} text={"지출 날짜"} handleChange={handleChange} />
       <Error>{state.dateError}</Error>
       <Input text={"지출 가격"} state={state} handleChange={handleChange} />
       <Error>{state.priceError}</Error>

@@ -1,12 +1,11 @@
 import React from "react";
-import Col from "./style/Col";
-import Row from "./style/Row";
+import { Col, Row } from "components/style/Styled";
 
 const ColTwoAndTen = ({ children, ...rest }) => {
   const firstColSize = 2;
   const secondColSize = 10;
   return (
-    <Row height={"30px"} margin="10px 0">
+    <Row customStyle={{ height: "30px", margin: "10px 0" }}>
       <Col xs={4} sm={firstColSize} md={firstColSize} lg={firstColSize} {...rest}>
         {children[0]}
       </Col>

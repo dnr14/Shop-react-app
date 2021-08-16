@@ -38,3 +38,16 @@ export const get60Minutes = () => {
 export const isfillWithZero = (date) => {
   return String(date).padStart(2, "0");
 }
+
+export const d = date => {
+  const ymdArray = ["년 ", "월 ", "일 "];
+  const hmsArray = ["시 ", "분 "];
+  let [yymmdd, hhmmss] = String(date).split(" ");
+  yymmdd = yymmdd.split("-").reduce((acc, cur, idx) => (acc += `${cur}${ymdArray[idx]}`), "");
+  hhmmss = hhmmss
+    .split(":")
+    .slice(0, 2)
+    .reduce((acc, cur, idx) => (acc += `${cur}${hmsArray[idx]}`), "");
+
+  return `${yymmdd} ${hhmmss}`;
+}

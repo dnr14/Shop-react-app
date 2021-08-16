@@ -15,5 +15,10 @@ export const addItem = (property, data) => {
     ls.setItem(property, JSON.stringify(itemArray));
   }
 
+}
 
+export const setItem = (itemKey) => {
+  if (!localStorage.getItem(itemKey)) {
+    localStorage.setItem(itemKey, JSON.stringify([]));
+  }
 }

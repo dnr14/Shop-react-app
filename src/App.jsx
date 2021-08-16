@@ -1,6 +1,6 @@
 import Header from "components/layout/Header";
-import Home from "components/Home";
 import HouseholdledgerInset from "components/insert/HouseholdledgerInset";
+import HouseholdledgerSelect from "components/select/HouseholdledgerSelect";
 import { BrowserRouter, Route } from "react-router-dom";
 
 function App() {
@@ -8,8 +8,9 @@ function App() {
     <>
       <BrowserRouter>
         <Header />
-        <Route path="/" exact component={Home} />
+        <Route path="/" exact component={() => <div>홈</div>} />
         <Route path="/insert" component={HouseholdledgerInset} />
+        <Route path="/select" component={HouseholdledgerSelect} />
       </BrowserRouter>
     </>
   );

@@ -1,6 +1,6 @@
 import React from "react";
 import { setThreeComma } from "util/NumberUtil";
-import ColTwoAndTen from "../ColTwoAndTen";
+import ColTwoAndTen from "components/ColTwoAndTen";
 
 const Input = ({ text, handleChange, state }) => {
   return (

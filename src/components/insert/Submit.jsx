@@ -1,7 +1,6 @@
+import { Col, Row } from "components/style/Styled";
 import React, { memo } from "react";
 import styled, { css } from "styled-components";
-import Col from "../style/Col";
-import Row from "../style/Row";
 
 const StyledButton = styled.button`
   ${css`

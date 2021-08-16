@@ -1,9 +1,7 @@
 import React, { useState } from "react";
-import Col from "../style/Col";
-import Row from "../style/Row";
-import { MaxWidthContainer } from "../style/Styled";
+import { MaxWidthContainer, Row, Col } from "components/style/Styled";
 import { Link, NavLink } from "react-router-dom";
-import StyledHeader from "../style/StyledHeader";
+import StyledHeader from "components/style/StyledHeader";
 
 const activeClassName = "active";
 
@@ -43,7 +41,9 @@ const Header = () => {
                   </NavLink>
                 </li>
                 <li className="nav-item">
-                  <a href="/">가계부 현황</a>
+                  <NavLink to="/select" activeClassName={activeClassName}>
+                    입출 목록
+                  </NavLink>
                 </li>
                 <li className="nav-item">
                   <a href="/">통계</a>

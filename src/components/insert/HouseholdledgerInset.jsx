@@ -1,14 +1,9 @@
 import React from "react";
-import SpendingContainer from "./ExpenditureContainer";
-import Col from "../style/Col";
-import Row from "../style/Row";
-import { MaxWidthContainer } from "../style/Styled";
+import ExpenditureContainer from "./ExpenditureContainer";
+import { MaxWidthContainer, LinkContainer, Row, Col, StyledSection, Title } from "components/style/Styled";
 import { Route } from "react-router";
 import { NavLink } from "react-router-dom";
-import StyledSection from "../style/StyledSection";
-import Title from "../Title";
-import ExpenditureContainer from "./IncomeContainer";
-import styled from "styled-components";
+import IncomeContainer from "./IncomeContainer";
 
 const HouseholdledgerInset = ({ match: { path } }) => {
   return (
@@ -17,19 +12,17 @@ const HouseholdledgerInset = ({ match: { path } }) => {
         <StyledSection>
           <Row>
             <Col>
-              <Title>
-                <h1>입출을 가계부에 등록해보세요.</h1>
-              </Title>
+              <Title>입출을 가계부에 등록해보세요.</Title>
             </Col>
           </Row>
 
           <LinkContainer>
-            <ActiveNavLink url={`${path}/spending`} text={"지출"} />
-            <ActiveNavLink url={`${path}/expenditure`} text={"수입"} />
+            <ActiveNavLink url={`${path}/expenditure`} text={"지출"} />
+            <ActiveNavLink url={`${path}/income`} text={"수입"} />
           </LinkContainer>
 
-          <Route path={`${path}/spending`} component={SpendingContainer} />
           <Route path={`${path}/expenditure`} component={ExpenditureContainer} />
+          <Route path={`${path}/income`} component={IncomeContainer} />
         </StyledSection>
       </MaxWidthContainer>
     </main>
@@ -49,15 +42,5 @@ const ActiveNavLink = ({ url, text }) => {
     </NavLink>
   );
 };
-
-const LinkContainer = styled.div`
-  margin-bottom: 10px;
-  margin-left: -10px;
-  a {
-    text-align: center;
-    color: black;
-    padding: 10px;
-  }
-`;
 
 export default HouseholdledgerInset;

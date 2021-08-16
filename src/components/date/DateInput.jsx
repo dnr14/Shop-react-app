@@ -3,7 +3,7 @@ import ColTwoAndTen from "../ColTwoAndTen";
 import Horus24Select from "./Horus24Select";
 import Minutes60Select from "./Minutes60Select";
 
-const Date = ({ state, text, handleChange }) => {
+const DateInput = ({ state, text, handleChange }) => {
   return (
     <ColTwoAndTen display="flex" gap="10px">
       <div>{text}</div>
@@ -14,4 +14,4 @@ const Date = ({ state, text, handleChange }) => {
   );
 };
 
-export default Date;
+export default DateInput;

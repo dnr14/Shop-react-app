@@ -55,7 +55,6 @@ const GlobalStyled = createGlobalStyle`
     a{
       display: inline-block;
       text-decoration: none;
-      color: rgba(236, 240, 241, 1);
     }
 
     img{
@@ -70,20 +69,13 @@ const GlobalStyled = createGlobalStyle`
 
 export default GlobalStyled;
 
-// ===== row =====
-export const StyledRow = styled.div`
-  ${({ margin }) =>
-    margin &&
+// ===== row ======
+export const Row = styled.div`
+  ${({ customStyle }) =>
+    customStyle &&
     css`
-      margin: ${margin};
+      ${customStyle}
     `}
-
-  ${({ height }) =>
-    height &&
-    css`
-      height: ${height};
-    `}
-
 
   &::after {
     content: "";
@@ -93,7 +85,7 @@ export const StyledRow = styled.div`
 `;
 
 // ===== col =====
-export const StyledCol = styled.div`
+export const Col = styled.div`
   float: left;
   height: inherit;
 
@@ -121,18 +113,41 @@ export const StyledCol = styled.div`
     width: ${({ lg }) => lg && `${calcWidthPercent(lg)}%`};
   }
 `;
-StyledCol.defaultProps = {
+Col.defaultProps = {
   xs: 12,
   sm: 12,
   md: 12,
   lg: 12,
 };
+
 const calcWidthPercent = (span) => {
   if (!span) return;
 
   const width = (span / 12) * 100;
   return width;
 };
+// ============= section =================
+export const StyledSection = styled.section`
+  width: 80%;
+  margin: 0 auto;
+`;
+
+// ============= Title ===============
+export const Title = styled.h1`
+  text-align: center;
+  font-size: 1.3rem;
+  letter-spacing: 0.2rem;
+`;
+// ============= linkContainer ========
+export const LinkContainer = styled.div`
+  margin-bottom: 10px;
+  margin-left: -10px;
+  a {
+    text-align: center;
+    color: black;
+    padding: 10px;
+  }
+`;
 
 // ========= MaxWidthContainer ===========
 export const MaxWidthContainer = memo(styled.div`

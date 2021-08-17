@@ -34,8 +34,8 @@ const HouseholdledgerSelect = ({ match: { path } }) => {
                 </NavLink>
               </LinkContainer>
 
-              <Route path={`${path}/income`} component={Ic} />
-              <Route path={`${path}/expenditure`} component={Ex} />
+              <Route path={`${path}/income`} component={IncomeCompo} />
+              <Route path={`${path}/expenditure`} component={ExpendCompo} />
             </Col>
           </Row>
         </StyledSection>
@@ -53,7 +53,7 @@ const setDataSort = (data, sortStyle = "desc") => {
     .map((v, idx) => ({ ...v, idx }));
 };
 
-const Ic = () => {
+const IncomeCompo = () => {
   const [data, setData] = useState(setDataSort(JSON.parse(localStorage.getItem("incomeData"))));
 
   const handleClick = (sortStyle) => (e) => {
@@ -90,7 +90,7 @@ const DataSort = memo(function DataSort({ handleClick }) {
   );
 });
 
-const Ex = () => {
+const ExpendCompo = () => {
   const [date, setDate] = useState(JSON.parse(localStorage.getItem("expenditureData")));
 
   return (

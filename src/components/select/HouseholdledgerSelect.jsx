@@ -2,7 +2,7 @@ import { StyledSection, LinkContainer, Title, MaxWidthContainer, Row, Col } from
 import React, { memo, useState } from "react";
 import { Route } from "react-router";
 import { NavLink } from "react-router-dom";
-import { d } from "util/DateUtil";
+import { setDateFormat } from "util/DateUtil";
 
 const activeStyle = {
   fontWeight: "bold",
@@ -26,11 +26,11 @@ const HouseholdledgerSelect = ({ match: { path } }) => {
           <Row>
             <Col>
               <LinkContainer>
-                <NavLink to={`${path}/income`} activeStyle={activeStyle}>
-                  수입
-                </NavLink>
                 <NavLink to={`${path}/expenditure`} activeStyle={activeStyle}>
                   지출
+                </NavLink>
+                <NavLink to={`${path}/income`} activeStyle={activeStyle}>
+                  수입
                 </NavLink>
               </LinkContainer>
 
@@ -66,7 +66,7 @@ const IncomeCompo = () => {
       {data.map((v, idx) => (
         <Row key={idx} customStyle={{ margin: "10px 0" }}>
           <Col lg={3}>
-            <span>{d(v.date)}</span>
+            <span>{setDateFormat(v.date)}</span>
           </Col>
           <Col lg={3}>
             <span>{v.price}</span>
@@ -98,7 +98,7 @@ const ExpendCompo = () => {
       {date.map((v, idx) => (
         <Row key={idx}>
           <Col lg={3}>
-            <span>{d(v.date)}</span>
+            <span>{setDateFormat(v.date)}</span>
           </Col>
           <Col lg={3}>
             <span>{v.price}</span>

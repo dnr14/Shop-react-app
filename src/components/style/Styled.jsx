@@ -16,6 +16,12 @@ export const maxWidthByBreakPointTable = (props) => css`
   }
 `;
 
+export const minWidthByBreakPointTable = (props) => css`
+  @media only screen and (min-width: ${BREAK_POINT_TABLET}px) {
+    ${props}
+  }
+`;
+
 const GlobalStyled = createGlobalStyle`
 
    *{

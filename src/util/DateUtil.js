@@ -15,7 +15,7 @@ export const getyymmddHHMMSS = () => {
   const MM = date.getMinutes();
   const SS = date.getSeconds();
 
-  const obj = {
+  const return_obj = {
     fullDate: `${yyyy}-${mm}-${dd} ${HH}:${MM}:${SS}`,
     halfDate: getToday(),
     hours: HH,
@@ -23,7 +23,7 @@ export const getyymmddHHMMSS = () => {
   }
 
 
-  return obj;
+  return return_obj;
 }
 
 export const get24Hour = () => {
@@ -39,15 +39,15 @@ export const isfillWithZero = (date) => {
   return String(date).padStart(2, "0");
 }
 
-export const d = date => {
-  const ymdArray = ["년 ", "월 ", "일 "];
-  const hmsArray = ["시 ", "분 "];
+export const setDateFormat = date => {
+  const ymdArray = ["년", "월", "일"];
+  const hmsArray = ["시", "분"];
   let [yymmdd, hhmmss] = String(date).split(" ");
-  yymmdd = yymmdd.split("-").reduce((acc, cur, idx) => (acc += `${cur}${ymdArray[idx]}`), "");
+  yymmdd = yymmdd.split("-").reduce((acc, cur, idx) => (acc += `${cur}${ymdArray[idx]} `), "");
   hhmmss = hhmmss
     .split(":")
     .slice(0, 2)
-    .reduce((acc, cur, idx) => (acc += `${cur}${hmsArray[idx]}`), "");
+    .reduce((acc, cur, idx) => (acc += `${cur}${hmsArray[idx]} `), "");
 
   return `${yymmdd} ${hhmmss}`;
 }

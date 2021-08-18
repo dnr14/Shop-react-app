@@ -8,12 +8,14 @@ import Submit from "./Submit";
 import Input from "./Input";
 import DateInput from "components/date/DateInput";
 import Form from "components/layout/Form";
+import Result from "./Result";
 
 const INITIAL_STATE = {
   dates: getyymmddHHMMSS(),
   price: "",
   dateError: "",
   priceError: "",
+  insertData: "",
 };
 
 const itemKey = "incomeData";
@@ -40,7 +42,7 @@ const IncomeContainer = () => {
         const time = new Date(date).getTime();
         const price = `${setThreeComma(state.price)}원`;
         addItem(itemKey, { date, price, time });
-        setState(INITIAL_STATE);
+        setState({ ...INITIAL_STATE, insertData: { date, price, time } });
         return;
       }
 
@@ -102,15 +104,18 @@ const IncomeContainer = () => {
   );
 
   return (
-    <Form handleSubmit={handleSubmit}>
-      <DateInput text={"수입 날짜"} state={state} handleChange={handleChange} />
-      <Error>{state.dateError}</Error>
-      <Input text={"수입 가격"} state={state} handleChange={handleChange} />
-      <Error>{state.priceError}</Error>
-      <Submit color="#fff" padding="10px" font-weight="bold" backgroundColor="rgba(46,204,113,1)" borderRadius="10px">
-        등록
-      </Submit>
-    </Form>
+    <>
+      <Form handleSubmit={handleSubmit}>
+        <DateInput text={"수입 날짜"} state={state} handleChange={handleChange} />
+        <Error>{state.dateError}</Error>
+        <Input text={"수입 가격"} state={state} handleChange={handleChange} />
+        <Error>{state.priceError}</Error>
+        <Submit color="#fff" padding="10px" font-weight="bold" backgroundColor="rgba(46,204,113,1)" borderRadius="10px">
+          등록
+        </Submit>
+      </Form>
+      {state.insertData && <Result insertData={state.insertData} />}
+    </>
   );
 };
 

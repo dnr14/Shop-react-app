@@ -8,7 +8,7 @@ function App() {
     <>
       <BrowserRouter>
         <Header />
-        <Route path="/" exact component={() => <div>홈</div>} />
+        <Route path="/" exact render={() => <div>홈</div>} />
         <Route path="/insert" component={HouseholdledgerInset} />
         <Route path="/select" component={HouseholdledgerSelect} />
       </BrowserRouter>

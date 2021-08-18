@@ -59,23 +59,30 @@ const StyledHeader = styled.header`
           left: 0;
         }
       }
+    }
+  }
 
-      .active {
-        font-weight: bold;
-        &:after {
-          display: inline-block;
-          content: "";
-          position: absolute;
-          border-bottom: 1px solid;
-          height: 1px;
-          bottom: 0.625rem;
-          right: 0;
-          left: 0;
-          box-shadow: 2px 2px 3px rgba(34, 47, 62, 1);
+  // 1200px부터
+  ${minWidthByBreakPointTable(css`
+    .nav-list {
+      .nav-item {
+        .active {
+          font-weight: bold;
+          &:after {
+            display: inline-block;
+            content: "";
+            position: absolute;
+            border-bottom: 1px solid;
+            height: 1px;
+            bottom: 0.625rem;
+            right: 0;
+            left: 0;
+            box-shadow: 2px 2px 3px rgba(34, 47, 62, 1);
+          }
         }
       }
     }
-  }
+  `)}
 
   // 992px까지
   ${maxWidthByBreakPointTable(css`

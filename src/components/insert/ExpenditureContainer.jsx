@@ -9,6 +9,7 @@ import Error from "./Error";
 import Form from "components/layout/Form";
 import Input from "./Input";
 import Submit from "./Submit";
+import Result from "./Result";
 
 const INITIAL_STATE = {
   dates: getyymmddHHMMSS(),
@@ -17,6 +18,7 @@ const INITIAL_STATE = {
   dateError: "",
   priceError: "",
   categoryError: "",
+  insertData: "",
 };
 const itemKey = "expenditureData";
 
@@ -104,7 +106,7 @@ const ExpenditureContainer = () => {
         const price = `${setThreeComma(state.price)}원`;
         const category = `${state.category}`;
         addItem(itemKey, { date, price, category, time });
-        setState(INITIAL_STATE);
+        setState({ ...INITIAL_STATE, insertData: { date, price, category, time } });
         return;
       }
 
@@ -114,17 +116,20 @@ const ExpenditureContainer = () => {
   );
 
   return (
-    <Form handleSubmit={handleSubmit}>
-      <DateInput state={state} text={"지출 날짜"} handleChange={handleChange} />
-      <Error>{state.dateError}</Error>
-      <Input text={"지출 가격"} state={state} handleChange={handleChange} />
-      <Error>{state.priceError}</Error>
-      <Category state={state} handleChange={handleChange} />
-      <Error>{state.categoryError}</Error>
-      <Submit color="#fff" padding="10px" font-weight="bold" backgroundColor="rgba(46,204,113,1)" borderRadius="10px">
-        등록
-      </Submit>
-    </Form>
+    <>
+      <Form handleSubmit={handleSubmit}>
+        <DateInput state={state} text={"지출 날짜"} handleChange={handleChange} />
+        <Error>{state.dateError}</Error>
+        <Input text={"지출 가격"} state={state} handleChange={handleChange} />
+        <Error>{state.priceError}</Error>
+        <Category state={state} handleChange={handleChange} />
+        <Error>{state.categoryError}</Error>
+        <Submit color="#fff" padding="10px" font-weight="bold" backgroundColor="rgba(46,204,113,1)" borderRadius="10px">
+          등록
+        </Submit>
+      </Form>
+      {state.insertData && <Result insertData={state.insertData} />}
+    </>
   );
 };
 

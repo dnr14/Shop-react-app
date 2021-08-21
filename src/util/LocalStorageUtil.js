@@ -17,7 +17,7 @@ export const addItem = (property, data) => {
 
 }
 
-export const setItem = (itemKey) => {
+export const setInitialData = (itemKey) => {
   if (!localStorage.getItem(itemKey)) {
     localStorage.setItem(itemKey, JSON.stringify([]));
   }

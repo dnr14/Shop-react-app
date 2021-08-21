@@ -1,4 +1,4 @@
-import GlobalStyled from 'components/style/Styled.jsx';
+import GlobalStyled from 'style/Styled.jsx';
 import React from 'react';
 import ReactDOM from 'react-dom';
 import App from './App.jsx';

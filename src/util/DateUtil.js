@@ -1,41 +1,38 @@
 export const getToday = () => {
   const date = new Date();
   const yyyy = date.getFullYear();
-  const mm = String(date.getMonth() + 1).padStart(2, "0");
-  const dd = String(date.getDate()).padStart(2, "0");
+  const mm = isFillWithZero(date.getMonth() + 1);
+  const dd = isFillWithZero(date.getDate());
   return `${yyyy}-${mm}-${dd}`;
 }
 
-export const getyymmddHHMMSS = () => {
+export const getYYMMDD_HHMMSS = () => {
   const date = new Date();
-  const yyyy = date.getFullYear();
-  const mm = String(date.getMonth() + 1).padStart(2, "0");
-  const dd = String(date.getDate()).padStart(2, "0");
-  const HH = date.getHours();
-  const MM = date.getMinutes();
-  const SS = date.getSeconds();
+  const YYYY = date.getFullYear();
+  const MM = String(date.getMonth() + 1).padStart(2, "0");
+  const DD = String(date.getDate()).padStart(2, "0");
+  const hh = date.getHours();
+  const mm = date.getMinutes();
+  const ss = date.getSeconds();
 
-  const return_obj = {
-    fullDate: `${yyyy}-${mm}-${dd} ${HH}:${MM}:${SS}`,
-    halfDate: getToday(),
-    hours: HH,
-    minutes: MM,
-  }
-
-
-  return return_obj;
+  return {
+    today: `${YYYY}-${MM}-${DD} ${hh}:${mm}:${ss}`,
+    selectedDate: getToday(),
+    hours: hh,
+    minutes: mm,
+  };
 }
 
-export const get24Hour = () => {
+export const getOneToTwentyForeHoure = () => {
   return Array.from({ length: 24 }, (_, i) => i + 1);
 }
 
-export const get60Minutes = () => {
+export const getZeroToFiftyNineMinutes = () => {
   return Array.from({ length: 60 }, (_, i) => i);
 }
 
 
-export const isfillWithZero = (date) => {
+export const isFillWithZero = (date) => {
   return String(date).padStart(2, "0");
 }
 

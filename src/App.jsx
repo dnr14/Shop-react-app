@@ -1,16 +1,15 @@
-import Header from "components/layout/Header";
-import HouseholdledgerInset from "components/insert/HouseholdledgerInset";
-import HouseholdledgerSelect from "components/select/HouseholdledgerSelect";
 import { BrowserRouter, Route } from "react-router-dom";
+import HeaderContainer from "container/HeaderContainer";
+import Insert from "components/insert/Insert";
 
 function App() {
   return (
     <>
       <BrowserRouter>
-        <Header />
+        <HeaderContainer />
+
         <Route path="/" exact render={() => <div>홈</div>} />
-        <Route path="/insert" component={HouseholdledgerInset} />
-        <Route path="/select" component={HouseholdledgerSelect} />
+        <Route path="/insert" component={Insert} />
       </BrowserRouter>
     </>
   );

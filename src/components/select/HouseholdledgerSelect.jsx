@@ -1,8 +1,9 @@
-import { StyledSection, LinkContainer, Title, MaxWidthContainer, Row, Col } from "components/style/Styled";
+import { StyledSection, LinkContainer, StyledMaxWidth, Row, Col } from "style/Styled";
 import React, { memo, useState } from "react";
 import { Route } from "react-router";
 import { NavLink } from "react-router-dom";
 import { setDateFormat } from "util/DateUtil";
+import InsertTitle from "components/insert/InsertTitle";
 
 const activeStyle = {
   fontWeight: "bold",
@@ -16,13 +17,9 @@ const activeStyle = {
 const HouseholdledgerSelect = ({ match: { path } }) => {
   return (
     <main>
-      <MaxWidthContainer>
+      {/* <StyledMaxWidth>
         <StyledSection>
-          <Row>
-            <Col>
-              <Title>입출 목록</Title>
-            </Col>
-          </Row>
+          <InsertTitle />
           <Row>
             <Col>
               <LinkContainer>
@@ -39,7 +36,7 @@ const HouseholdledgerSelect = ({ match: { path } }) => {
             </Col>
           </Row>
         </StyledSection>
-      </MaxWidthContainer>
+      </StyledMaxWidth> */}
     </main>
   );
 };

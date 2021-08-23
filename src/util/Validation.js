@@ -30,10 +30,7 @@ export const priceValidation = price => {
 }
 
 export const isEmpty = (x) => {
-  if (x === "") {
-    return true;
-  }
-  if (x === "0") {
+  if (x === "" || x === "0") {
     return true;
   }
   return false;

@@ -10,7 +10,7 @@ const activeStyle = {
   padding: "5px",
 };
 
-const StyledAnchor = styled(NavLink)`
+const StyledNavLink = styled(NavLink)`
   display: inline-block;
   padding: 5px;
   margin: 0 5px;
@@ -20,19 +20,19 @@ const StyledAnchor = styled(NavLink)`
   }
 `;
 
-const InsertLinks = ({ path }) => {
+const Links = ({ path }) => {
   return (
     <Row>
       <Col>
-        <StyledAnchor to={`${path}/expenditure`} activeStyle={activeStyle}>
+        <StyledNavLink to={`${path}/expenditure`} activeStyle={activeStyle}>
           지출
-        </StyledAnchor>
-        <StyledAnchor to={`${path}/income`} activeStyle={activeStyle}>
+        </StyledNavLink>
+        <StyledNavLink to={`${path}/income`} activeStyle={activeStyle}>
           수입
-        </StyledAnchor>
+        </StyledNavLink>
       </Col>
     </Row>
   );
 };
 
-export default InsertLinks;
+export default Links;

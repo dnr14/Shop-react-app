@@ -1,10 +1,10 @@
-import React from "react";
+import React, { memo } from "react";
 import { setDateFormat } from "util/DateUtil";
 
 const Result = ({ insertData }) => {
-  console.log(insertData);
   return (
     <div>
+      <div>등록 현황</div>
       <div>{setDateFormat(insertData.date)}</div>
       <div>{insertData.category}</div>
       <div>{insertData.price}</div>
@@ -13,4 +13,4 @@ const Result = ({ insertData }) => {
   );
 };
 
-export default Result;
+export default memo(Result);

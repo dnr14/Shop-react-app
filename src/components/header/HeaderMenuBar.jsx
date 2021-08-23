@@ -5,6 +5,8 @@ import styled, { css } from "styled-components";
 import HeaderHamburger from "./HeaderHamburger";
 
 const StyledMenuBar = styled.button`
+  display: none;
+
   ${maxWidthByBreakPointTable(css`
     display: flex;
     justify-content: center;

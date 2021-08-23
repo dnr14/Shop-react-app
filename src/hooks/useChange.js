@@ -1,31 +1,14 @@
-import Submit from "components/insert/Submit";
-import React, { useCallback, useEffect, useState } from "react";
-import { getYYMMDD_HHMMSS, isFillWithZero } from "util/DateUtil";
-import { addItem, setInitialData } from "util/LocalStorageUtil";
+import { useCallback, useState } from "react";
+import { isFillWithZero } from "util/DateUtil";
+import { addItem } from "util/LocalStorageUtil";
 import { setNumberThreeCommaDraw } from "util/NumberUtil";
 import { dateValidation, isEmpty, priceValidation } from "util/Validation";
-import DateSelect from "components/insert/DateSelect";
-import PriceInput from "components/insert/PriceInput";
-import CategorySelect from "components/insert/CategorySelect";
-import Result from "components/insert/Result";
 
-const INITIAL_STATE = {
-  dates: getYYMMDD_HHMMSS(),
-  price: "",
-  category: "",
-  dateError: "",
-  priceError: "",
-  categoryError: "",
-  insertData: "",
-};
 
-const ITEM_KEY = "expenditureData";
+const useChange = (init) => {
+  const [state, setState] = useState(init);
 
-const ExpenditureContainer = () => {
-  const [state, setState] = useState(INITIAL_STATE);
-  useEffect(() => setInitialData(ITEM_KEY), []);
-
-  const handleChange = useCallback((e) => {
+  const handleChange = useCallback(e => {
     const { name } = e.target;
 
     switch (name) {
@@ -80,9 +63,10 @@ const ExpenditureContainer = () => {
     }
   }, []);
 
+
   const handleSubmit = (e) => {
     e.preventDefault();
-
+    const { name } = e.target;
     const isDateValidation = dateValidation(state.dates.selectedDate);
     const isPriceValidation = priceValidation(state.price);
     const isCategoryValidation = isEmpty(state.category);
@@ -93,48 +77,29 @@ const ExpenditureContainer = () => {
     if (isPriceValidation.result) o.priceError = isPriceValidation.error;
     if (isCategoryValidation) o.categoryError = "not selected";
 
-    // 모두 에러가 없을 때
-    if (!isDateValidation.result && !isPriceValidation.result && !isCategoryValidation) {
-      const date = `${state.dates.selectedDate} ${isFillWithZero(state.dates.hours)}:${isFillWithZero(state.dates.minutes)}:00`;
-      const time = new Date(date).getTime();
-      const price = `${setNumberThreeCommaDraw(state.price)}원`;
-      const category = `${state.category}`;
-      addItem(ITEM_KEY, { date, price, category, time });
-      setState({ ...INITIAL_STATE, insertData: { date, price, category, time } });
-      return;
+    const date = `${state.dates.selectedDate} ${isFillWithZero(state.dates.hours)}:${isFillWithZero(state.dates.minutes)}:00`;
+    const time = new Date(date).getTime();
+    const price = `${setNumberThreeCommaDraw(state.price)}원`;
+
+    if (name === "income") {
+      if (!isDateValidation.result && !isPriceValidation.result) {
+        addItem(`${name}Data`, { date, price, time });
+        setState({ ...init, insertData: { date, price, time } });
+        return;
+      }
+    } else {
+      if (!isDateValidation.result && !isPriceValidation.result && !isCategoryValidation) {
+        const category = state.category;
+        addItem(`${name}Data`, { date, price, category, time });
+        setState({ ...init, insertData: { date, price, category, time } });
+        return;
+      }
     }
 
     setState(o);
   };
-
-  console.log(state.dateError);
-
-  return (
-    <>
-      <form onSubmit={handleSubmit}>
-        <DateSelect
-          selectedDate={state.dates.selectedDate}
-          hours={state.dates.hours}
-          minutes={state.dates.minutes}
-          error={state.dateError}
-          handleChange={handleChange}
-        >
-          지출날짜
-        </DateSelect>
-        <PriceInput error={state.priceError} price={state.price} handleChange={handleChange}>
-          지출 가격
-        </PriceInput>
-        <CategorySelect error={state.categoryError} category={state.category} handleChange={handleChange}>
-          지출 카테고리
-        </CategorySelect>
-
-        <Submit color="#fff" padding="10px" fontWeight="bold" backgroundColor="rgba(46,204,113,1)" borderRadius="10px">
-          등록
-        </Submit>
-      </form>
-      {state.insertData && <Result insertData={state.insertData} />}
-    </>
-  );
+  return [state, handleSubmit, handleChange];
 };
 
-export default ExpenditureContainer;
+
+export default useChange;

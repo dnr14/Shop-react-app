@@ -1,6 +1,7 @@
 import { BrowserRouter, Route } from "react-router-dom";
 import HeaderContainer from "container/HeaderContainer";
-import Insert from "components/insert/Insert";
+import InsertContainer from "container/InsertContainer";
+import SelectContainer from "container/SelectContainer";
 
 function App() {
   return (
@@ -9,7 +10,8 @@ function App() {
         <HeaderContainer />
 
         <Route path="/" exact render={() => <div>홈</div>} />
-        <Route path="/insert" component={Insert} />
+        <Route path="/insert" component={InsertContainer} />
+        <Route path="/select" component={SelectContainer} />
       </BrowserRouter>
     </>
   );

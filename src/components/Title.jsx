@@ -8,14 +8,14 @@ const StyledH1 = styled.h1`
   letter-spacing: 0.2rem;
 `;
 
-const InsertTitle = () => {
+const Title = ({ children }) => {
   return (
     <Row>
       <Col>
-        <StyledH1>입출을 가계부에 등록해보세요.</StyledH1>
+        <StyledH1>{children}</StyledH1>
       </Col>
     </Row>
   );
 };
 
-export default InsertTitle;
+export default Title;

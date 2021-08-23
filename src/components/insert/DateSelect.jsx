@@ -28,7 +28,6 @@ const dateSelectAreEqual = (prevProps, nextProps) => {
 };
 
 const DateSelect = memo(function DateSelect({ error, selectedDate, hours, minutes, children, handleChange }) {
-  console.log(error);
   return (
     <InsertTableLayout>
       <StyledDiv>{children}</StyledDiv>

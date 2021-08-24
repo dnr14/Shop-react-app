@@ -1,4 +1,4 @@
-import React, { memo, useCallback, useEffect, useState } from "react";
+import React, { memo, useEffect, useMemo, useState } from "react";
 import { Link } from "react-router-dom";
 import { Col } from "style/Styled";
 import { Row } from "style/Styled";
@@ -10,25 +10,42 @@ const inintialData = () => {
   return data.slice(data.length - 7, data.length).map((v, idx) => ({ ...v, idx }));
 };
 
-const IncomeCompo = ({ match: { path }, history: { location } }) => {
+const IncomeCompo = function IncomeCompo({ match: { path }, history: { location } }) {
   const [data, setData] = useState(inintialData());
+  const sort = useMemo(() => querytString.parse(location.search).sort, [location.search]);
 
-  const handleClick = useCallback(() => {
-    console.log("sortClick");
-    const { sort } = querytString.parse(location.search);
+  useEffect(() => {
     sort === "desc"
       ? setData((prevData) => prevData.sort((a, b) => (a.time >= b.time ? 1 : -1)).map((v, idx) => ({ ...v, idx })))
       : setData((prevData) => prevData.sort((a, b) => (a.time <= b.time ? 1 : -1)).map((v, idx) => ({ ...v, idx })));
-  }, [location]);
-
-  useEffect(() => {
-    const { sort } = querytString.parse(location.search);
-    if (sort === undefined) setData((prevData) => prevData.sort((a, b) => (a.time >= b.time ? 1 : -1)).map((v, idx) => ({ ...v, idx })));
-  }, [location]);
+  }, [sort]);
 
   return (
     <>
-      <DataSort handleClick={handleClick} path={path} />
+      <DataSort path={path} />
+      <ShowCompo data={data} />
+    </>
+  );
+};
+
+const DataSort = memo(function DataSort({ path }) {
+  return (
+    <>
+      <div>
+        <Link to={`${path}?sort=asc`}>
+          <button>시간 오름차순</button>
+        </Link>
+        <Link to={`${path}?sort=desc`}>
+          <button>시간 내림차순</button>
+        </Link>
+      </div>
+    </>
+  );
+});
+
+const ShowCompo = memo(function ShowCompo({ data }) {
+  return (
+    <>
       {data.map((v, idx) => (
         <Row key={idx} addStyle={{ margin: "10px 0" }}>
           <Col lg={1}>
@@ -48,21 +65,6 @@ const IncomeCompo = ({ match: { path }, history: { location } }) => {
           </Col>
         </Row>
       ))}
-    </>
-  );
-};
-
-const DataSort = memo(function DataSort({ handleClick, path }) {
-  return (
-    <>
-      <div>
-        <Link to={`${path}?sort=asc`}>
-          <button onClick={handleClick}>시간 오름차순</button>
-        </Link>
-        <Link to={`${path}?sort=desc`}>
-          <button onClick={handleClick}>시간 내림차순</button>
-        </Link>
-      </div>
     </>
   );
 });

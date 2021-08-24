@@ -1,4 +1,4 @@
-import React from "react";
+import React, { memo } from "react";
 import { Col, Row } from "style/Styled";
 import styled from "styled-components";
 
@@ -18,4 +18,4 @@ const Title = ({ children }) => {
   );
 };
 
-export default Title;
+export default memo(Title);

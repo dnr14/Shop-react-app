@@ -1,4 +1,4 @@
-import React from "react";
+import React, { memo } from "react";
 import { NavLink } from "react-router-dom";
 import { Col, Row } from "style/Styled";
 import styled from "styled-components";
@@ -35,4 +35,4 @@ const Links = ({ path }) => {
   );
 };
 
-export default Links;
+export default memo(Links);

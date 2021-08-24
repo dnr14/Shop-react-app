@@ -1,8 +1,8 @@
 import Links from "components/Links";
 import IncomeCompo from "components/select/IncomeCompo";
 import Title from "components/Title";
-import React, { memo, useState } from "react";
-import { Link, Route } from "react-router-dom";
+import React, { useState } from "react";
+import { Route } from "react-router-dom";
 import { Row } from "style/Styled";
 import { Col } from "style/Styled";
 import { StyledMaxWidth } from "style/Styled";

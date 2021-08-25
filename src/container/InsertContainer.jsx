@@ -1,8 +1,8 @@
-import Links from "components/Links";
+import Links from "components/insert/InsertLinks";
 import Title from "components/Title";
 import IncomeForm from "components/insert/IncomeForm";
 import ExpenditureForm from "components/insert/ExpenditureForm";
-import React from "react";
+import React, { useEffect } from "react";
 import { Route } from "react-router-dom";
 import { StyledMaxWidth } from "style/Styled";
 import { getYYMMDD_HHMMSS } from "util/DateUtil";
@@ -24,8 +24,9 @@ const INITIAL_STATE = {
   insertData: "",
 };
 
-const InsertContainer = ({ match: { path } }) => {
-  const [state, handleSubmit, handleChange] = useChange(INITIAL_STATE);
+const InsertContainer = ({ match, location }) => {
+  const [state, handleSubmit, handleChange] = useChange(INITIAL_STATE, location);
+  const { path } = match;
 
   return (
     <StyledMaxWidth>

@@ -20,14 +20,14 @@ const StyledNavLink = styled(NavLink)`
   }
 `;
 
-const Links = ({ path }) => {
+const SelectLinks = ({ path }) => {
   return (
     <Row>
       <Col>
-        <StyledNavLink to={`${path}/expenditure`} activeStyle={activeStyle}>
+        <StyledNavLink to={`${path}/expenditure?page=1`} activeStyle={activeStyle}>
           지출
         </StyledNavLink>
-        <StyledNavLink to={`${path}/income`} activeStyle={activeStyle}>
+        <StyledNavLink to={`${path}/income?page=1`} activeStyle={activeStyle}>
           수입
         </StyledNavLink>
       </Col>
@@ -35,4 +35,4 @@ const Links = ({ path }) => {
   );
 };
 
-export default memo(Links);
+export default memo(SelectLinks);

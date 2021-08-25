@@ -1,7 +1,7 @@
 import { BrowserRouter, Route } from "react-router-dom";
 import HeaderContainer from "container/HeaderContainer";
 import InsertContainer from "container/InsertContainer";
-import SelectContainer from "container/SelectContainer";
+import SelectContainer from "components/select/Select";
 
 function App() {
   return (

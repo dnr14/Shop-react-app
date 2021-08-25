@@ -1,12 +1,16 @@
-import { useCallback, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { isFillWithZero } from "util/DateUtil";
 import { addItem } from "util/LocalStorageUtil";
 import { setNumberThreeCommaDraw } from "util/NumberUtil";
 import { dateValidation, isEmpty, priceValidation } from "util/Validation";
 
 
-const useChange = (init) => {
+const useChange = (init, location) => {
   const [state, setState] = useState(init);
+
+  useEffect(() => {
+    setState(init);
+  }, [location, init])
 
   const handleChange = useCallback(e => {
     const { name } = e.target;
@@ -83,14 +87,14 @@ const useChange = (init) => {
 
     if (name === "income") {
       if (!isDateValidation.result && !isPriceValidation.result) {
-        addItem(`${name}Data`, { date, price, time });
+        addItem(`${name}Data`, { date, price, time, insertTime: new Date().getTime() });
         setState({ ...init, insertData: { date, price, time } });
         return;
       }
     } else {
       if (!isDateValidation.result && !isPriceValidation.result && !isCategoryValidation) {
         const category = state.category;
-        addItem(`${name}Data`, { date, price, category, time });
+        addItem(`${name}Data`, { date, price, category, time, insertTime: new Date().getTime() });
         setState({ ...init, insertData: { date, price, category, time } });
         return;
       }

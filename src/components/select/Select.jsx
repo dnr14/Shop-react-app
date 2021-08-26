@@ -1,5 +1,6 @@
 import SelectLinks from "components/select/SelectLinks";
-import IncomeCompo from "container/IncomeContainer";
+import IncomeContainer from "container/IncomeContainer";
+import ExpenditureContainer from "container/ExpenditureContainer";
 import Title from "components/Title";
 import React from "react";
 import { Route } from "react-router-dom";
@@ -18,7 +19,8 @@ const Select = ({ match: { path } }) => {
         <section>
           <Title>등록한 입출을 확인하세요.</Title>
           <SelectLinks path={path} />
-          <Route path={`${path}/income`} component={IncomeCompo} />
+          <Route path={`${path}/income`} component={IncomeContainer} />
+          <Route path={`${path}/expenditure`} component={ExpenditureContainer} />
         </section>
       </StyledMain>
     </StyledMaxWidth>

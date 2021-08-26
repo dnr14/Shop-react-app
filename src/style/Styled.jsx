@@ -94,6 +94,12 @@ export const Row = styled.div`
 export const Col = styled.div`
   float: left;
 
+  ${({ addStyle }) =>
+    addStyle &&
+    css`
+      ${addStyle}
+    `}
+
   ${({ display }) =>
     display &&
     css`

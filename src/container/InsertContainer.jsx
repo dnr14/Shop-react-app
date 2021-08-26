@@ -2,7 +2,7 @@ import Links from "components/insert/InsertLinks";
 import Title from "components/Title";
 import IncomeForm from "components/insert/IncomeForm";
 import ExpenditureForm from "components/insert/ExpenditureForm";
-import React, { useEffect } from "react";
+import React from "react";
 import { Route } from "react-router-dom";
 import { StyledMaxWidth } from "style/Styled";
 import { getYYMMDD_HHMMSS } from "util/DateUtil";

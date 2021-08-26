@@ -1,7 +1,6 @@
 import { useCallback, useEffect, useState } from "react";
 import { isFillWithZero } from "util/DateUtil";
 import { addItem } from "util/LocalStorageUtil";
-import { setNumberThreeCommaDraw } from "util/NumberUtil";
 import { dateValidation, isEmpty, priceValidation } from "util/Validation";
 
 
@@ -83,7 +82,7 @@ const useChange = (init, location) => {
 
     const date = `${state.dates.selectedDate} ${isFillWithZero(state.dates.hours)}:${isFillWithZero(state.dates.minutes)}:00`;
     const time = new Date(date).getTime();
-    const price = `${setNumberThreeCommaDraw(state.price)}원`;
+    const price = state.price;
 
     if (name === "income") {
       if (!isDateValidation.result && !isPriceValidation.result) {

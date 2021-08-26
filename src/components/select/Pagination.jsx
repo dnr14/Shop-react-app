@@ -1,58 +1,79 @@
 import React, { memo, useMemo } from "react";
-import { Link } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 import styled from "styled-components";
 import queryString from "query-string";
+import { getPageNationNumbers } from "util/PageNation";
+import prevArrow from "images/prevArrow.svg";
+import nextArrow from "images/nextArrow.svg";
+import { makeUrl } from "util/urlUtil";
 
 const StyledUl = styled.ul`
   display: flex;
   justify-content: center;
   gap: 10px;
+  margin-top: 10px;
 
   li {
     display: inline-block;
+    & > a {
+      box-sizing: content-box;
+      display: inline-block;
+      padding: 5px;
+      width: 20px;
+      text-align: center;
+      color: #000;
+      border-radius: 2px;
+      box-shadow: 5px 5px 5px rgba(127, 140, 141, 0.5);
+    }
+  }
+  .prve,
+  .next {
+    background-size: cover;
+    height: 19px;
+    width: 19px;
+  }
+  .prve {
+    background-image: url(${prevArrow});
+  }
+  .next {
+    background-image: url(${nextArrow});
+  }
+
+  .active {
+    background-color: rgba(46, 204, 113, 1);
+    color: #fff;
   }
 `;
 
-const drawPagination = (pageGroup, lastPage) => {
-  const PAGECOUNT = 5;
-  return Array.from({ length: PAGECOUNT }, (_, i) => (pageGroup - 1) * PAGECOUNT + 1 + i);
-};
-
-const Pagination = ({ pathname, search, pageGroup, lastPageGroup, lastPage }) => {
-  const sort = queryString.parse(search).sort;
-  const pagenation = useMemo(() => {
-    return drawPagination(pageGroup, lastPage);
-  }, [pageGroup, lastPage]);
-
-  const nextPage = useMemo(() => {
-    return pageGroup * 5 + 1;
-  }, [pageGroup]);
-
-  const prevPage = useMemo(() => {
-    return (pageGroup - 1) * 5;
-  }, [pageGroup]);
+const Pagination = ({ pathname, currentQuery, pageGroup, lastPageGroup, lastPage }) => {
+  const [nextPage, prevPage, pagenation] = useMemo(
+    () => getPageNationNumbers(pageGroup, lastPage, lastPageGroup),
+    [pageGroup, lastPage, lastPageGroup]
+  );
 
   return (
-    <div>
-      <StyledUl>
-        {1 !== pageGroup && (
-          <li>
-            {sort ? <Link to={`${pathname}?page=${prevPage}&sort=${sort}`}>{"<"}</Link> : <Link to={`${pathname}?page=${prevPage}`}>{"<"}</Link>}
-          </li>
-        )}
-        {pagenation.map((item, idx) => (
-          <li key={idx}>
-            {sort ? <Link to={`${pathname}?page=${item}&sort=${sort}`}>{item}</Link> : <Link to={`${pathname}?page=${item}`}>{item}</Link>}
-          </li>
-        ))}
-        {lastPageGroup !== pageGroup && (
-          <li>
-            {sort ? <Link to={`${pathname}?page=${nextPage}&sort=${sort}`}>{">"}</Link> : <Link to={`${pathname}?page=${nextPage}`}>{">"}</Link>}
-          </li>
-        )}
-      </StyledUl>
-    </div>
+    <StyledUl>
+      {1 !== pageGroup && (
+        <li>
+          <Link to={`${makeUrl(pathname, currentQuery, { page: prevPage })}`} className="prve" />
+        </li>
+      )}
+      {pagenation.map((item, idx) => (
+        <li key={idx}>
+          <NavLink to={`${makeUrl(pathname, currentQuery, { page: item })}`} isActive={(_, location) => isActive(item, location)}>
+            {item}
+          </NavLink>
+        </li>
+      ))}
+      {lastPageGroup !== pageGroup && (
+        <li>
+          <Link to={`${makeUrl(pathname, currentQuery, { page: nextPage })}`} className="next" />
+        </li>
+      )}
+    </StyledUl>
   );
 };
+
+const isActive = (item, location) => (String(item) === queryString.parse(location.search).page ? true : false);
 
 export default memo(Pagination);

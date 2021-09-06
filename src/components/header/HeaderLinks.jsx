@@ -94,7 +94,7 @@ const HeaderLinks = ({ isMenuOpen }) => {
             <NavLink to="/login">로그인</NavLink>
           </li>
           <li className="nav-item">
-            <a href="/">회원가입</a>
+            <NavLink to="/memberShip">회원가입</NavLink>
           </li>
           <li className="nav-item">
             <NavLink to="/insert">입출 등록</NavLink>

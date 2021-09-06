@@ -1,7 +1,7 @@
 import SelectLinks from "components/select/SelectLinks";
 import IncomeContainer from "container/IncomeContainer";
 import ExpenditureContainer from "container/ExpenditureContainer";
-import Title from "components/Title";
+import Title from "components/common/Title";
 import React from "react";
 import { Route } from "react-router-dom";
 import { StyledMaxWidth } from "style/Styled";
@@ -12,7 +12,7 @@ const StyledMain = styled.main`
   margin: 0 auto;
 `;
 
-const Select = ({ match: { path } }) => {
+const SelectContainer = ({ match: { path } }) => {
   return (
     <StyledMaxWidth>
       <StyledMain>
@@ -27,4 +27,4 @@ const Select = ({ match: { path } }) => {
   );
 };
 
-export default Select;
+export default SelectContainer;

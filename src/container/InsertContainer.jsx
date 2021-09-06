@@ -1,5 +1,5 @@
 import Links from "components/insert/InsertLinks";
-import Title from "components/Title";
+import Title from "components/common/Title";
 import IncomeForm from "components/insert/IncomeForm";
 import ExpenditureForm from "components/insert/ExpenditureForm";
 import React from "react";

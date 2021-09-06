@@ -25,7 +25,6 @@ export const minWidthByBreakPointTable = (props) => css`
 const GlobalStyled = createGlobalStyle`
 
    *{
-      font-size: 16px;
       font-family: 'Roboto', sans-serif;
       box-sizing: border-box;
     }

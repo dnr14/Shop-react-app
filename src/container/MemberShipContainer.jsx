@@ -30,10 +30,11 @@ const StyledMain = styled.main`
 `;
 
 const inputInitialization = {
+  // type password로 하고 태그를 변경하자
   id: { value: "", isError: false, errorText: "" },
   email: { value: "", isError: false, errorText: "" },
-  password: { value: "", isError: false, errorText: "" },
-  confirmPassword: { value: "", isError: false, errorText: "" },
+  password: { value: "", isError: false, errorText: "", isShow: false },
+  confirmPassword: { value: "", isError: false, errorText: "", isShow: false },
 };
 
 const MemberShipContainer = () => {
@@ -47,7 +48,6 @@ const MemberShipContainer = () => {
 
   const handleChange = useCallback((e) => {
     const { name, value } = e.target;
-
     if (name === "id") {
       const maxLengthCheck = isMaxLengthCheck(value);
       const minLengthCheck = isMinLengthCheck(value);
@@ -200,9 +200,18 @@ const MemberShipContainer = () => {
       }
     }
 
-    if (name === "password" || name === "confirmPassword") {
-      console.log(1);
-    }
+    // if (name === "password" || name === "confirmPassword") {
+    //   setMemberShip((prevState) => {
+    //     let newString = prevState[name].value;
+    //     const lastString = value[value.length - 1];
+    //     console.log(lastString);
+    //     newString += lastString;
+    //     console.log(newString);
+
+    //     return { ...prevState, [name]: { value: newString, isError: false, errorText: "" } };
+    //   });
+    //   return;
+    // }
 
     setMemberShip((prevState) => ({ ...prevState, [name]: { value, isError: false, errorText: "" } }));
   }, []);

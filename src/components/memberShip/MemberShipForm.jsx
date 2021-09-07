@@ -134,12 +134,12 @@ const Password = memo(function Password({ password, confirmPassword, handleChang
         <Col xs={inputSize} sm={inputSize} md={inputSize} lg={inputSize}>
           <StyledInput
             error={password.isError}
-            type="text"
+            type="password"
             id="password"
             name="password"
             placeholder="비밀번호를 입력해주세요."
             onChange={handleChange}
-            value={passwordChange(password.value)}
+            value={password.value}
           />
         </Col>
       </Row>

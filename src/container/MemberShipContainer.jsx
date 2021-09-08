@@ -1,8 +1,9 @@
 import MemberShipForm from "components/memberShip/MemberShipForm";
 import Title from "components/common/Title";
-import React, { useCallback, useState } from "react";
+import React, { useCallback, useEffect, useRef, useState } from "react";
 import { StyledMaxWidth } from "style/Styled";
 import styled from "styled-components";
+import { useHistory } from "react-router";
 
 const errorsEnum = Object.freeze({
   id: Object.freeze({
@@ -21,7 +22,10 @@ const errorsEnum = Object.freeze({
     emailPatternError: "이메일 형식이 아닙니다.",
     maxLengthError: "아이디는 최대 25자 입니다.",
   }),
-  password: Object.freeze({}),
+  password: Object.freeze({
+    maxLengthError: "비밀번호는 최대 15자 입니다.",
+    minLengthError: "비밀번호는 최소 6자 입니다.",
+  }),
 });
 
 const StyledMain = styled.main`
@@ -30,19 +34,50 @@ const StyledMain = styled.main`
 `;
 
 const inputInitialization = {
-  // type password로 하고 태그를 변경하자
   id: { value: "", isError: false, errorText: "" },
   email: { value: "", isError: false, errorText: "" },
+  //isShow 비밀번호 별표에서 보이게 트리거
   password: { value: "", isError: false, errorText: "", isShow: false },
   confirmPassword: { value: "", isError: false, errorText: "", isShow: false },
 };
 
 const MemberShipContainer = () => {
   const [memberShip, setMemberShip] = useState(inputInitialization);
+  const isBlocking = useRef(false);
+  const history = useHistory();
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-  };
+  useEffect(() => {
+    const unblock = history.block((_, action) => {
+      if (action === "POP" || action === "PUSH") {
+        isBlocking.current = true;
+        return window.confirm("나갈꺼냐?");
+      }
+      return true;
+    });
+
+    return () => unblock();
+  }, [history]);
+
+  const handleSubmit = useCallback(
+    (e) => {
+      e.preventDefault();
+      const { id, email, password, confirmPassword } = memberShip;
+      const isIdValueEmpty = isEmpty(id.value);
+      const isEmailValueEmpty = isEmpty(email.value);
+      const isPasswordValueEmpty = isEmpty(password.value);
+      const isConfirmPasswordValueEmpty = isEmpty(confirmPassword.value);
+
+      if (isIdValueEmpty || isEmailValueEmpty || isPasswordValueEmpty || isConfirmPasswordValueEmpty) {
+        console.log("빈칸을 모두 입력");
+        return;
+      }
+
+      if (!id.isError && !email.isError && !password.isError && !confirmPassword.isError) {
+        console.log("에러없다");
+      }
+    },
+    [memberShip]
+  );
 
   const onReset = useCallback(() => setMemberShip(inputInitialization), []);
 
@@ -52,7 +87,7 @@ const MemberShipContainer = () => {
       const maxLengthCheck = isMaxLengthCheck(value);
       const minLengthCheck = isMinLengthCheck(value);
       const firstTextCheck = isFirstTexCheck(value);
-      const spaceCheck = isSpaceCheck(value);
+      const spaceCheck = isWhiteSpaceCheck(value);
       const specialSymbolCheck = isSpecialSymbol(value);
       const koreaLengCheck = isKoreaLengCheck(value);
 
@@ -126,7 +161,7 @@ const MemberShipContainer = () => {
     }
 
     if (name === "email") {
-      const spaceCheck = isSpaceCheck(value);
+      const spaceCheck = isWhiteSpaceCheck(value);
       const specialSymbolCheck = isEmailSpecialSymbol(value);
       const koreaLengCheck = isKoreaLengCheck(value);
       const emailMaxLength = isEmailMaxLength(value);
@@ -199,25 +234,46 @@ const MemberShipContainer = () => {
         return;
       }
     }
+    // 비밀번호
+    if (name === "password" || name === "confirmPassword") {
+      if (String(value).length > 15) {
+        setMemberShip((prevState) =>
+          prevState[name].isError === true
+            ? prevState
+            : {
+                ...prevState,
+                [name]: { value: prevState.password.value, isError: true, errorText: errorsEnum.password.maxLengthError },
+              }
+        );
+        return;
+      }
 
-    // if (name === "password" || name === "confirmPassword") {
-    //   setMemberShip((prevState) => {
-    //     let newString = prevState[name].value;
-    //     const lastString = value[value.length - 1];
-    //     console.log(lastString);
-    //     newString += lastString;
-    //     console.log(newString);
+      setMemberShip((prevState) => {
+        const confirmPassword = prevState[`${name === "password" ? "confirmPassword" : "password"}`].value;
 
-    //     return { ...prevState, [name]: { value: newString, isError: false, errorText: "" } };
-    //   });
-    //   return;
-    // }
+        if (confirmPassword !== value) {
+          return { ...prevState, [name]: { value, isError: true, errorText: "비밀번호가 틀립니다." } };
+        }
+        // 비밀번호가 동일하면 에러창 없어짐
+        if (confirmPassword === value) {
+          const propertyName = name === "password" ? "confirmPassword" : "password";
+          return {
+            ...prevState,
+            [name]: { value, isError: false, errorText: "" },
+            [propertyName]: {
+              ...prevState[propertyName],
+              isError: false,
+              errorText: "",
+            },
+          };
+        }
+      });
+
+      return;
+    }
 
     setMemberShip((prevState) => ({ ...prevState, [name]: { value, isError: false, errorText: "" } }));
   }, []);
-
-  console.log(memberShip.password);
-  console.log(memberShip.confirmPassword);
 
   return (
     <StyledMaxWidth>
@@ -225,6 +281,12 @@ const MemberShipContainer = () => {
         <section>
           <Title>회 원 가 입</Title>
           <MemberShipForm handleSubmit={handleSubmit} handleChange={handleChange} onReset={onReset} memberShip={memberShip} />
+          {isBlocking.current && (
+            <div>
+              <button>뒤로</button>
+              <button>취소</button>
+            </div>
+          )}
         </section>
       </StyledMain>
     </StyledMaxWidth>
@@ -249,7 +311,7 @@ const isFirstTexCheck = (value) => {
 };
 
 // 공백
-const isSpaceCheck = (value) => {
+const isWhiteSpaceCheck = (value) => {
   // 정규식에 걸린다면 안티패턴
   const regExp = /\s/gi;
   return regExp.test(value) ? true : false;
@@ -278,8 +340,12 @@ const isEmailSpecialSymbol = (value) => {
 };
 
 const isEmailPatternCheck = (value) => {
-  const regExp = /^[0-9a-zA-Z]([-_\\.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_\\.]?[0-9a-zA-Z])*\.[a-zA-Z]{2,3}$/i;
+  const regExp = /^[0-9a-zA-Z]([-_\\.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_\\.]?[0-9a-zA-Z])*\.(kr|com|net)/gi;
   return regExp.test(value);
+};
+
+const isEmpty = (value) => {
+  return String(value).length === 0;
 };
 
 export default MemberShipContainer;

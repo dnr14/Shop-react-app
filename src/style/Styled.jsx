@@ -31,6 +31,20 @@ const GlobalStyled = createGlobalStyle`
 
     body{
       margin: 0; 
+      -ms-overflow-style: none; /* IE and Edge */
+      scrollbar-width: none; /* Firefox */
+      ::-webkit-scrollbar{
+      width: 0;
+      height: auto;
+    }
+    ::-webkit-scrollbar-thumb{
+      background-color: rgba(46,204,113,1);
+      border-radius: 5px;
+    }
+    ::-webkit-scrollbar-track{
+        background-color: #fff;
+      }
+
     }
 
     html{

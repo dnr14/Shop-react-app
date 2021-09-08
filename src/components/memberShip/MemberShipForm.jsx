@@ -41,6 +41,31 @@ const StyledInput = styled.input`
   `)}
 `;
 
+const StyledButton = styled.button`
+  & + & {
+    margin-left: 10px;
+  }
+
+  background: rgba(46, 204, 113, 1);
+  border: 1px solid transparent;
+  border-radius: 2px;
+  color: #fff;
+  cursor: pointer;
+  font-size: 1rem;
+  line-height: 1.5rem;
+  letter-spacing: 0.1rem;
+
+  &:active {
+    background: #fff;
+    color: #000;
+    border: 1px solid #000;
+    font-weight: bold;
+  }
+  &:hover {
+    font-weight: bold;
+  }
+`;
+
 const StyledLabel = styled.label`
   display: inline-block;
   line-height: 2rem;
@@ -69,8 +94,7 @@ const MemberShipForm = ({ handleSubmit, handleChange, memberShip, onReset }) => 
         <Id id={id} handleChange={handleChange} />
         <Email email={email} handleChange={handleChange} />
         <Password password={password} confirmPassword={confirmPassword} handleChange={handleChange} />
-        <Submit />
-        <Reset onReset={onReset} />
+        <Button onReset={onReset} />
       </StyledDiv>
     </form>
   );
@@ -140,10 +164,11 @@ const Password = memo(function Password({ password, confirmPassword, handleChang
             placeholder="비밀번호를 입력해주세요."
             onChange={handleChange}
             value={password.value}
+            autoComplete="off"
           />
         </Col>
       </Row>
-      {password.isError && <Error>비밀번호를 확인 하세요.{password.errorText}</Error>}
+      {password.isError && <Error>{password.errorText}</Error>}
       <Row addStyle={addStyled}>
         <Col xs={labelSize} sm={labelSize} md={labelSize} lg={labelSize}>
           <StyledLabel htmlFor="confirmPassword">비밀번호 확인</StyledLabel>
@@ -151,45 +176,32 @@ const Password = memo(function Password({ password, confirmPassword, handleChang
         <Col xs={inputSize} sm={inputSize} md={inputSize} lg={inputSize}>
           <StyledInput
             error={confirmPassword.isError}
-            type="text"
+            type="password"
             id="confirmPassword"
             name="confirmPassword"
             placeholder="비밀번호를 확인해주세요."
             onChange={handleChange}
-            value={passwordChange(confirmPassword.value)}
+            value={confirmPassword.value}
+            autoComplete="off"
           />
         </Col>
       </Row>
-      {confirmPassword.isError && <Error>비밀번호를 확인 하세요.{confirmPassword.errorText}</Error>}
+      {confirmPassword.isError && <Error>{confirmPassword.errorText}</Error>}
     </>
   );
 });
 
-const Submit = memo(function Submit() {
+const Button = memo(function Reset({ onReset }) {
   return (
     <Row addStyle={addStyled}>
       <Col>
-        <button type="submit">입력</button>
-      </Col>
-    </Row>
-  );
-});
-
-const Reset = memo(function Reset({ onReset }) {
-  return (
-    <Row addStyle={addStyled}>
-      <Col>
-        <button type="button" onClick={onReset}>
+        <StyledButton type="submit">입력</StyledButton>
+        <StyledButton type="button" onClick={onReset}>
           초기화
-        </button>
+        </StyledButton>
       </Col>
     </Row>
   );
 });
-
-const passwordChange = (value) => {
-  const regExp = /[\\{\\}\\[\]\\/?,;:|\\)*~`!^\-_+<>\\#@$%&\\\\=\\(\\'\\"a-zA-Z]/gi;
-  return value.replaceAll(regExp, "*");
-};
 
 export default MemberShipForm;

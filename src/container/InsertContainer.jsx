@@ -1,4 +1,4 @@
-import Links from "components/insert/InsertLinks";
+import InsertLinks from "components/insert/InsertLinks";
 import Title from "components/common/Title";
 import IncomeForm from "components/insert/IncomeForm";
 import ExpenditureForm from "components/insert/ExpenditureForm";
@@ -33,7 +33,7 @@ const InsertContainer = ({ match, location }) => {
       <StyledMain>
         <section>
           <Title>입출을 가계부에 등록해보세요.</Title>
-          <Links path={path} />
+          <InsertLinks path={path} />
           <Route
             path={`${path}/expenditure`}
             render={() => <ExpenditureForm state={state} handleChange={handleChange} handleSubmit={handleSubmit} />}

@@ -87,7 +87,7 @@ const StyledUl = styled.ul`
 
 const HeaderLinks = ({ isMenuOpen }) => {
   return (
-    <Col lg={10} md={10}>
+    <Col lg={9} md={9}>
       <nav>
         <StyledUl isMenuOpen={isMenuOpen}>
           <li className="nav-item">

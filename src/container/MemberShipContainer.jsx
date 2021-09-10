@@ -1,9 +1,10 @@
 import MemberShipForm from "components/memberShip/MemberShipForm";
 import Title from "components/common/Title";
-import React, { useCallback, useEffect, useRef, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { StyledMaxWidth } from "style/Styled";
 import styled from "styled-components";
 import { useHistory } from "react-router";
+import axios from "axios";
 
 const errorsEnum = Object.freeze({
   id: Object.freeze({
@@ -36,27 +37,28 @@ const StyledMain = styled.main`
 const inputInitialization = {
   id: { value: "", isError: false, errorText: "" },
   email: { value: "", isError: false, errorText: "" },
-  //isShow 비밀번호 별표에서 보이게 트리거
   password: { value: "", isError: false, errorText: "", isShow: false },
   confirmPassword: { value: "", isError: false, errorText: "", isShow: false },
 };
 
+const API_URI = "/api/users/insert";
+
 const MemberShipContainer = () => {
   const [memberShip, setMemberShip] = useState(inputInitialization);
-  const isBlocking = useRef(false);
   const history = useHistory();
 
   useEffect(() => {
     const unblock = history.block((_, action) => {
       if (action === "POP" || action === "PUSH") {
-        isBlocking.current = true;
-        return window.confirm("나갈꺼냐?");
+        const { id, password, email } = memberShip;
+        if (id.value !== "" || password.value !== "" || email.value !== "") {
+          return window.confirm("정보를 입력 했습니다. 뒤로 가겠습니까?");
+        }
       }
       return true;
     });
-
     return () => unblock();
-  }, [history]);
+  }, [history, memberShip]);
 
   const handleSubmit = useCallback(
     (e) => {
@@ -68,15 +70,47 @@ const MemberShipContainer = () => {
       const isConfirmPasswordValueEmpty = isEmpty(confirmPassword.value);
 
       if (isIdValueEmpty || isEmailValueEmpty || isPasswordValueEmpty || isConfirmPasswordValueEmpty) {
-        console.log("빈칸을 모두 입력");
+        window.alert("입력 정보를 모두 써주세요.");
         return;
       }
 
       if (!id.isError && !email.isError && !password.isError && !confirmPassword.isError) {
-        console.log("에러없다");
+        const isInsertCallApi = async () => {
+          try {
+            return await axios.post(API_URI, {
+              id: memberShip.id.value,
+              email: memberShip.email.value,
+              password: memberShip.password.value,
+            });
+          } catch (err) {
+            const { status, statusText } = err.response;
+            if (status) console.error(`Error ${status}. ${statusText}`);
+            return err.response;
+          }
+        };
+
+        isInsertCallApi().then((res) => {
+          const { status, data } = res;
+          const getMessage = ({ message }) => {
+            window.alert(message);
+          };
+
+          switch (status) {
+            case 409:
+              getMessage(data);
+              return;
+            case 503:
+              getMessage(data);
+              return;
+            // default status 200
+            default:
+              history.replace("/");
+              return;
+          }
+        });
       }
     },
-    [memberShip]
+    [memberShip, history]
   );
 
   const onReset = useCallback(() => setMemberShip(inputInitialization), []);
@@ -281,12 +315,6 @@ const MemberShipContainer = () => {
         <section>
           <Title>회 원 가 입</Title>
           <MemberShipForm handleSubmit={handleSubmit} handleChange={handleChange} onReset={onReset} memberShip={memberShip} />
-          {isBlocking.current && (
-            <div>
-              <button>뒤로</button>
-              <button>취소</button>
-            </div>
-          )}
         </section>
       </StyledMain>
     </StyledMaxWidth>

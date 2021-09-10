@@ -23,8 +23,8 @@ const StyledDiv = styled.div`
 
 const HeaderTitle = memo(function HeaderTitle() {
   return (
-    <Col xs={6} sm={6} lg={2} md={2}>
-      <StyledDiv className="header-title">
+    <Col xs={6} sm={6} lg={3} md={3}>
+      <StyledDiv>
         <Link to="/">똑똑 가계부</Link>
       </StyledDiv>
     </Col>

@@ -2,7 +2,6 @@ import React, { memo } from "react";
 import { Row, maxWidthByBreakPointTable, Col } from "style/Styled";
 import styled, { css } from "styled-components";
 import Error from "components/memberShip/Error";
-import axios from "axios";
 
 const StyledDiv = styled.div`
   font-size: 1rem;

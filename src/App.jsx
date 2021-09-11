@@ -3,6 +3,7 @@ import HeaderContainer from "container/HeaderContainer";
 import InsertContainer from "container/InsertContainer";
 import SelectContainer from "container/SelectContainer";
 import MemberShipContainer from "container/MemberShipContainer";
+import LoginCotainer from "container/LoginCotainer";
 
 function App() {
   return (
@@ -14,6 +15,7 @@ function App() {
         <Route path="/memberShip" component={MemberShipContainer} />
         <Route path="/insert" component={InsertContainer} />
         <Route path="/select" component={SelectContainer} />
+        <Route path="/login" component={LoginCotainer} />
       </BrowserRouter>
     </>
   );

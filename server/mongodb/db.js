@@ -1,19 +1,10 @@
 import mongoose from "mongoose";
 import dotenv from 'dotenv';
-const a = dotenv.config({ path: "../.env" });
+dotenv.config();
 
-console.log(a);
 const DB_PATH = process.env.DB;
-const PORT = process.env.PORT;
 
-console.log(` DB_PATH = ${DB_PATH}`);
-console.log(` PORT = ${PORT}`);
-
-
-
-
-export default function db() {
-
+const db = () => {
   const connect = () => {
     mongoose.connect(DB_PATH, err => {
       if (err) {
@@ -26,5 +17,7 @@ export default function db() {
   connect();
   mongoose.connection.on("disconnected", connect);
 
-};
+}
+
+export default db;
 

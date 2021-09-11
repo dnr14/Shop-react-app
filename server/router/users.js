@@ -3,7 +3,8 @@ import Users from "../mongodb/model/Users";
 
 const router = express.Router();
 
-router.post('/insert', async (req, res) => {
+
+router.post('/', async (req, res) => {
   const { id, email, password } = req.body;
 
   const users = new Users({
@@ -38,7 +39,7 @@ router.post('/insert', async (req, res) => {
   }
 });
 
-router.get("/select/:id", (req, res) => {
+router.get("/:id", (req, res) => {
   const { id } = req.params;
   Users.findOne()
     .where('id')

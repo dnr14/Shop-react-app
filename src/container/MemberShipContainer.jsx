@@ -5,6 +5,7 @@ import { StyledMaxWidth } from "style/Styled";
 import styled from "styled-components";
 import { useHistory } from "react-router";
 import axios from "axios";
+import ImgSrc from "images/loading.gif";
 
 const errorsEnum = Object.freeze({
   id: Object.freeze({
@@ -34,6 +35,22 @@ const StyledMain = styled.main`
   margin: 0 auto;
 `;
 
+const StyledLoadingBar = styled.div`
+  position: fixed;
+  right: 0;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  z-index: 1;
+  img {
+    width: 10%;
+    position: relative;
+    transform: translate(-50%, -50%);
+    top: 50%;
+    left: 50%;
+  }
+`;
+
 const inputInitialization = {
   id: { value: "", isError: false, errorText: "" },
   email: { value: "", isError: false, errorText: "" },
@@ -41,10 +58,11 @@ const inputInitialization = {
   confirmPassword: { value: "", isError: false, errorText: "", isShow: false },
 };
 
-const API_URI = "/api/users/insert";
+const API_URI = "/api/users/";
 
 const MemberShipContainer = () => {
   const [memberShip, setMemberShip] = useState(inputInitialization);
+  const [isLoading, setIsLoading] = useState(false);
   const history = useHistory();
 
   useEffect(() => {
@@ -75,39 +93,22 @@ const MemberShipContainer = () => {
       }
 
       if (!id.isError && !email.isError && !password.isError && !confirmPassword.isError) {
-        const isInsertCallApi = async () => {
-          try {
-            return await axios.post(API_URI, {
-              id: memberShip.id.value,
-              email: memberShip.email.value,
-              password: memberShip.password.value,
-            });
-          } catch (err) {
-            const { status, statusText } = err.response;
-            if (status) console.error(`Error ${status}. ${statusText}`);
-            return err.response;
-          }
+        const showMessage = ({ response }) => {
+          const { status, statusText, data } = response;
+          if (status) console.error(`Error ${status}. ${statusText}`);
+          window.alert(data.message);
         };
 
-        isInsertCallApi().then((res) => {
-          const { status, data } = res;
-          const getMessage = ({ message }) => {
-            window.alert(message);
-          };
-
-          switch (status) {
-            case 409:
-              getMessage(data);
-              return;
-            case 503:
-              getMessage(data);
-              return;
-            // default status 200
-            default:
-              history.replace("/");
-              return;
-          }
-        });
+        setIsLoading(true);
+        axios
+          .post(API_URI, {
+            id: memberShip.id.value,
+            email: memberShip.email.value,
+            password: memberShip.password.value,
+          })
+          .then(() => history.replace("/"))
+          .catch(showMessage)
+          .finally(() => setIsLoading(false));
       }
     },
     [memberShip, history]
@@ -313,11 +314,20 @@ const MemberShipContainer = () => {
     <StyledMaxWidth>
       <StyledMain>
         <section>
+          {isLoading && <Loading />}
           <Title>회 원 가 입</Title>
           <MemberShipForm handleSubmit={handleSubmit} handleChange={handleChange} onReset={onReset} memberShip={memberShip} />
         </section>
       </StyledMain>
     </StyledMaxWidth>
+  );
+};
+
+const Loading = () => {
+  return (
+    <StyledLoadingBar>
+      <img src={ImgSrc} alt="loading" />
+    </StyledLoadingBar>
   );
 };
 

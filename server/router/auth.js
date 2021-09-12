@@ -1,5 +1,5 @@
 import express from 'express';
-import Users from "../mongodb/model/Users";
+import Users from "../mongodb/models/Users";
 
 const router = express.Router();
 

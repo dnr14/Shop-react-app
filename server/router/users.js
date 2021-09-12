@@ -1,17 +1,17 @@
 import express from "express";
-import Users from "../mongodb/model/Users";
+import Users from "../mongodb/models/Users";
 
 const router = express.Router();
-
 
 router.post('/', async (req, res) => {
   const { id, email, password } = req.body;
 
-  const users = new Users({
+  const user = new Users({
     id,
     email,
     password
   });
+
 
   try {
     // doc이 없다면 null 반환
@@ -20,18 +20,19 @@ router.post('/', async (req, res) => {
       .equals(id)
       .select('-_id id');
 
-    if (!userID) {
-      const doc = await users.save();
-      log(doc);
-      const SUCCESS = {
-        message: "memberShip insert success"
-      }
-      res.status(200).json(SUCCESS);
-    } else if (userID) {
-      const error = new Error("중복된 ID입니다.");
+    if (userID) {
+      const error = new Error("이미 존재하는 ID입니다.");
       error.status = 409;
       throw error;
     }
+
+    if (!userID) {
+
+      const returned = await user.save();
+      res.status(200).json({ message: "memberShip create success" });
+      log(returned);
+    }
+
 
   } catch (error) {
     const status = error.status === 409 ? error.status : 503;

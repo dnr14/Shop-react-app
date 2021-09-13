@@ -5,7 +5,7 @@ import { StyledMaxWidth } from "style/Styled";
 import styled from "styled-components";
 import { useHistory } from "react-router";
 import axios from "axios";
-import ImgSrc from "images/loading.gif";
+import Loading from "components/common/Loading";
 
 const errorsEnum = Object.freeze({
   id: Object.freeze({
@@ -33,22 +33,6 @@ const errorsEnum = Object.freeze({
 const StyledMain = styled.main`
   width: 50%;
   margin: 0 auto;
-`;
-
-const StyledLoadingBar = styled.div`
-  position: fixed;
-  right: 0;
-  left: 0;
-  top: 0;
-  bottom: 0;
-  z-index: 1;
-  img {
-    width: 10%;
-    position: relative;
-    transform: translate(-50%, -50%);
-    top: 50%;
-    left: 50%;
-  }
 `;
 
 const inputInitialization = {
@@ -320,14 +304,6 @@ const MemberShipContainer = () => {
         </section>
       </StyledMain>
     </StyledMaxWidth>
-  );
-};
-
-const Loading = () => {
-  return (
-    <StyledLoadingBar>
-      <img src={ImgSrc} alt="loading" />
-    </StyledLoadingBar>
   );
 };
 

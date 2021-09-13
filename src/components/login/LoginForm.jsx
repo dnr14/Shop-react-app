@@ -3,6 +3,7 @@ import { maxWidthByBreakPointMobile } from "style/Styled";
 import { Col } from "style/Styled";
 import { Row } from "style/Styled";
 import styled, { css } from "styled-components";
+import Error from "components/common/Error";
 
 const StyledInput = styled.input`
   display: block;
@@ -10,6 +11,12 @@ const StyledInput = styled.input`
   height: 2rem;
   font-size: 1rem;
   padding: 0 15px;
+  border-radius: 5px;
+  border: 1px solid rgba(127, 140, 141, 0.8);
+  color: rgba(44, 62, 80, 1);
+  &::placeholder {
+    color: rgba(127, 140, 141, 0.5);
+  }
 `;
 
 const StyledForm = styled.form`
@@ -25,7 +32,7 @@ const StyledForm = styled.form`
 
 const StyledTextBox = styled.div`
   text-align: center;
-  font-size: 1.5rem;
+  font-size: 0.8rem;
   font-weight: bold;
 
   ${maxWidthByBreakPointMobile(
@@ -60,37 +67,54 @@ const addStyle = {
   margin: "10px 0",
 };
 
-const LoginForm = ({ handleSubmit, handleChane, loginForm }) => {
+const LoginForm = ({ handleSubmit, handleChange, loginForm, error }) => {
   const { id, password } = loginForm;
   return (
-    <StyledForm onSubmit={handleSubmit} autoComplete="off">
+    <StyledForm onSubmit={handleSubmit}>
       <TextBox text="아 이 디" />
-      <Id handleChane={handleChane} id={id} />
+      <Id handleChange={handleChange} id={id} />
       <TextBox text="패 스 워 드" />
-      <Password handleChane={handleChane} password={password} />
+      <Password handleChange={handleChange} password={password} />
       <Submit />
+      {error && <Error errorText={error.error.message} />}
     </StyledForm>
   );
 };
 
-const Id = memo(function Id({ handleChane, id }) {
+const Id = memo(function Id({ handleChange, id }) {
   return (
     <>
       <Row addStyle={addStyle}>
         <Col>
-          <StyledInput type="text" name="id" value={id} onChange={handleChane} maxLength="15" />
+          <StyledInput
+            type="text"
+            name="id"
+            value={id}
+            onChange={handleChange}
+            maxLength="15"
+            autoComplete="username"
+            placeholder="아이디를 입력하세요."
+          />
         </Col>
       </Row>
     </>
   );
 });
 
-const Password = memo(function Password({ handleChane, password }) {
+const Password = memo(function Password({ handleChange, password }) {
   return (
     <>
       <Row addStyle={addStyle}>
         <Col>
-          <StyledInput type="password" name="password" value={password} onChange={handleChane} maxLength="15" />
+          <StyledInput
+            type="password"
+            name="password"
+            value={password}
+            onChange={handleChange}
+            maxLength="15"
+            autoComplete="current-password"
+            placeholder="비밀번호를 입력하세요."
+          />
         </Col>
       </Row>
     </>

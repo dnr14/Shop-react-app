@@ -182,7 +182,7 @@ const Password = memo(function Password({ password, confirmPassword, handleChang
             placeholder="비밀번호를 확인해주세요."
             onChange={handleChange}
             value={confirmPassword.value}
-            autoComplete="off"
+            autoComplete="current-password"
           />
         </Col>
       </Row>

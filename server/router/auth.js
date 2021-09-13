@@ -1,19 +1,67 @@
 import express from 'express';
 import Users from "../mongodb/models/Users";
+import { verifyToken } from "./middlewares";
+import jwt from 'jsonwebtoken';
+import dotenv from 'dotenv';
+dotenv.config();
+
+
+
 
 const router = express.Router();
+
+const resultJson = {
+  success: false,
+  error: {
+    message: null
+  },
+  token: null
+}
 
 router.post("/login", async (req, res) => {
 
   const { id, password } = req.body;
+  let isError = false;
+  const user = await Users.findOne({ id }).select({ password: 1 });
 
-  const user = await Users.findOne({ id, password });
-  console.log(user);
 
-  if (user !== null) {
-    res.status(200).json({ message: "성공" })
-  } else if (user === null) {
-    res.status(401).json({ message: "유효한 값이 아닙니다." });
+  //아이디가 틀렸을때
+  if (!user) {
+    console.log(user);
+    isError = true;
+    resultJson.error.message = {
+      id: "아이디가 틀립니다."
+    }
+  }
+
+  if (user) {
+    // 비밀번호가 틀렸을때
+    if (!user.authenticate(password)) {
+      isError = true;
+      resultJson.error.message = {
+        ...resultJson.error.message,
+        password: "비밀번호가 틀립니다."
+      }
+    }
+  }
+
+
+  if (isError) {
+    res.status(403).json(resultJson);
+  }
+
+  if (!isError) {
+
+    const token = jwt.sign({
+      id,
+    }, process.env.JWT_SECRET, {
+      expiresIn: '1m', // 1분
+      issuer: '토큰발급자',
+    });
+
+    if (user) {
+      res.status(200).json({ ...resultJson, success: true, token });
+    }
   }
 
 });

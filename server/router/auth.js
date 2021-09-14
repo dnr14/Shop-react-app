@@ -24,13 +24,12 @@ router.post("/login", async (req, res) => {
   let isError = false;
   const user = await Users.findOne({ id }).select({ password: 1 });
 
-
   //아이디가 틀렸을때
   if (!user) {
-    console.log(user);
     isError = true;
     resultJson.error.message = {
-      id: "아이디가 틀립니다."
+      id: "아이디가 틀립니다.",
+      password: "비밀번호가 틀립니다."
     }
   }
 
@@ -65,6 +64,12 @@ router.post("/login", async (req, res) => {
   }
 
 });
+
+router.get('/test', verifyToken, (req, res) => {
+  res.json(req.decoded);
+});
+
+
 // // res.writeHead(503, { 'Content-type': 'application/json; charset=euc-kr' });
 // res.write(JSON.stringify({ message: "실패" }))
 // res.end();

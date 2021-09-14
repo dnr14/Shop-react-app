@@ -1,6 +1,5 @@
 import jwt from 'jsonwebtoken';
 
-
 export function verifyToken(req, res, next) {
   try {
     // 요청 헤더에 저장된 토큰(req.headers.authorization)과 비밀키를 사용하여 토큰 반환

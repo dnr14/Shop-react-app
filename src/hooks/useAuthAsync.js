@@ -5,6 +5,7 @@ import axios from "axios";
 const initialState = {
   loading: false,
   success: null,
+  token: null,
   error: null,
 };
 
@@ -15,13 +16,13 @@ const useAuthAsync = () => {
     dispatch({ type: POST_LOGIN });
     try {
       const { data } = await axios.post(`${url}`, { id, password });
-      console.log(data);
       if (data.success) {
-        dispatch({ type: POST_LOGIN_SUCCESS, success: data.success });
+        const { success, token } = data;
+        dispatch({ type: POST_LOGIN_SUCCESS, success, token });
       }
     } catch (error) {
       const { response } = error;
-      dispatch({ type: POST_LOGIN_ERROR, error: response.data });
+      dispatch({ type: POST_LOGIN_ERROR, error: response });
     }
   }, []);
 

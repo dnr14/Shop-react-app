@@ -1,9 +1,12 @@
 import Header from "components/header/Header";
-import React, { useState } from "react";
+import React, { useCallback, useState } from "react";
 
 const HeaderContainer = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const handleClick = ({ type }) => (type !== "blur" ? setIsMenuOpen(!isMenuOpen) : setIsMenuOpen(false));
+
+  const handleClick = useCallback(() => {
+    return ({ type }) => (type !== "blur" ? setIsMenuOpen((prevState) => !prevState) : setIsMenuOpen(false));
+  }, [setIsMenuOpen]);
 
   return <Header isMenuOpen={isMenuOpen} handleClick={handleClick} />;
 };

@@ -1,4 +1,5 @@
-import React from "react";
+import { useAuthContext } from "contexts/AuthContextProvider";
+import React, { memo } from "react";
 import { NavLink } from "react-router-dom";
 import { maxWidthByBreakPointTable } from "style/Styled";
 import { minWidthByBreakPointTable } from "style/Styled";
@@ -86,12 +87,19 @@ const StyledUl = styled.ul`
 `;
 
 const HeaderLinks = ({ isMenuOpen }) => {
+  const { access } = useAuthContext();
+
+  const currentAccessState = {
+    url: access ? "/logout" : "/login",
+    docText: access ? "로그아웃" : "로그인",
+  };
+
   return (
     <Col lg={9} md={9}>
       <nav>
         <StyledUl isMenuOpen={isMenuOpen}>
           <li className="nav-item">
-            <NavLink to="/login">로그인</NavLink>
+            <NavLink to={currentAccessState.url}>{currentAccessState.docText}</NavLink>
           </li>
           <li className="nav-item">
             <NavLink to="/memberShip">회원가입</NavLink>
@@ -111,4 +119,4 @@ const HeaderLinks = ({ isMenuOpen }) => {
   );
 };
 
-export default HeaderLinks;
+export default memo(HeaderLinks);

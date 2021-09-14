@@ -6,16 +6,22 @@ import useAuthAsync from "hooks/useAuthAsync";
 import { useHistory } from "react-router";
 import { useForm } from "hooks/useForm";
 import Loading from "components/common/Loading";
+import { useAuthContext } from "contexts/AuthContextProvider";
+import { setAccessToken } from "util/LocalStorageUtil";
+
+const initialState = {
+  id: "",
+  password: "",
+};
 
 const LoginCotainer = () => {
+  const { setAccess } = useAuthContext();
+
   const history = useHistory();
-  const [loginForm, handleChange] = useForm({
-    id: "",
-    password: "",
-  });
+  const [loginForm, handleChange] = useForm(initialState);
+
   const [state, callLoginApi] = useAuthAsync();
-  const { loading, error, success } = state;
-  console.log(error);
+  const { loading, error, success, token } = state;
 
   const handleSubmit = useCallback(
     (e) => {
@@ -26,10 +32,17 @@ const LoginCotainer = () => {
   );
 
   useEffect(() => {
-    // if (success) history.push("/");
-  }, [success, history]);
+    if (localStorage.getItem("ACCESS_TOKEN")) {
+      window.alert("이미 로그인 하셨습니다.");
+      history.push("/");
+    }
 
-  console.log(state);
+    if (success) {
+      setAccessToken(token);
+      setAccess(true);
+      history.push("/");
+    }
+  }, [success, history, token, setAccess]);
 
   return (
     <StyledMaxWidth>

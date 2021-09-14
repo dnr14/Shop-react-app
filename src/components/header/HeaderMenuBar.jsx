@@ -1,4 +1,4 @@
-import React from "react";
+import React, { memo } from "react";
 import { Col } from "style/Styled";
 import { maxWidthByBreakPointTable } from "style/Styled";
 import styled, { css } from "styled-components";
@@ -81,4 +81,4 @@ const HeaderMenuBar = ({ isMenuOpen, handleClick }) => {
   );
 };
 
-export default HeaderMenuBar;
+export default memo(HeaderMenuBar);

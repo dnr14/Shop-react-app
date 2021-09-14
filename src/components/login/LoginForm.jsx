@@ -76,7 +76,7 @@ const LoginForm = ({ handleSubmit, handleChange, loginForm, error }) => {
       <TextBox text="패 스 워 드" />
       <Password handleChange={handleChange} password={password} />
       <Submit />
-      {error && <Error errorText={error.error.message} />}
+      {error && <Error error={error} />}
     </StyledForm>
   );
 };

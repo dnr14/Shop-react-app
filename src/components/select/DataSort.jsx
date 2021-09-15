@@ -6,7 +6,7 @@ import down from "images/down.svg";
 import CurrentSort from "./CurrentSort";
 import { Row } from "style/Styled";
 import { Col } from "style/Styled";
-import { makeUrl } from "util/urlUtil";
+import { makeUrl } from "utils/urlUtil";
 
 const StyledDiv = styled.div`
   margin-top: 10px;

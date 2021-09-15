@@ -1,5 +1,5 @@
 import React from "react";
-import { getZeroToFiftyNineMinutes } from "util/DateUtil";
+import { getZeroToFiftyNineMinutes } from "utils/DateUtil";
 
 const Minutes59Select = ({ minutes, handleChange }) => {
   return (

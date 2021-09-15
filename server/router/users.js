@@ -5,14 +5,11 @@ const router = express.Router();
 
 router.post('/', async (req, res) => {
   const { id, email, password } = req.body;
-
   const user = new Users({
     id,
     email,
     password
   });
-
-
 
   try {
 

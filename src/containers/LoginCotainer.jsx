@@ -7,36 +7,27 @@ import { useHistory } from "react-router";
 import { useForm } from "hooks/useForm";
 import Loading from "components/common/Loading";
 import { useAuthContext } from "contexts/AuthContextProvider";
-import { setAccessToken } from "util/LocalStorageUtil";
-
-const initialState = {
-  id: "",
-  password: "",
-};
+import { setAccessToken } from "utils/LocalStorageUtil";
 
 const LoginCotainer = () => {
   const { setAccess } = useAuthContext();
 
   const history = useHistory();
-  const [loginForm, handleChange] = useForm(initialState);
+  const [loginForm, handleChange] = useForm();
 
   const [state, callLoginApi] = useAuthAsync();
-  const { loading, error, success, token } = state;
 
   const handleSubmit = useCallback(
     (e) => {
       e.preventDefault();
-      callLoginApi("/api/auth/login", loginForm);
+      callLoginApi("/api/auth/login", loginForm.id.value, loginForm.password.value);
     },
     [loginForm, callLoginApi]
   );
 
-  useEffect(() => {
-    if (localStorage.getItem("ACCESS_TOKEN")) {
-      window.alert("이미 로그인 하셨습니다.");
-      history.push("/");
-    }
+  const { loading, error, success, token } = state;
 
+  useEffect(() => {
     if (success) {
       setAccessToken(token);
       setAccess(true);

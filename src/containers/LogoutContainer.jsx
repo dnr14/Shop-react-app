@@ -1,10 +1,11 @@
 import Logout from "components/logout/Logout";
 import { useAuthContext } from "contexts/AuthContextProvider";
 import React, { useCallback, useEffect } from "react";
-import { setAccessTokenRemove } from "util/LocalStorageUtil";
+import { setAccessTokenRemove } from "utils/LocalStorageUtil";
 
 const LogoutContainer = () => {
   const { setAccess } = useAuthContext();
+  console.log(1);
 
   const logOut = useCallback(() => {
     setAccessTokenRemove();

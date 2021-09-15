@@ -10,14 +10,14 @@ const StyledHeader = styled.header`
   letter-spacing: 0.2rem;
 `;
 
-const Header = (props) => {
+const Header = ({ isMenuOpen, handleClick, headerWidth, pureLinsks }) => {
   return (
     <StyledHeader>
       <StyledMaxWidth>
         <Row>
           <HeaderTitle />
-          <HeaderMenuBar {...props} />
-          <HeaderLinks {...props} />
+          <HeaderMenuBar isMenuOpen={isMenuOpen} handleClick={handleClick} />
+          <HeaderLinks isMenuOpen={isMenuOpen} headerWidth={headerWidth} pureLinsks={pureLinsks} />
         </Row>
       </StyledMaxWidth>
     </StyledHeader>

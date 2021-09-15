@@ -1,4 +1,6 @@
-import { createContext, useContext, useState } from "react";
+import axios from "axios";
+import { createContext, useContext, useLayoutEffect, useState } from "react";
+import { setAccessTokenRemove } from "utils/LocalStorageUtil";
 
 
 export const AuthContext = createContext(null);
@@ -8,8 +10,28 @@ export function useAuthContext() {
 }
 
 const AuthContextProvider = ({ children }) => {
+
   const ACCESS_TOKEN = localStorage.getItem("ACCESS_TOKEN");
   const [access, setAccess] = useState(ACCESS_TOKEN);
+
+  useLayoutEffect(() => {
+    if (ACCESS_TOKEN !== null) {
+      const isVerifyToken = async () => {
+        try {
+          await axios.get("/api/auth/verify", {
+            headers: {
+              authorization: ACCESS_TOKEN
+            }
+          });
+          setAccess(ACCESS_TOKEN);
+        } catch (error) {
+          setAccessTokenRemove();
+          setAccess(null);
+        }
+      }
+      isVerifyToken();
+    }
+  }, [ACCESS_TOKEN]);
 
   return <AuthContext.Provider value={
     {

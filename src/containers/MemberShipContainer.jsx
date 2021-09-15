@@ -325,8 +325,8 @@ const isFirstTexCheck = (value) => {
 };
 
 // 공백
+// type email은 공백을 입력해도 무시해준다.
 const isWhiteSpaceCheck = (value) => {
-  // 정규식에 걸린다면 안티패턴
   const regExp = /\s/gi;
   return regExp.test(value) ? true : false;
 };
@@ -354,7 +354,7 @@ const isEmailSpecialSymbol = (value) => {
 };
 
 const isEmailPatternCheck = (value) => {
-  const regExp = /^[0-9a-zA-Z]([-_\\.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_\\.]?[0-9a-zA-Z])*\.(kr|com|net)/gi;
+  const regExp = /^[0-9a-zA-Z]([-_\\.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_\\.]?[0-9a-zA-Z])*\.(kr|com|net)$/gi;
   return regExp.test(value);
 };
 

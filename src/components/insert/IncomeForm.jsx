@@ -2,7 +2,7 @@ import Submit from "components/insert/Submit";
 import DateSelect from "components/insert/DateSelect";
 import PriceInput from "components/insert/PriceInput";
 import React, { useEffect } from "react";
-import { setInitialData } from "util/LocalStorageUtil";
+import { setInitialData } from "utils/LocalStorageUtil";
 import Result from "components/insert/Result";
 
 const IncomeContainer = ({ state, handleSubmit, handleChange }) => {

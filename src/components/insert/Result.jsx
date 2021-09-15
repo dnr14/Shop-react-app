@@ -1,5 +1,5 @@
 import React, { memo } from "react";
-import { setDateFormat } from "util/DateUtil";
+import { setDateFormat } from "utils/DateUtil";
 
 const Result = ({ insertData }) => {
   return (

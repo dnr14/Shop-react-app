@@ -1,12 +1,9 @@
 import express from 'express';
 import Users from "../mongodb/models/Users";
-import { verifyToken } from "./middlewares";
+import verifyToken from "../middleware/verifyToken";
 import jwt from 'jsonwebtoken';
 import dotenv from 'dotenv';
 dotenv.config();
-
-
-
 
 const router = express.Router();
 
@@ -23,6 +20,20 @@ router.post("/login", async (req, res) => {
   const { id, password } = req.body;
   let isError = false;
   const user = await Users.findOne({ id }).select({ password: 1 });
+
+  if (id === undefined || id === null) {
+    resultJson.error = {
+      meassge: "잘못된 값입니다."
+    }
+    res.status(403).json(resultJson);
+  }
+  if (password === undefined || password === null) {
+    resultJson.error = {
+      meassge: "잘못된 값입니다."
+    }
+    res.status(403).json(resultJson);
+  }
+
 
   //아이디가 틀렸을때
   if (!user) {
@@ -62,10 +73,11 @@ router.post("/login", async (req, res) => {
       res.status(200).json({ ...resultJson, success: true, token });
     }
   }
+  res.send("없어")
 
 });
 
-router.get('/test', verifyToken, (req, res) => {
+router.get('/verify', verifyToken, (req, res) => {
   res.json(req.decoded);
 });
 

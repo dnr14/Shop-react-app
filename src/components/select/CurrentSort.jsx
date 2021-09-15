@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import { Col } from "style/Styled";
 import { Row } from "style/Styled";
 import styled, { css } from "styled-components";
-import { makeUrl } from "util/urlUtil";
+import { makeUrl } from "utils/urlUtil";
 import up from "images/up.svg";
 import down from "images/down.svg";
 

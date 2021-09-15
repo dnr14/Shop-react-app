@@ -1,8 +1,6 @@
-export const POST_LOGIN = "POST_LOGIN";
-export const POST_LOGIN_SUCCESS = "POST_LOGIN_SUCCESS";
-export const POST_LOGIN_ERROR = "POST_LOGIN_ERROR";
+import { POST_LOGIN, POST_LOGIN_ERROR, POST_LOGIN_SUCCESS } from "actions/authAction";
 
-export default function authReducer(state, action) {
+export default function authReducer(previouseState, action) {
   const { type } = action;
 
   switch (type) {

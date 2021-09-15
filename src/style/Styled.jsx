@@ -48,7 +48,6 @@ const GlobalStyled = createGlobalStyle`
     }
 
     html{
-      min-width: 320px;
 
       ${maxWidthByBreakPointTable(css`
         font-size: 13px;

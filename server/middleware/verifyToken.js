@@ -1,6 +1,6 @@
 import jwt from 'jsonwebtoken';
 
-export function verifyToken(req, res, next) {
+export default function verifyToken(req, res, next) {
   try {
     // 요청 헤더에 저장된 토큰(req.headers.authorization)과 비밀키를 사용하여 토큰 반환
     req.decoded = jwt.verify(req.headers.authorization, process.env.JWT_SECRET);
@@ -9,6 +9,8 @@ export function verifyToken(req, res, next) {
 
   // 인증 실패
   catch (error) {
+    console.log(error);
+
     // 유효기간이 초과된 경우
     if (error.name === 'TokenExpiredError') {
       return res.status(419).json({

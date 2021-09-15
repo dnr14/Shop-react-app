@@ -2,10 +2,10 @@ import React, { memo, useMemo } from "react";
 import { Link, NavLink } from "react-router-dom";
 import styled from "styled-components";
 import queryString from "query-string";
-import { getPageNationNumbers } from "util/PageNation";
+import { getPageNationNumbers } from "utils/PageNation";
 import prevArrow from "images/prevArrow.svg";
 import nextArrow from "images/nextArrow.svg";
-import { makeUrl } from "util/urlUtil";
+import { makeUrl } from "utils/urlUtil";
 
 const StyledUl = styled.ul`
   display: flex;

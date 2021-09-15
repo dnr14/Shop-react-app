@@ -35,3 +35,19 @@ export const isEmpty = (x) => {
   }
   return false;
 }
+
+export const isSpecialSymbol = (value) => {
+  const regExp = /[\\{\\}\\[\]\\/?,@;:|\\)*~`!^\-_+<>\\#$%&\\\\=\\(\\'\\"]/gi;
+  return regExp.test(value) ? true : false;
+};
+
+export const isKoreaLengCheck = (value) => {
+  const regExp = /[가-힣ㄱ-ㅎㅏ-ㅣ]/gi;
+  return regExp.test(value) ? true : false;
+};
+
+export const isWhiteSpaceCheck = (value) => {
+  const regExp = /\s/gi;
+  return regExp.test(value) ? true : false;
+};
+

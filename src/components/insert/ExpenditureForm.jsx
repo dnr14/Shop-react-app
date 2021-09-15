@@ -1,6 +1,6 @@
 import Submit from "components/insert/Submit";
 import React, { useEffect } from "react";
-import { setInitialData } from "util/LocalStorageUtil";
+import { setInitialData } from "utils/LocalStorageUtil";
 import DateSelect from "components/insert/DateSelect";
 import PriceInput from "components/insert/PriceInput";
 import CategorySelect from "components/insert/CategorySelect";

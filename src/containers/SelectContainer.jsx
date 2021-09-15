@@ -1,6 +1,6 @@
 import SelectLinks from "components/select/SelectLinks";
-import IncomeContainer from "container/IncomeContainer";
-import ExpenditureContainer from "container/ExpenditureContainer";
+import IncomeContainer from "containers/IncomeContainer";
+import ExpenditureContainer from "containers/ExpenditureContainer";
 import Title from "components/common/Title";
 import React from "react";
 import { Route } from "react-router-dom";

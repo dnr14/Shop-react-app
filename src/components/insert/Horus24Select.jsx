@@ -1,5 +1,5 @@
 import React from "react";
-import { getOneToTwentyForeHoure } from "util/DateUtil";
+import { getOneToTwentyForeHoure } from "utils/DateUtil";
 
 const HorusZeroToTwentyFourSelect = ({ hours, handleChange }) => {
   return (

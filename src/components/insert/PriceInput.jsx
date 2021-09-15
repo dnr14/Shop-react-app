@@ -1,5 +1,5 @@
 import React, { memo } from "react";
-import { setNumberThreeCommaDraw } from "util/NumberUtil";
+import { setNumberThreeCommaDraw } from "utils/NumberUtil";
 import Error from "./Error";
 import InsertTableLayout from "./InsertTableLayout";
 

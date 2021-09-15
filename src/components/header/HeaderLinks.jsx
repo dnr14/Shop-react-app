@@ -1,6 +1,4 @@
-import { useAuthContext } from "contexts/AuthContextProvider";
-import React, { memo } from "react";
-import { NavLink } from "react-router-dom";
+import React from "react";
 import { maxWidthByBreakPointTable } from "style/Styled";
 import { minWidthByBreakPointTable } from "style/Styled";
 import { Col } from "style/Styled";
@@ -59,7 +57,15 @@ const StyledUl = styled.ul`
     overflow: hidden;
     height: 0;
     padding: 0;
-    transition: 1s;
+    ${({ headerWidth }) => {
+      console.log(headerWidth);
+
+      if (headerWidth < 992) {
+        return css`
+          transition: 1s;
+        `;
+      }
+    }}
     .nav-item {
       width: 100%;
       a {
@@ -78,45 +84,24 @@ const StyledUl = styled.ul`
       }
     }
 
-    ${({ isMenuOpen }) =>
+    ${({ isMenuOpen, liLength }) =>
       isMenuOpen &&
       css`
-        height: 255px;
+        height: ${liLength * 50}px;
       `}
   `)}
 `;
 
-const HeaderLinks = ({ isMenuOpen }) => {
-  const { access } = useAuthContext();
-
-  const currentAccessState = {
-    url: access ? "/logout" : "/login",
-    docText: access ? "로그아웃" : "로그인",
-  };
-
+const HeaderLinks = ({ isMenuOpen, headerWidth, pureLinsks }) => {
   return (
     <Col lg={9} md={9}>
       <nav>
-        <StyledUl isMenuOpen={isMenuOpen}>
-          <li className="nav-item">
-            <NavLink to={currentAccessState.url}>{currentAccessState.docText}</NavLink>
-          </li>
-          <li className="nav-item">
-            <NavLink to="/memberShip">회원가입</NavLink>
-          </li>
-          <li className="nav-item">
-            <NavLink to="/insert">입출 등록</NavLink>
-          </li>
-          <li className="nav-item">
-            <NavLink to="/select">입출 목록</NavLink>
-          </li>
-          <li className="nav-item">
-            <a href="/">통계</a>
-          </li>
+        <StyledUl isMenuOpen={isMenuOpen} headerWidth={headerWidth} liLength={pureLinsks.length}>
+          {pureLinsks}
         </StyledUl>
       </nav>
     </Col>
   );
 };
 
-export default memo(HeaderLinks);
+export default HeaderLinks;

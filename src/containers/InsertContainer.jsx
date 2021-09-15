@@ -5,7 +5,7 @@ import ExpenditureForm from "components/insert/ExpenditureForm";
 import React from "react";
 import { Route } from "react-router-dom";
 import { StyledMaxWidth } from "style/Styled";
-import { getYYMMDD_HHMMSS } from "util/DateUtil";
+import { getYYMMDD_HHMMSS } from "utils/DateUtil";
 import styled from "styled-components";
 import useChange from "hooks/useChange";
 

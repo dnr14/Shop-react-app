@@ -2,8 +2,8 @@ import React, { memo } from "react";
 import { Col } from "style/Styled";
 import { Row } from "style/Styled";
 import styled from "styled-components";
-import { setDateFormat } from "util/DateUtil";
-import { setNumberThreeCommaDraw } from "util/NumberUtil";
+import { setDateFormat } from "utils/DateUtil";
+import { setNumberThreeCommaDraw } from "utils/NumberUtil";
 
 const StyledDiv = styled.div`
   margin-top: 20px;

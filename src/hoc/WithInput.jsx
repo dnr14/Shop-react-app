@@ -1,7 +1,6 @@
 import React from "react";
-
-import { Row, Col } from "style/Styled";
 import styled, { css } from "styled-components";
+import { Row, Col } from "style/Styled";
 
 const StyledInput = styled.input`
   display: block;
@@ -27,7 +26,8 @@ const addStyle = {
   margin: "10px 0",
 };
 
-const withInput = ({ ...rest }) => {
+const WithInput = ({ component: Component, ...rest }) => {
+  console.log(Component);
   return (
     <Row addStyle={addStyle}>
       <Col>
@@ -37,4 +37,4 @@ const withInput = ({ ...rest }) => {
   );
 };
 
-export default withInput;
+export default WithInput;

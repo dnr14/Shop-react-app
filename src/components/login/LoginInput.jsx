@@ -10,8 +10,8 @@ const StyledInput = styled.input`
   padding: 0 15px;
   border-radius: 5px;
   border: 1px solid rgba(127, 140, 141, 0.8);
-  ${({ vaildation }) =>
-    vaildation &&
+  ${({ error }) =>
+    error &&
     css`
       border: 1px solid #c0392b;
     `}
@@ -26,8 +26,7 @@ const addStyle = {
   margin: "10px 0",
 };
 
-const WithInput = ({ component: Component, ...rest }) => {
-  console.log(Component);
+const LoginInput = ({ ...rest }) => {
   return (
     <Row addStyle={addStyle}>
       <Col>
@@ -37,4 +36,4 @@ const WithInput = ({ component: Component, ...rest }) => {
   );
 };
 
-export default WithInput;
+export default LoginInput;

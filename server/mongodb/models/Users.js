@@ -7,9 +7,10 @@ const userSchema = new Schema({
     type: String,
     required: [true, 'id is required'],
     trim: true,
-    unique: true
+    unique: true,
+    select: true
   },
-  email: { type: String, trim: true },
+  email: { type: String, trim: true, select: true },
   password: { type: String, required: [true, 'Password is required!'], select: false }
 }, {
   toObject: { virtuals: true }

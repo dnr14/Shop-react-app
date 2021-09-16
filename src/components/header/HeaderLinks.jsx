@@ -58,8 +58,6 @@ const StyledUl = styled.ul`
     height: 0;
     padding: 0;
     ${({ headerWidth }) => {
-      console.log(headerWidth);
-
       if (headerWidth < 992) {
         return css`
           transition: 1s;
@@ -92,11 +90,15 @@ const StyledUl = styled.ul`
   `)}
 `;
 
-const HeaderLinks = ({ isMenuOpen, headerWidth, pureLinsks }) => {
+const HeaderLinks = ({ isMenuOpen, headerWidth, pureLinsks, ...rest }) => {
   return (
-    <Col lg={9} md={9}>
+    <Col {...rest}>
       <nav>
-        <StyledUl isMenuOpen={isMenuOpen} headerWidth={headerWidth} liLength={pureLinsks.length}>
+        <StyledUl
+          isMenuOpen={isMenuOpen}
+          headerWidth={headerWidth}
+          liLength={pureLinsks.length}
+        >
           {pureLinsks}
         </StyledUl>
       </nav>

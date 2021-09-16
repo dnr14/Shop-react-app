@@ -1,8 +1,6 @@
 import React, { memo } from "react";
-import { Col } from "style/Styled";
-import { maxWidthByBreakPointTable } from "style/Styled";
+import { Col, maxWidthByBreakPointTable } from "style/Styled";
 import styled, { css } from "styled-components";
-import HeaderHamburger from "./HeaderHamburger";
 
 const StyledMenuBar = styled.button`
   display: none;
@@ -71,11 +69,11 @@ const StyledMenuBar = styled.button`
   `)}
 `;
 
-const HeaderMenuBar = ({ isMenuOpen, handleClick }) => {
+const HeaderMenuBar = ({ isMenuOpen, handleClick, ...rest }) => {
   return (
-    <Col xs={6} sm={6} lg={0} md={0}>
+    <Col {...rest}>
       <StyledMenuBar isMenuOpen={isMenuOpen} onBlur={handleClick} onClick={handleClick}>
-        <HeaderHamburger />
+        <div></div>
       </StyledMenuBar>
     </Col>
   );

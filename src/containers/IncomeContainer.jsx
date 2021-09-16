@@ -8,7 +8,7 @@ import DataTable from "components/select/DataTable";
 const IncomeContainer = ({ history: { location } }) => {
   const { pathname, search } = location;
   const [pageNationState] = useState(getPageNationInitialData("incomeData"));
-  // 동일한 페이지를 눌으면 재랜더 x
+
   const currentQuery = useMemo(() => queryString.parse(search), [search]);
   const showPages = useMemo(() => {
     if (currentQuery.page === undefined) currentQuery.page = 1;

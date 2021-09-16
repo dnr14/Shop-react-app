@@ -1,4 +1,5 @@
 import express from "express";
+import verifyToken from "../middleware/verifyToken";
 import Users from "../mongodb/models/Users";
 
 const router = express.Router();
@@ -39,20 +40,8 @@ router.post('/', async (req, res) => {
   }
 });
 
-router.get("/:id", (req, res) => {
-  const { id } = req.params;
-  Users.findOne()
-    .where('id')
-    .equals(id)
-    .exec((err, data) => {
-      if (data) {
-        res.json(data)
-      } else {
-        res.json({
-          error: "없음"
-        })
-      }
-    });
+router.get("/info", verifyToken, (req, res) => {
+  res.json(req.decoded);
 });
 
 

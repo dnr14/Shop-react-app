@@ -24,11 +24,13 @@ export const getYYMMDD_HHMMSS = () => {
 }
 
 export const getOneToTwentyForeHoure = () => {
-  return Array.from({ length: 24 }, (_, i) => i + 1);
+  const houre = Array.from({ length: 24 }, (_, i) => String(i + 1).padStart(2, "0"));
+  return houre;
 }
 
 export const getZeroToFiftyNineMinutes = () => {
-  return Array.from({ length: 60 }, (_, i) => i);
+  const Minutes = Array.from({ length: 60 }, (_, i) => String(i).padStart(2, "0"));
+  return Minutes;
 }
 
 

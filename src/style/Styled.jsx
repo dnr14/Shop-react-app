@@ -1,4 +1,3 @@
-import { memo } from "react";
 import styled, { createGlobalStyle, css } from "styled-components";
 const BREAK_POINT_MOBILE = 768;
 const BREAK_POINT_TABLET = 992;
@@ -151,7 +150,7 @@ const calcWidthPercent = (span) => {
 };
 
 // ========= MaxWidthContainer ===========
-export const StyledMaxWidth = memo(styled.div`
+export const StyledMaxWidth = styled.div`
   max-width: 1200px;
   margin: 0 auto;
-`);
+`;

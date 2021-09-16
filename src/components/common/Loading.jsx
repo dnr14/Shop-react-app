@@ -1,6 +1,6 @@
-import React from "react";
+import React, { memo } from "react";
 import styled from "styled-components";
-import loading from "images/loading.gif";
+import loadingIMG from "images/loading.gif";
 
 const StyledLDiv = styled.div`
   position: fixed;
@@ -19,14 +19,16 @@ const StyledLDiv = styled.div`
   }
 `;
 
-const Loading = () => {
+const Loading = ({ loading }) => {
   return (
     <>
-      <StyledLDiv>
-        <img src={loading} alt="loadingbar" />
-      </StyledLDiv>
+      {loading && (
+        <StyledLDiv>
+          <img src={loadingIMG} alt="loadingbar" />
+        </StyledLDiv>
+      )}
     </>
   );
 };
 
-export default Loading;
+export default memo(Loading);

@@ -15,9 +15,24 @@ const Header = ({ isMenuOpen, handleClick, headerWidth, pureLinsks }) => {
     <StyledHeader>
       <StyledMaxWidth>
         <Row>
-          <HeaderTitle />
-          <HeaderMenuBar isMenuOpen={isMenuOpen} handleClick={handleClick} />
-          <HeaderLinks isMenuOpen={isMenuOpen} headerWidth={headerWidth} pureLinsks={pureLinsks} />
+          <HeaderTitle xs={6} sm={6} md={3} lg={3} />
+          <HeaderMenuBar
+            xs={6}
+            sm={6}
+            md={0}
+            lg={0}
+            isMenuOpen={isMenuOpen}
+            handleClick={handleClick}
+          />
+          <HeaderLinks
+            xs={12}
+            sm={12}
+            md={9}
+            lg={9}
+            isMenuOpen={isMenuOpen}
+            headerWidth={headerWidth}
+            pureLinsks={pureLinsks}
+          />
         </Row>
       </StyledMaxWidth>
     </StyledHeader>

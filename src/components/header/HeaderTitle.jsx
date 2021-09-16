@@ -21,9 +21,9 @@ const StyledDiv = styled.div`
   `)}
 `;
 
-const HeaderTitle = memo(function HeaderTitle() {
+const HeaderTitle = memo(function HeaderTitle({ ...rest }) {
   return (
-    <Col xs={6} sm={6} lg={3} md={3}>
+    <Col {...rest}>
       <StyledDiv>
         <Link to="/">똑똑 가계부</Link>
       </StyledDiv>

@@ -5,7 +5,6 @@ import { setAccessTokenRemove } from "utils/LocalStorageUtil";
 
 const LogoutContainer = () => {
   const { setAccess } = useAuthContext();
-  console.log(1);
 
   const logOut = useCallback(() => {
     setAccessTokenRemove();

@@ -23,7 +23,6 @@ const AuthContextProvider = ({ children }) => {
               authorization: ACCESS_TOKEN
             }
           });
-          setAccess(ACCESS_TOKEN);
         } catch (error) {
           setAccessTokenRemove();
           setAccess(null);

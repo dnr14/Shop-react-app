@@ -5,11 +5,9 @@ export default function verifyToken(req, res, next) {
     const token = req.headers['authorization'];
 
     if (!token) {
-      res.redirect("/");
-      // return res.status(403).json({
-      //   success: false,
-      //   message: '토큰이 없습니다.'
-      // });
+      const error = new Error();
+      error.name = "TokenisEmptyError";
+      throw error;
     }
     // 요청 헤더에 저장된 토큰(req.headers.authorization)과 비밀키를 사용하여 토큰 반환
     req.decoded = jwt.verify(token, process.env.JWT_SECRET);
@@ -24,6 +22,10 @@ export default function verifyToken(req, res, next) {
         success: false,
         message: '토큰이 만료되었습니다.'
       });
+    }
+
+    if (error.name === "TokenisEmptyError") {
+      return res.redirect("/");
     }
 
     // 토큰의 비밀키가 일치하지 않는 경우

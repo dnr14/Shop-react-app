@@ -8,66 +8,56 @@ dotenv.config();
 const router = express.Router();
 const JWT_TIME = "10m";
 
-const resultJson = {
-  success: false,
-  error: null,
-  token: null
-}
+
 
 router.post("/login", async (req, res) => {
   const { id, password } = req.body;
-  let isError = false;
   const user = await Users.findOne({ id }).select({ password: 1 });
 
-  if (id === undefined || id === null) {
-    resultJson.error = {
-      meassge: "잘못된 값입니다."
+  try {
+
+    if (id === undefined || id === null || password === undefined || password === null) {
+      const error = new Error("잘못된 값입니다.");
+      error.status = 403;
+      throw error;
     }
-    res.status(403).json(resultJson);
-    return;
-  }
-  if (password === undefined || password === null) {
-    resultJson.error = {
-      meassge: "잘못된 값입니다."
+
+    //아이디가 틀렸을때
+    if (!user) {
+      const error = new Error("없는 아이디 입니다.");
+      error.status = 403;
+      throw error;
+    } else {
+      if (!user.authenticate(password)) {
+        const error = new Error("비밀번호가 틀립니다.");
+        error.status = 403;
+        throw error;
+      }
     }
-    res.status(403).json(resultJson);
-    return;
-  }
 
-
-  //아이디가 틀렸을때
-  if (!user) {
-    isError = true;
-    resultJson.error = "없는 아이디 입니다.";
-  }
-
-  if (user) {
-    // 비밀번호가 틀렸을때
-    if (!user.authenticate(password)) {
-      isError = true;
-      resultJson.error = "비밀번호가 틀립니다.";
+    const payload = {
+      userInfo: {
+        id: user.id,
+        email: user.email
+      }
     }
-  }
 
-
-  if (isError) {
-    res.status(403).json(resultJson);
-  }
-
-  if (!isError) {
-
-    const token = jwt.sign({
-      id: user.id,
-      email: user.email
-    }, process.env.JWT_SECRET, {
+    const tokenOption = {
       expiresIn: JWT_TIME, // 10분
-      issuer: '토큰발급자',
-    });
-
-    if (user) {
-      res.status(200).json({ ...resultJson, success: true, token });
+      issuer: 'localhost',
     }
+
+    const access_token = jwt.sign(payload, process.env.JWT_SECRET, tokenOption);
+    res.status(200).json({ success: true, error: null, access_token });
+
+  } catch (error) {
+    res.status(`${error.status}`).json({
+      success: false,
+      access_token: null,
+      error: error.message,
+    });
   }
+
 });
 
 router.get('/verify', verifyToken, (req, res) => {

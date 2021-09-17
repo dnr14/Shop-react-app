@@ -1,8 +1,7 @@
 import { errorAction, loadingAction, successAction } from "actions/userInfoAction";
-import axios from "axios";
 import { useCallback, useReducer } from "react";
 import userInfoReducer from "reducers/userInfoReducer";
-import { getAccessToken } from "utils/LocalStorageUtil";
+import axiosInstance from "axios/customAxios";
 
 const initialState = {
   loading: false,
@@ -16,16 +15,12 @@ const useInfoAsync = () => {
   const getUserInfoAPI = useCallback(async () => {
     dispatch(loadingAction());
     try {
-      const { data } = await axios.get("/api/users/info", {
-        headers: {
-          authorization: getAccessToken(),
-        },
-      })
-      const { id, email } = data;
-      dispatch(successAction({ id, email }));
+      const { data } = await axiosInstance.get("/api/users/info");
+      const { userInfo } = data;
+      console.log("userInfo", userInfo);
+      dispatch(successAction(userInfo));
     } catch (error) {
-      const { response } = error;
-      dispatch(errorAction(response));
+      dispatch(errorAction(error));
     }
   }, []);
 

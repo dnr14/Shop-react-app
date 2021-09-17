@@ -1,12 +1,12 @@
 import { useCallback, useReducer } from "react";
 import authReducer from "reducers/authReducer";
 import { errorAction, loadingAction, successAction } from 'actions/authAction';
-import axios from "axios";
+import axiosInstance from "axios/customAxios";
 
 const initialState = {
   loading: false,
   success: null,
-  token: null,
+  access_token: null,
   error: null,
 };
 
@@ -16,14 +16,13 @@ const useAuthAsync = () => {
   const callLoginApi = useCallback(async (url, id, password) => {
     dispatch(loadingAction());
     try {
-      const { data } = await axios.post(`${url}`, { id, password });
+      const { data } = await axiosInstance.post(`${url}`, { id, password });
       if (data.success) {
-        const { success, token } = data;
-        dispatch(successAction(success, token));
+        const { success, access_token } = data;
+        dispatch(successAction(success, access_token));
       }
     } catch (error) {
-      const { response } = error;
-      dispatch(errorAction(response));
+      dispatch(errorAction(error));
     }
   }, []);
 

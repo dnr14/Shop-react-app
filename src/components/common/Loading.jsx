@@ -1,6 +1,7 @@
 import React, { memo } from "react";
 import styled from "styled-components";
 import loadingIMG from "images/loading.gif";
+import PropTypes from "prop-types";
 
 const StyledLDiv = styled.div`
   position: fixed;
@@ -29,6 +30,14 @@ const Loading = ({ loading }) => {
       )}
     </>
   );
+};
+
+Loading.propTypes = {
+  loading: PropTypes.bool,
+};
+
+Loading.defaultProps = {
+  loading: false,
 };
 
 export default memo(Loading);

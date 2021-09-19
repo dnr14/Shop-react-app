@@ -1,7 +1,14 @@
 import styled, { createGlobalStyle, css } from "styled-components";
+const BREAK_POINT_SMAILL_MOBILE = 420;
 const BREAK_POINT_MOBILE = 768;
 const BREAK_POINT_TABLET = 992;
 const BREAK_POINT_PC = 1200;
+
+export const maxWidthByBreakPointSmaillMobile = (props) => css`
+  @media only screen and (max-width: ${BREAK_POINT_SMAILL_MOBILE}px) {
+    ${props}
+  }
+`;
 
 export const maxWidthByBreakPointMobile = (props) => css`
   @media only screen and (max-width: ${BREAK_POINT_MOBILE}px) {

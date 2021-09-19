@@ -17,7 +17,6 @@ const useInfoAsync = () => {
     try {
       const { data } = await axiosInstance.get("/api/users/info");
       const { userInfo } = data;
-      console.log("userInfo", userInfo);
       dispatch(successAction(userInfo));
     } catch (error) {
       dispatch(errorAction(error));

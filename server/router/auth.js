@@ -6,7 +6,7 @@ import dotenv from 'dotenv';
 dotenv.config();
 
 const router = express.Router();
-const JWT_TIME = "10m";
+const JWT_TIME = "30m";
 
 
 

@@ -1,4 +1,7 @@
+import Loading from "components/common/Loading";
+import ErrorBoundary from "components/error/ErrorBoundary";
 import UserInfo from "components/userInfo/UserInfo";
+import UserInfoContetProvider from "contexts/UserInfoContetProvider";
 import useInfoAsync from "hooks/useInfoAsync";
 import React, { useEffect } from "react";
 import { useHistory } from "react-router";
@@ -13,17 +16,20 @@ const UserInfoContainer = () => {
   }, [getUserInfoAPI]);
 
   useEffect(() => {
+    // access토큰이 유효하지 않으면 이동
     if (state.error) {
       history.push("/");
       return;
     }
   }, [state, history]);
 
-  if (state.loading) {
-    return <div>로딩 중..</div>;
-  }
+  if (state.loading) return <Loading loading={state.loading} />;
 
-  return <UserInfo info={state.info} />;
+  return (
+    <UserInfoContetProvider>
+      <ErrorBoundary>{state.info && <UserInfo info={state.info} />}</ErrorBoundary>
+    </UserInfoContetProvider>
+  );
 };
 
 export default UserInfoContainer;

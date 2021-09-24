@@ -9,7 +9,6 @@ const router = express.Router();
 const JWT_TIME = "30m";
 
 
-
 router.post("/login", async (req, res) => {
   const { id, password } = req.body;
   const user = await Users.findOne({ id }).select({ password: 1 });
@@ -51,15 +50,21 @@ router.post("/login", async (req, res) => {
     res.status(200).json({ success: true, error: null, access_token });
 
   } catch (error) {
-    res.status(`${error.status}`).json({
-      success: false,
-      access_token: null,
-      error: error.message,
-    });
-  }
 
+    if (error.status) {
+      res.status(`${error.status}`).json({
+        success: false,
+        access_token: null,
+        error: error.message,
+      });
+    } else {
+      res.json({ error: "서버 에러" });
+    }
+
+  }
 });
 
+//유효한 토큰인지 검증 해 준다.
 router.get('/verify', verifyToken, (req, res) => {
   res.json(req.decoded);
 });

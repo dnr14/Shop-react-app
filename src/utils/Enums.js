@@ -18,5 +18,6 @@ export const MEMBERSHIP_ERRORS = Object.freeze({
   password: Object.freeze({
     maxLengthError: "비밀번호는 최대 15자 입니다.",
     minLengthError: "비밀번호는 최소 6자 입니다.",
+    spaceError: "공백을 입력했습니다.",
   }),
 });

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { memo } from "react";
 import { Row } from "style/Styled";
 import { Col } from "style/Styled";
 import styled from "styled-components";
@@ -32,4 +32,4 @@ FormError.defaultProps = {
   message: "",
 };
 
-export default FormError;
+export default memo(FormError);

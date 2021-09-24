@@ -69,9 +69,11 @@ const StyledUl = styled.ul`
       a {
         width: 100%;
         &:hover {
-          background-color: rgba(236, 240, 241, 1);
+          transform: scale(0.9);
+          background: #fff;
           color: rgba(44, 62, 80, 1);
           font-weight: bold;
+          border-radius: 5px;
         }
       }
 
@@ -80,12 +82,16 @@ const StyledUl = styled.ul`
         background-color: #fff;
         color: #000;
       }
+
+      &:last-child {
+      }
     }
 
     ${({ isMenuOpen, liLength }) =>
       isMenuOpen &&
       css`
         height: ${liLength * 50}px;
+        margin-bottom: 10px;
       `}
   `)}
 `;

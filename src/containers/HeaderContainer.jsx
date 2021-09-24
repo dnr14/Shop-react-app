@@ -40,7 +40,7 @@ const HeaderContainer = () => {
       },
       {
         text: `${access ? "마이페이지" : "회원가입"}`,
-        url: `${access ? "/info" : "/memberShip"}`,
+        url: `${access ? "/me" : "/memberShip"}`,
         access: true,
       },
       { text: "입출 등록", url: "/insert" },

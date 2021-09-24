@@ -9,7 +9,8 @@ const initialState = {
 };
 
 
-const useMemberShipForm = () => {
+const useMemberShipForm = (keep = true) => {
+  const [_keep] = useState(keep);
   const [value, setter] = useState(initialState);
 
   const handleChange = useCallback((e) => {
@@ -248,33 +249,42 @@ const useMemberShipForm = () => {
         );
         return;
       }
+      const spaceCheck = isWhiteSpaceCheck(value);
+      if (spaceCheck) {
+        setter((prevState) => prevState[name].isError === true ? prevState
+          : { ...prevState, [name]: { ...prevState[`${name}`], isError: true, errorText: MEMBERSHIP_ERRORS.password.spaceError } }
+        );
+        return;
+      }
+      console.log("랜더");
 
-      setter((prevState) => {
-        const confirmPassword =
-          prevState[`${name === "password" ? "confirmPassword" : "password"}`].value;
+      if (_keep) {
+        setter((prevState) => {
+          const confirmPassword =
+            prevState[`${name === "password" ? "confirmPassword" : "password"}`].value;
 
-        if (confirmPassword !== value) {
-          return {
-            ...prevState,
-            [name]: { value, isError: true, errorText: "비밀번호가 틀립니다." },
-          };
-        }
-        // 비밀번호가 동일하면 에러창 없어짐
-        if (confirmPassword === value) {
-          const propertyName = name === "password" ? "confirmPassword" : "password";
-          return {
-            ...prevState,
-            [name]: { value, isError: false, errorText: "" },
-            [propertyName]: {
-              ...prevState[propertyName],
-              isError: false,
-              errorText: "",
-            },
-          };
-        }
-      });
-
-      return;
+          if (confirmPassword !== value) {
+            return {
+              ...prevState,
+              [name]: { value, isError: true, errorText: "비밀번호가 틀립니다." },
+            };
+          }
+          // 비밀번호가 동일하면 에러창 없어짐
+          if (confirmPassword === value) {
+            const propertyName = name === "password" ? "confirmPassword" : "password";
+            return {
+              ...prevState,
+              [name]: { value, isError: false, errorText: "" },
+              [propertyName]: {
+                ...prevState[propertyName],
+                isError: false,
+                errorText: "",
+              },
+            };
+          }
+        });
+        return;
+      }
     }
 
     setter((prevState) => ({

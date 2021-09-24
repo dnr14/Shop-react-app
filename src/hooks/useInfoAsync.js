@@ -12,10 +12,11 @@ const initialState = {
 const useInfoAsync = () => {
   const [state, dispatch] = useReducer(userInfoReducer, initialState);
 
+
   const getUserInfoAPI = useCallback(async () => {
     dispatch(loadingAction());
     try {
-      const { data } = await axiosInstance.get("/api/users/info");
+      const { data } = await axiosInstance.get("/api/users/me");
       const { userInfo } = data;
       dispatch(successAction(userInfo));
     } catch (error) {

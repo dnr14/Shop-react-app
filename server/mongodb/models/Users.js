@@ -25,6 +25,7 @@ userSchema.pre('save', function (next) {
     return next();
   }
 })
+
 userSchema.methods.authenticate = function (password) {
   const user = this;
   return bcrypt.compareSync(password, user.password);

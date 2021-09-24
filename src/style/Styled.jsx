@@ -1,8 +1,15 @@
 import styled, { createGlobalStyle, css } from "styled-components";
-const BREAK_POINT_SMAILL_MOBILE = 420;
+const BREAK_POINT_SMAILL_MOBILE = 450;
 const BREAK_POINT_MOBILE = 768;
 const BREAK_POINT_TABLET = 992;
 const BREAK_POINT_PC = 1200;
+
+const MOBILE_FONT_SIZE = css`
+  font-size: 12px;
+`;
+const TABLE_FONT_SIZE = css`
+  font-size: 13px;
+`;
 
 export const maxWidthByBreakPointSmaillMobile = (props) => css`
   @media only screen and (max-width: ${BREAK_POINT_SMAILL_MOBILE}px) {
@@ -22,6 +29,18 @@ export const maxWidthByBreakPointTable = (props) => css`
   }
 `;
 
+export const minWidthByBreakPointSmaillMobile = (props) => css`
+  @media only screen and (min-width: ${BREAK_POINT_SMAILL_MOBILE}px) {
+    ${props}
+  }
+`;
+
+export const minWidthByBreakPointMobile = (props) => css`
+  @media only screen and (min-width: ${BREAK_POINT_MOBILE}px) {
+    ${props}
+  }
+`;
+
 export const minWidthByBreakPointTable = (props) => css`
   @media only screen and (min-width: ${BREAK_POINT_TABLET}px) {
     ${props}
@@ -30,8 +49,10 @@ export const minWidthByBreakPointTable = (props) => css`
 
 const GlobalStyled = createGlobalStyle`
 
+    @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100;300;400;500;700;900&display=swap');
+
    *{
-      font-family: 'Roboto', sans-serif;
+      font-family: 'Noto Sans KR', sans-serif;
       box-sizing: border-box;
     }
 
@@ -54,15 +75,10 @@ const GlobalStyled = createGlobalStyle`
     }
 
     html{
-
-      ${maxWidthByBreakPointTable(css`
-        font-size: 13px;
-      `)}
-
-      ${maxWidthByBreakPointMobile(css`
-        font-size: 12px;
-      `)}
-
+      //테이블 폰트
+      ${maxWidthByBreakPointTable(TABLE_FONT_SIZE)}
+      // 모바일 폰트
+      ${maxWidthByBreakPointMobile(MOBILE_FONT_SIZE)}
     }
 
     ol, ul {

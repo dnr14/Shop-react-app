@@ -6,9 +6,7 @@ const StyledDiv = styled.div`
   right: 0;
   top: 200px;
   left: 0;
-  /* ${({ width }) => css`
-    width: ${width}px;
-  `}; */
+
   width: 200px;
   margin: auto;
   background-color: #fff;

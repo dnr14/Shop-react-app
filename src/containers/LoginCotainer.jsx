@@ -47,9 +47,9 @@ const LoginCotainer = () => {
     }
 
     if (state.error) {
-      const { data } = state.error;
+      const { data } = state?.error;
       setVisible(true);
-      setPopUpMessage(data.error);
+      setPopUpMessage(data?.error);
     }
   }, [history, setAccess, state, setPopUpMessage]);
 

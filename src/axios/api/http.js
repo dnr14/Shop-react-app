@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { getAccessToken } from 'utils/LocalStorageUtil';
 
-const axiosInstance = axios.create({
+const instance = axios.create({
   timeout: 5000,
   headers: {
     "Content-Type": "application/json"
@@ -9,7 +9,7 @@ const axiosInstance = axios.create({
 });
 
 
-axiosInstance.interceptors.request.use(
+instance.interceptors.request.use(
   (config) => {
     config.headers.authorization = getAccessToken();
     return config;
@@ -22,7 +22,7 @@ axiosInstance.interceptors.request.use(
   }
 );
 
-axiosInstance.interceptors.response.use(
+instance.interceptors.response.use(
   (config) => {
     return config;
   },
@@ -40,4 +40,4 @@ axiosInstance.interceptors.response.use(
   }
 );
 
-export default axiosInstance;
+export default instance;

@@ -1,15 +1,17 @@
 import LoginForm from "components/login/LoginForm";
 import React, { useCallback, useEffect, useState } from "react";
 import useAuthAsync from "hooks/useAuthAsync";
-import { useHistory } from "react-router";
+import { Route, useHistory, useRouteMatch } from "react-router";
 import { useForm } from "hooks/useForm";
 import { useAuthContext } from "contexts/AuthContextProvider";
 import { setAccessToken } from "utils/LocalStorageUtil";
+import IDorPasswordSearchContainer from "./IDorPasswordSearchContainer";
 
 const LoginCotainer = () => {
   const { setAccess } = useAuthContext();
 
   const history = useHistory();
+  const match = useRouteMatch();
   const [loginForm, handleChange] = useForm();
   const [state, callLoginApi] = useAuthAsync();
   const [popUpMessage, setPopUpMessage] = useState(null);
@@ -54,15 +56,20 @@ const LoginCotainer = () => {
   }, [history, setAccess, state, setPopUpMessage]);
 
   return (
-    <LoginForm
-      handleSubmit={handleSubmit}
-      handleChange={handleChange}
-      setVisible={setVisible}
-      loginForm={loginForm}
-      state={state}
-      visible={visible}
-      message={popUpMessage}
-    />
+    <>
+      <Route path={`${match.path}`} exact>
+        <LoginForm
+          handleSubmit={handleSubmit}
+          handleChange={handleChange}
+          setVisible={setVisible}
+          loginForm={loginForm}
+          state={state}
+          visible={visible}
+          message={popUpMessage}
+        />
+      </Route>
+      <Route path="/login/search" render={() => <IDorPasswordSearchContainer />} />
+    </>
   );
 };
 

@@ -1,7 +1,7 @@
 import { useCallback, useReducer } from "react";
 import authReducer from "reducers/authReducer";
 import { errorAction, loadingAction, successAction } from 'actions/authAction';
-import axiosInstance from "axios/customAxios";
+import axiosInstance from "axios/api/http";
 
 const initialState = {
   loading: false,

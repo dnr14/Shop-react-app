@@ -6,7 +6,7 @@ import { Link } from "react-router-dom";
 import { StyledMaxWidth } from "style/Styled";
 import { StyledSection, UpdateButton, Container, LayOut } from "style/user/User.styled";
 
-const UserInfo = ({ info }) => {
+const UserInfo = ({ info, userDelete }) => {
   return (
     <StyledMaxWidth>
       <Container>
@@ -20,7 +20,7 @@ const UserInfo = ({ info }) => {
             <Link to="/me/password">
               <UpdateButton>비밀번호 수정</UpdateButton>
             </Link>
-            <UpdateButton>회원 탈퇴</UpdateButton>
+            <UpdateButton onClick={userDelete}>회 원 탈 퇴</UpdateButton>
           </LayOut>
         </StyledSection>
       </Container>

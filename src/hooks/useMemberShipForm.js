@@ -256,7 +256,6 @@ const useMemberShipForm = (keep = true) => {
         );
         return;
       }
-      console.log("랜더");
 
       if (_keep) {
         setter((prevState) => {
@@ -291,7 +290,7 @@ const useMemberShipForm = (keep = true) => {
       ...prevState,
       [name]: { value, isError: false, errorText: "" },
     }));
-  }, []);
+  }, [_keep]);
 
   const onReset = useCallback(() => setter(initialState), []);
 

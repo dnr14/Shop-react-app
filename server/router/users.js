@@ -46,9 +46,7 @@ router.get("/me", verifyToken, (req, res) => {
   res.json(req.decoded);
 });
 
-// info
-// passoword
-
+// update
 router.put("/", verifyToken, async (req, res) => {
 
   const { id, currentPassword, newPassword } = req.body;
@@ -67,6 +65,32 @@ router.put("/", verifyToken, async (req, res) => {
     res.json({ success: "비밀번호가 변경되었습니다." });
   } catch (error) {
     res.status(error.status).json({ message: error.message });
+  }
+});
+
+//delete
+router.delete("/:id", verifyToken, async (req, res) => {
+
+  l(req.params.id)
+
+  try {
+    const { id } = req.params;
+    if (id === null || id === undefined) {
+      const error = new Error("입력이 잘 못 되었습니다.");
+      error.status = 409;
+      throw error;
+    }
+    const r = await Users.deleteOne({ id });
+    if (r.deletedCount === 1) {
+      res.json({ message: "아이디가 삭제 되었습니다." });
+      return;
+    }
+  } catch (error) {
+    if (error.status) {
+      res.status(error.status).json({ message: error.message })
+      return;
+    }
+    res.json({ message: "서버 에러" });
   }
 });
 

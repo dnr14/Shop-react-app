@@ -1,22 +1,15 @@
 import React from "react";
-import styled, { css } from "styled-components";
 import Id from "./Id";
 import Password from "./Password";
 import FormButton from "./FormButton";
-import { StyledMaxWidth, minWidthByBreakPointMobile } from "style/Styled";
+import { StyledMaxWidth } from "style/Styled";
 import Loading from "components/common/Loading";
 import Title from "components/common/Title";
 import PopUp from "./PopUp";
-
-const StyledMain = styled.main`
-  margin-top: 3rem;
-`;
-
-const Container = styled.section`
-  margin: 0 auto;
-  width: 80%;
-  ${minWidthByBreakPointMobile({ width: "50%" })}
-`;
+import { StyledMain, Container } from "style/login/LoginForm.styled";
+import Button from "components/common/Button";
+import { Link } from "react-router-dom";
+import { useRouteMatch } from "react-router";
 
 const LoginForm = ({
   handleSubmit,
@@ -28,6 +21,9 @@ const LoginForm = ({
   message,
 }) => {
   const { id, password } = loginForm;
+
+  const match = useRouteMatch();
+
   return (
     <StyledMaxWidth>
       <StyledMain>
@@ -38,6 +34,14 @@ const LoginForm = ({
             <Password handleChange={handleChange} password={password} />
             <FormButton />
           </form>
+          <div>
+            <Link to={`${match.path}/search/id`}>
+              <Button text="아이디 찾기" />
+            </Link>
+            <Link to={`${match.path}/search/password`}>
+              <Button text="비밀번호 찾기" />
+            </Link>
+          </div>
           <Loading loading={state.loading} />
           <PopUp setVisible={setVisible} message={message} visible={visible} />
         </Container>

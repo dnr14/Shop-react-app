@@ -1,7 +1,7 @@
 import { errorAction, loadingAction, successAction } from "actions/userInfoAction";
 import { useCallback, useReducer } from "react";
 import userInfoReducer from "reducers/userInfoReducer";
-import axiosInstance from "axios/customAxios";
+import axiosInstance from "axios/api/http";
 
 const initialState = {
   loading: false,

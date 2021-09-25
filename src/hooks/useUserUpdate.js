@@ -1,5 +1,5 @@
-import axiosInstance from "axios/customAxios";
-import React, { useCallback, useReducer } from "react";
+import axiosInstance from "axios/api/http";
+import { useCallback, useReducer } from "react";
 
 
 const init = {
@@ -34,11 +34,11 @@ const updateReducer = (state, action) => {
     case USER_UPDATE_ERROR:
       return {
         loading: false,
-        success: null,
+        success: false,
         error: action.error
       }
     default:
-      break;
+      throw new Error('update reducer에 없는 액션입니다.')
   }
 
 }

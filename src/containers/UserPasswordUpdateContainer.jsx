@@ -1,35 +1,40 @@
 import PasswordUpdate from "components/user/PasswordUpdate";
 import useMemberShipForm from "hooks/useMemberShipForm";
 import React, { useCallback, useEffect, useState } from "react";
+import useUserPasswordUpdateAsync from "hooks/useUserPasswordUpdateAsync";
 import { useHistory } from "react-router";
-import { Link } from "react-router-dom";
-import useUserUpdate from "hooks/useUserUpdate";
 
-const UserPasswordUpdateContainer = ({ info }) => {
+const UserPasswordUpdateContainer = ({ user }) => {
   const [form, _, handleChange] = useMemberShipForm(false);
-  const history = useHistory();
-  const [apiState, getUserUpdateApi] = useUserUpdate();
-  const { loading, error, success } = apiState;
+  const [fetchState, setFatch] = useUserPasswordUpdateAsync();
   const [visible, setVisible] = useState(false);
-  // setVisible, visible, message
-  //success하면 다른 화면 랜더 해주고 몇초 후 메인으로 가게
+  const history = useHistory();
+  const { loading, error, success } = fetchState;
+
   const handleSubmit = useCallback(
     (e) => {
       e.preventDefault();
       const passwordError = form.password.isError;
       const newPassowrdError = form.confirmPassword.isError;
+      const currentPassword = form.password.value;
+      const newPassword = form.confirmPassword.value;
 
-      if (passwordError || newPassowrdError) {
-        console.log("에러가 있다");
+      if (
+        passwordError ||
+        newPassowrdError ||
+        currentPassword === "" ||
+        newPassword === ""
+      ) {
         return;
       }
-      getUserUpdateApi({
-        id: info.id,
-        currentPassword: form.password.value,
-        newPassword: form.confirmPassword.value,
+
+      setFatch({
+        id: user.id,
+        currentPassword,
+        newPassword,
       });
     },
-    [form, getUserUpdateApi, info]
+    [form, user, setFatch]
   );
 
   useEffect(() => {
@@ -48,26 +53,19 @@ const UserPasswordUpdateContainer = ({ info }) => {
       setVisible((p) => !p);
     }
   }, [error, setVisible]);
-
-  if (success) {
-    return (
-      <div>
-        <div>수정을 하였습니다.</div>
-        <Link to="/">홈으로</Link>
-      </div>
-    );
-  }
+  console.log(error);
 
   return (
     <PasswordUpdate
-      info={info}
-      form={form}
-      loading={loading}
-      visible={visible}
-      error={error}
       handleChange={handleChange}
       handleSubmit={handleSubmit}
       setVisible={setVisible}
+      user={user}
+      form={form}
+      visible={visible}
+      loading={loading}
+      error={error}
+      success={success}
     />
   );
 };

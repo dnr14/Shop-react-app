@@ -3,6 +3,7 @@ import Loading from "components/common/Loading";
 import Title from "components/common/Title";
 import PopUp from "components/login/PopUp";
 import React from "react";
+import { Link } from "react-router-dom";
 import { StyledMaxWidth } from "style/Styled";
 import { Container } from "style/user/PasswordUpdate.styled";
 import { UpdateButton } from "style/user/User.styled";
@@ -20,18 +21,28 @@ const PasswordUpdate = ({
   visible,
   error,
   loading,
+  success,
   form,
-  info,
+  user,
   handleChange,
   handleSubmit,
 }) => {
+  if (success) {
+    return (
+      <div>
+        <div>수정을 하였습니다.</div>
+        <Link to="/">홈으로</Link>
+      </div>
+    );
+  }
+
   return (
     <StyledMaxWidth>
       <Container>
         <section>
           <Title>비밀번호 수정</Title>
-          <Input text="아이디" type="text" defaultValue={info.id} disabled />
-          <Input text="이메일" type="text" defaultValue={info.email} disabled />
+          <Input text="아이디" type="text" defaultValue={user.id} disabled />
+          <Input text="이메일" type="text" defaultValue={user.email} disabled />
           <form onSubmit={handleSubmit}>
             <Input
               text="기존 비밀번호"

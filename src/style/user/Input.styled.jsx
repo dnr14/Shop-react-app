@@ -20,6 +20,7 @@ export const StyledInput = styled.input`
   letter-spacing: 0.13rem;
   text-align: center;
   text-overflow: ellipsis;
+  height: 2.5rem;
 
   @media only screen and (min-width: ${540}px) {
     flex: 8;

@@ -19,10 +19,20 @@ const IncomeContainer = ({ state, handleSubmit, handleChange }) => {
         >
           수입 날짜
         </DateSelect>
-        <PriceInput error={state.priceError} price={state.price} handleChange={handleChange}>
+        <PriceInput
+          error={state.priceError}
+          price={state.price}
+          handleChange={handleChange}
+        >
           수입 가격
         </PriceInput>
-        <Submit color="#fff" padding="10px" font-weight="bold" backgroundColor="rgba(46,204,113,1)" borderRadius="10px">
+        <Submit
+          color="#fff"
+          padding="10px"
+          font-weight="bold"
+          backgroundColor="rgba(46,204,113,1)"
+          borderRadius="10px"
+        >
           등록
         </Submit>
       </form>

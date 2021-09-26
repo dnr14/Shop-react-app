@@ -91,7 +91,7 @@ const UserContainer = () => {
       <Switch>
         <Route
           path={`${path}/password`}
-          render={() => <UserPasswordUpdateContainer info={userState.info} />}
+          render={() => <UserPasswordUpdateContainer user={userState.info} />}
         />
         <Route
           path={`${path}`}

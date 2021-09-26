@@ -9,7 +9,6 @@ dotenv.config();
 const router = express.Router();
 const JWT_TIME = "30m";
 
-
 router.post("/login", async (req, res) => {
   const { id, password } = req.body;
   const user = await Users.findOne({ id }).select({ password: 1 });
@@ -146,6 +145,7 @@ router.post('/search', async (req, res) => {
 router.put('/search', async (req, res) => {
   try {
     const { id, email, newPassword } = req.body;
+    console.log(id, email, newPassword)
     const reuslt = await Users.updateOne({ id, email }, {
       "$set": { "password": bcrypt.hashSync(newPassword) }
     })

@@ -8,17 +8,23 @@ const PricetAreEqual = (prevProps, nextProps) => {
   if (nextProps.price === prevProps.price) return true;
 };
 
-const InsertInput = memo(function InsertInput({ error, children, price, handleChange }) {
+const InsertInput = ({ error, children, price, handleChange }) => {
   return (
     <InsertTableLayout>
       <div>{children}</div>
       <div>
-        <input type="text" name="price" value={price && setNumberThreeCommaDraw(price)} onChange={handleChange} placeholder="0" />
+        <input
+          type="text"
+          name="price"
+          value={price && setNumberThreeCommaDraw(price)}
+          onChange={handleChange}
+          placeholder="0원"
+        />
         <span>원</span>
       </div>
       <Error>{error}</Error>
     </InsertTableLayout>
   );
-}, PricetAreEqual);
+};
 
-export default InsertInput;
+export default memo(InsertInput, PricetAreEqual);

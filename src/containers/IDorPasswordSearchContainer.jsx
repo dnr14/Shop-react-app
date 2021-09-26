@@ -6,19 +6,16 @@ import { useLocation, useRouteMatch } from "react-router";
 
 const LOADING_INIT = {
   isLoading: false,
-  type: null,
 };
 
 const SUCCESS_INIT = {
   isSuccess: false,
   data: null,
-  tpye: null,
 };
 
 const ERROR_INIT = {
   message: null,
   isError: false,
-  type: null,
 };
 
 const IDorPasswordSearchContainer = () => {

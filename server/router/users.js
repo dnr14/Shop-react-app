@@ -3,7 +3,6 @@ import verifyToken from "../middleware/verifyToken";
 import Users from "../mongodb/models/Users";
 import bcrypt from 'bcrypt-nodejs';
 
-const l = console.log;
 
 const router = express.Router();
 
@@ -70,8 +69,6 @@ router.put("/", verifyToken, async (req, res) => {
 
 //delete
 router.delete("/:id", verifyToken, async (req, res) => {
-
-  l(req.params.id)
 
   try {
     const { id } = req.params;

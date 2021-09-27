@@ -4,6 +4,8 @@ import logger from './middleware/logger';
 import db from './mongodb/db';
 import usersRouter from './router/users';
 import authRouter from './router/auth';
+import bordersRouter from './router/borders'
+
 
 const app = express();
 const PORT = process.env.PORT || 5000;
@@ -16,5 +18,6 @@ app.use(express.static(ROOT));
 
 app.use("/api/users", usersRouter);
 app.use("/api/auth", authRouter);
+app.use("/api/borders", bordersRouter);
 app.use("*", (_, res) => res.sendFile(`${ROOT}/index.html`));
 app.listen(PORT, () => console.log(`app listening at http://localhost:${PORT}`));

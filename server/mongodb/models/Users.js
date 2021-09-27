@@ -34,4 +34,3 @@ userSchema.methods.authenticate = function (password) {
 
 
 export default mongoose.model('users', userSchema);
-;

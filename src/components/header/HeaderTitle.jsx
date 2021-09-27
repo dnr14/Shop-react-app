@@ -13,6 +13,8 @@ const StyledDiv = styled.div`
     padding: 15px 0.625rem;
     font-weight: bold;
     font-size: 1.5rem;
+    word-break: keep-all;
+    text-align: center;
   }
 
   ${maxWidthByBreakPointTable(css`

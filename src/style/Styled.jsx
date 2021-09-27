@@ -79,6 +79,7 @@ const GlobalStyled = createGlobalStyle`
       ${maxWidthByBreakPointTable(TABLE_FONT_SIZE)}
       // 모바일 폰트
       ${maxWidthByBreakPointMobile(MOBILE_FONT_SIZE)}
+      min-width:280px;
     }
 
     ol, ul {

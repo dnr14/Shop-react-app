@@ -10,6 +10,7 @@ import NotFount from "components/404/NotFount";
 import PrivateRouter from "hoc/PrivateRouter";
 import Home from "components/home/Home";
 import UserContainer from "containers/UserContainer";
+import BorderContainer from "containers/BorderContainer";
 
 const Routers = () => {
   return (
@@ -21,7 +22,8 @@ const Routers = () => {
         <PublicRouter path="/memberShip" component={MemberShipContainer} restricted />
         <PrivateRouter path="/me" component={UserContainer} />
         <PrivateRouter path="/logout" component={LogoutContainer} />
-        <Route path="/" component={Home} exact />
+        <Route path="/boder" component={BorderContainer} />
+        <Route path="/" component={NotFount} exact />
         <Route component={NotFount} />
       </Switch>
     </>

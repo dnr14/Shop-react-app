@@ -43,9 +43,9 @@ const HeaderContainer = () => {
         url: `${access ? "/me" : "/memberShip"}`,
         access: true,
       },
+      { text: "게시판", url: "/boder" },
       { text: "입출 등록", url: "/insert" },
       { text: "입출 목록", url: "/select" },
-      { text: "통계", url: "/sss" },
     ],
     [access]
   );

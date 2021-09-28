@@ -4,7 +4,6 @@ import styled from "styled-components";
 import { StyledMaxWidth } from "style/Styled";
 import { maxWidthByBreakPointSmaillMobile } from "style/Styled";
 import { Link } from "react-router-dom";
-import borderIcon from "images/bordericon.png";
 
 const StyledDiv = styled.div`
   display: flex;

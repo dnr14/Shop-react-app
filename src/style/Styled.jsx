@@ -100,6 +100,7 @@ const GlobalStyled = createGlobalStyle`
 
     img{
       display: inline-block;
+      -webkit-user-drag:none;
     }
 
     h1{

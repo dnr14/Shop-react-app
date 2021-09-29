@@ -22,11 +22,9 @@ app.use("/api/auth", authRouter);
 app.use("/api/borders", bordersRouter);
 app.use("/public/:imgname", (req, res) => {
   // const mimeTpyebyname = req.params.imgname.split('.');
-
   // const fullurl = `${ROOT}/uploads/${mimeTpyebyname[0]}.${mimeTpyebyname[1]}`;
   const fullurl = `${ROOT}/uploads/${req.params.imgname}`;
-  console.log(fullurl);
-
+  res.set('Cache-Control', 'public, max-age=120'); // one year
   res.sendFile(fullurl)
 });
 app.use("*", (_, res) => res.sendFile(`${ROOT}/index.html`));

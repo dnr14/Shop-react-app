@@ -18,6 +18,11 @@ const bordersSchema = new Schema({
     required: [true, "게시글 비밀번호는 필수 입니다."],
     select: true
   },
+  gender: {
+    type: Number,
+    required: [true, "성별은 필수 입니다."],
+    select: true
+  },
   createAt: {
     type: String,
     required: [true, "게시글 등록 시간은 필수 입니다."],

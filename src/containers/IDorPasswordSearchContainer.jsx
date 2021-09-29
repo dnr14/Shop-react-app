@@ -22,7 +22,7 @@ const IDorPasswordSearchContainer = () => {
   const match = useRouteMatch();
   const location = useLocation();
 
-  const [form, onReset, handleChange] = useMemberShipForm();
+  const [form, _, handleChange] = useMemberShipForm();
   const [loading, setLoading] = useState(LOADING_INIT);
   const [success, setSuccess] = useState(SUCCESS_INIT);
   const [error, setError] = useState(ERROR_INIT);

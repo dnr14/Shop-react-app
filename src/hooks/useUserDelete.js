@@ -1,6 +1,4 @@
-import axiosInstance from "axios/api/http";
 import { useCallback, useReducer } from "react";
-
 
 const USER_DELETE = "USER_DELETE"
 const USER_DELETE_SUCCESS = "USER_DELETE_SUCCESS"

@@ -8,7 +8,7 @@ import path from 'path';
 const limits = {
   fieldNameSize: 200, // 필드명 사이즈 최대값 (기본값 100bytes)
   filedSize: 1024 * 1024, // 필드 사이즈 값 설정 (기본값 1MB)
-  fields: 4, // 파일 형식이 아닌 필드의 최대 개수 (기본 값 무제한)
+  fields: 5, // 파일 형식이 아닌 필드의 최대 개수 (기본 값 무제한)
   fileSize: 16777216, //multipart 형식 폼에서 최대 파일 사이즈(bytes) "16MB 설정" (기본 값 무제한)
   files: 2, //multipart 형식 폼에서 파일 필드 최대 개수 (기본 값 무제한)
 }
@@ -48,8 +48,7 @@ router.post('/', (req, res) => {
       res.status(503).json({ message: err.message });
       return;
     }
-    const { comment, id, password } = req.body;
-    console.log(password);
+    const { comment, id, password, gender } = req.body;
 
     // console.log("폼에 정의된 필드명 : ", fieldname);
     // console.log("사용자가 업로드한 파일 명 : ", originalname);
@@ -80,14 +79,18 @@ router.post('/', (req, res) => {
             fileName: ``,
             mimeType: ``,
             originalFileName: ``,
+            gender: gender
           });
+
+
+
+          const result = await border.save();
+          res.status(200).json({ result });
 
           await Indexes.updateOne({ name: "borders" }, {
             "$set": { "currentIndex": indexes.currentIndex + 1 }
           });
 
-          await border.save();
-          res.status(200).json({ message: " create success" });
 
         } catch (error) {
           res.status(400).json({ message: error })
@@ -116,16 +119,20 @@ router.post('/', (req, res) => {
             fileName: `${filename}`,
             mimeType: `${mimetype.split('/')[1]}`,
             originalFileName: `${originalname}`,
+            gender: gender
           });
+
+
+
+          const result = await border.save();
 
           await Indexes.updateOne({ name: "borders" }, {
             "$set": { "currentIndex": indexes.currentIndex + 1 }
           });
 
-          await border.save();
-          res.status(200).json({ message: " create success" });
+          res.status(200).json({ result });
         } catch (error) {
-          fs.unlink(`${__dirname}/uploads/${filename}`, (err) => {
+          fs.unlink(`${STATIC_PATH}${filename}`, (err) => {
             if (err === null) {
               res.status(503).json({ message: " 서버에서 오류" });
             } else {

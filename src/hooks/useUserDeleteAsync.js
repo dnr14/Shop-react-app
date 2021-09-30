@@ -1,4 +1,5 @@
 import { useCallback, useReducer } from "react";
+import * as usersApi from 'axios/api/users';
 
 const USER_DELETE = "USER_DELETE"
 const USER_DELETE_SUCCESS = "USER_DELETE_SUCCESS"
@@ -58,7 +59,7 @@ const useUserDelete = () => {
   const getUserDeleteApi = useCallback(async (id) => {
     dispatch(getUserDeleteAction());
     try {
-      // await axiosInstance.delete(`/api/users/${id}`);
+      await usersApi.userDelete(id);
       dispatch(getUserDeleteASuccessction());
     } catch (error) {
       console.log("useDelete Error", error);

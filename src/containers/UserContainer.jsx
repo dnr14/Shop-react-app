@@ -5,7 +5,7 @@ import User from "components/user/User";
 import UserDelete from "components/user/UserDelete";
 import { useAuthContext } from "contexts/AuthContextProvider";
 import useInfoAsync from "hooks/useInfoAsync";
-import useUserDelete from "hooks/useUserDelete";
+import useUserDelete from "hooks/useUserDeleteAsync";
 import React, { useEffect, useState } from "react";
 import { Route, Switch, useHistory, useRouteMatch } from "react-router";
 import { setAccessTokenRemove } from "utils/LocalStorageUtil";

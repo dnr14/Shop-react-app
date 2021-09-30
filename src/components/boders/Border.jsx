@@ -1,4 +1,4 @@
-import React, { memo } from "react";
+import React, { memo, useCallback } from "react";
 import styled from "styled-components";
 
 const StyledDiv = styled.div`
@@ -11,61 +11,110 @@ const StyledDiv = styled.div`
     &:first-child {
       display: flex;
       justify-content: space-between;
-      span {
-        letter-spacing: 0.1rem;
+      & > div {
+        display: flex;
+        align-items: center;
+        span {
+          display: inline-block;
+          letter-spacing: 0.1rem;
+          padding: 0.2rem;
+          &:first-child {
+            color: rgba(46, 204, 113, 1);
+            font-weight: bold;
+            font-size: 1.2rem;
+          }
+          &:last-child {
+            font-size: 1rem;
+            font-weight: bold;
+          }
+        }
       }
     }
-  }
 
-  textarea {
-    width: 100%;
-    min-height: 100px;
-    resize: none;
-    background-color: #fff;
-    overflow: hidden;
-    &:focus {
-      outline: none;
+    &:nth-child(2) {
+      text-align: center;
+
+      & > img {
+        padding: 1rem;
+        box-sizing: content-box;
+        width: 50%;
+        min-height: 200px;
+      }
+    }
+    &:nth-child(3) {
+      display: flex;
+      & > span {
+        display: inline-block;
+        padding: 0.5rem 0.2rem;
+        color: rgba(46, 204, 113, 1);
+        font-weight: bold;
+        letter-spacing: 0.2rem;
+      }
+    }
+
+    &:nth-child(4) {
+      text-align: center;
+      textarea {
+        display: inline-block;
+        width: 94%;
+        min-height: 100px;
+        resize: none;
+        background-color: #fff;
+        overflow: hidden;
+        border-radius: 10px;
+        padding: 1rem 2.5%;
+        font-weight: bold;
+        box-shadow: 2px 2px 2px rgba(44, 62, 80, 0.5);
+        box-sizing: content-box;
+        &:focus {
+          outline: none;
+        }
+      }
     }
   }
 `;
 
 const Border = ({ border }) => {
-  function a(body) {
+  const getNewlineCount = useCallback((body) => {
     const regex = /(\\r|\\n|\r|\n)/g;
     let count = 0;
-    while (1) {
+    while (true) {
       const result = regex.exec(body);
       if (result === null) break;
       count += 1;
     }
-
     return count;
-  }
-  console.log(a(border.body));
+  }, []);
 
   return (
     <StyledDiv>
       <div>
         <div>
-          닉네임 <span>{border.createId}</span>
+          <span>닉네임 </span>
+          <span>{border.createId}</span>
         </div>
         <div>
-          작성시간 : <span>{border.createAt}</span>
+          <span>작성시간 </span>
+          <span>{border.createAt}</span>
         </div>
       </div>
       <div>
-        <textarea defaultValue={border.body} rows={a(border.body)} disabled readOnly />
+        {border?.fileName && (
+          <img src={`http://localhost:5000/public/${border.fileName}`} alt="img" />
+        )}
       </div>
-      <div>{border.originalFileName} </div>
-      {border?.fileName && (
-        <div style={{ textAlign: "center" }}>
-          <img
-            src={`http://localhost:5000/public/${border.fileName}`}
-            alt="img"
-            style={{ width: "50%", height: "200px" }}
-          />
-        </div>
-      )}
+      <div>
+        <span>성별 </span>
+        <span>{border.gender ? "👧" : "👨‍🦲"}</span>
+      </div>
+      <div>
+        <textarea
+          defaultValue={border.body}
+          rows={getNewlineCount(border.body)}
+          disabled
+          readOnly
+        />
+      </div>
     </StyledDiv>
   );
 };

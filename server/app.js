@@ -10,6 +10,7 @@ import bordersRouter from './router/borders'
 const app = express();
 const PORT = process.env.PORT || 5000;
 const ROOT = path.join(__dirname, "/public");
+const IMG_PATH = `${ROOT}/uploads/`;
 
 db();
 app.use(logger());
@@ -21,11 +22,8 @@ app.use("/api/users", usersRouter);
 app.use("/api/auth", authRouter);
 app.use("/api/borders", bordersRouter);
 app.use("/public/:imgname", (req, res) => {
-  // const mimeTpyebyname = req.params.imgname.split('.');
-  // const fullurl = `${ROOT}/uploads/${mimeTpyebyname[0]}.${mimeTpyebyname[1]}`;
-  const fullurl = `${ROOT}/uploads/${req.params.imgname}`;
-  res.set('Cache-Control', 'public, max-age=120'); // one year
-  res.sendFile(fullurl)
+  res.set('Cache-Control', 'public, max-age=240');
+  res.sendFile(`${IMG_PATH}${req.params.imgname}`)
 });
 app.use("*", (_, res) => res.sendFile(`${ROOT}/index.html`));
 app.listen(PORT, () => console.log(`app listening at http://localhost:${PORT}`));

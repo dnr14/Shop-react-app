@@ -5,6 +5,9 @@ import Indexes from "../mongodb/models/Indexes";
 import fs from 'fs';
 import path from 'path';
 
+
+const STATIC_PATH = "./public/uploads/";
+
 const limits = {
   fieldNameSize: 200, // 필드명 사이즈 최대값 (기본값 100bytes)
   filedSize: 1024 * 1024, // 필드 사이즈 값 설정 (기본값 1MB)
@@ -24,8 +27,6 @@ const fileFilter = (req, file, callback) => {
     return callback({ message: "*.jpg, *.jpeg, *.png 파일만 업로드가 가능합니다." }, false)
   }
 }
-
-const STATIC_PATH = "./public/uploads/";
 
 const router = express.Router();
 const upload = multer({
@@ -147,7 +148,6 @@ router.post('/', (req, res) => {
 
 });
 
-
 // 게시글 가져오기
 router.get('/', async (req, res) => {
   try {
@@ -155,11 +155,11 @@ router.get('/', async (req, res) => {
     const borders = await Borders.find()
       .sort({ borderId: 'desc' })
       .limit(5)
-      .select("-_id -__v");
+      .select("-password -_id -__v");
 
     res.json({
-      success: true,
       borders
+
     })
 
   } catch (error) {
@@ -170,7 +170,6 @@ router.get('/', async (req, res) => {
 // 추가로 가져오기
 router.get('/:borderId', async (req, res) => {
   const borderId = req.params.borderId;
-
   try {
     const borders = await Borders.find()
       .where("borderId")
@@ -179,9 +178,9 @@ router.get('/:borderId', async (req, res) => {
       .limit(5)
       .select("-password -_id -__v");
 
-    res.json({ data: borders })
+    res.json({ borders })
   } catch (error) {
-
+    console.log(error);
   }
 });
 

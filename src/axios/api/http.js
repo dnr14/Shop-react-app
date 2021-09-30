@@ -27,8 +27,9 @@ instance.interceptors.response.use(
     return config;
   },
   (err) => {
+
     const { response } = err;
-    const { status } = response;
+    const { status } = response ?? 500;
     if (status >= 500) {
       response.data = {
         sucess: false,

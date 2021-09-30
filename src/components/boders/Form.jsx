@@ -1,36 +1,10 @@
-import React, { memo, useCallback, useRef, useState } from "react";
+import React, { memo, useCallback, useRef } from "react";
 import { StyledForm } from "style/border/Form.styled";
 import Edit from "./Edit";
+import Gender from "./Gender";
 
 const Form = ({ handleBorderSubmit }) => {
-  const [gender, setGender] = useState({
-    man: true,
-    girl: false,
-  });
-
   const inputRef = useRef(null);
-
-  const handleGanderChange = (e) => {
-    if (e.target.name === "girl") {
-      setGender((prev) =>
-        prev.girl === true
-          ? prev
-          : {
-              man: false,
-              girl: true,
-            }
-      );
-    } else {
-      setGender((prev) =>
-        prev.man === true
-          ? prev
-          : {
-              man: true,
-              girl: false,
-            }
-      );
-    }
-  };
 
   const fileNameChange = useCallback(
     (e) => (inputRef.current.value = e.target.value),
@@ -41,29 +15,10 @@ const Form = ({ handleBorderSubmit }) => {
     <StyledForm onSubmit={handleBorderSubmit}>
       <div>
         <div>
-          <input type="text" name="id" placeholder="닉네임" autoComplete={"off"} />
+          <input type="text" name="id" placeholder="닉네임(익명)" autoComplete={"off"} />
           <input type="password" name="password" placeholder="비밀번호" />
         </div>
-        <div>
-          <label>
-            <input
-              type="checkbox"
-              name="man"
-              checked={gender.man}
-              onChange={handleGanderChange}
-            />
-            <span>👨‍🦲</span>
-          </label>
-          <label>
-            <input
-              type="checkbox"
-              name="girl"
-              checked={gender.girl}
-              onChange={handleGanderChange}
-            />
-            <span>👧</span>
-          </label>
-        </div>
+        <Gender />
       </div>
       <Edit />
       <div>

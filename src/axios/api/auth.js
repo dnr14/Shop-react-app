@@ -8,6 +8,5 @@ export async function SearchPassword(id, email) {
 }
 
 export async function PasswordUpdate(id, email, newPassword) {
-  console.log(id, email, newPassword);
   return http.put("/api/auth/search", { id, email, newPassword });
 }

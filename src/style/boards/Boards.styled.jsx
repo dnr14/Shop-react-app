@@ -10,8 +10,23 @@ export const Container = styled.main`
   ${maxWidthByBreakPointMobile(css`
     width: 85%;
   `)}
+
+  ${({ radius }) =>
+    radius?.length === 0 &&
+    css`
+      border-bottom-left-radius: 20px;
+      border-bottom-right-radius: 20px;
+    `}
 `;
 
 export const LayOut = styled.div`
   padding: 1rem;
+`;
+
+export const Empty = styled.div`
+  padding: 1rem;
+  text-align: center;
+  letter-spacing: 0.3rem;
+  font-size: 1.1rem;
+  font-weight: bold;
 `;

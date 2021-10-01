@@ -2,8 +2,8 @@ import mongoose from "mongoose";
 import bcrypt from 'bcrypt-nodejs';
 
 const Schema = mongoose.Schema;
-const bordersSchema = new Schema({
-  borderId: {
+const boardsSchema = new Schema({
+  boardsId: {
     type: Number,
     required: [true, "게시글 번호는 필수 입니다."],
     unique: true,
@@ -46,20 +46,20 @@ const bordersSchema = new Schema({
   }
 });
 
-bordersSchema.pre('save', function (next) {
-  const border = this;
-  if (!border.isModified('password')) {
+boardsSchema.pre('save', function (next) {
+  const boards = this;
+  if (!boards.isModified('password')) {
     return next();
   } else {
-    border.password = bcrypt.hashSync(border.password);
+    boards.password = bcrypt.hashSync(boards.password);
     return next();
   }
 })
 
-bordersSchema.methods.authenticate = function (password) {
-  const border = this;
-  return bcrypt.compareSync(password, border.password);
+boardsSchema.methods.authenticate = function (password) {
+  const boards = this;
+  return bcrypt.compareSync(String(password), boards.password);
 };
 
 
-export default mongoose.model('borders', bordersSchema);
+export default mongoose.model('boards', boardsSchema);

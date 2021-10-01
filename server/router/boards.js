@@ -1,7 +1,7 @@
 import express from "express";
 import multer from 'multer';
-import Borders from "../mongodb/models/Borders";
 import Indexes from "../mongodb/models/Indexes";
+import Boards from "../mongodb/models/Boards";
 import fs from 'fs';
 import path from 'path';
 
@@ -43,7 +43,6 @@ const upload = multer({
 
 // 게시글 생성
 router.post('/', (req, res) => {
-
   upload(req, res, err => {
     if (err) {
       res.status(503).json({ message: err.message });
@@ -66,13 +65,13 @@ router.post('/', (req, res) => {
       (async () => {
 
         try {
-          const indexes = await Indexes.findOne().where("name").equals("borders");
+          const indexes = await Indexes.findOne().where("name").equals("boards");
           if (indexes === null) {
             throw new Error("인덱스가 없습니다.");
           }
 
-          const border = new Borders({
-            borderId: indexes.currentIndex,
+          const boards = new Boards({
+            boardsId: indexes.currentIndex,
             createId: id,
             password: password,
             createAt: new Date().toLocaleString(),
@@ -85,10 +84,10 @@ router.post('/', (req, res) => {
 
 
 
-          const result = await border.save();
+          const result = await boards.save();
           res.status(200).json({ result });
 
-          await Indexes.updateOne({ name: "borders" }, {
+          await Indexes.updateOne({ name: "boards" }, {
             "$set": { "currentIndex": indexes.currentIndex + 1 }
           });
 
@@ -106,13 +105,13 @@ router.post('/', (req, res) => {
 
         try {
 
-          const indexes = await Indexes.findOne().where("name").equals("borders");
+          const indexes = await Indexes.findOne().where("name").equals("boards");
           if (indexes === null) {
             throw new Error("인덱스가 없습니다.");
           }
 
-          const border = new Borders({
-            borderId: indexes.currentIndex,
+          const boards = new Boards({
+            boardsId: indexes.currentIndex,
             createId: id,
             password: password,
             createAt: new Date().toLocaleString(),
@@ -124,15 +123,15 @@ router.post('/', (req, res) => {
           });
 
 
+          const result = await boards.save();
 
-          const result = await border.save();
-
-          await Indexes.updateOne({ name: "borders" }, {
+          await Indexes.updateOne({ name: "boards" }, {
             "$set": { "currentIndex": indexes.currentIndex + 1 }
           });
 
           res.status(200).json({ result });
         } catch (error) {
+          console.log(error);;
           fs.unlink(`${STATIC_PATH}${filename}`, (err) => {
             if (err === null) {
               res.status(503).json({ message: " 서버에서 오류" });
@@ -142,7 +141,6 @@ router.post('/', (req, res) => {
           });
         }
       })();
-
     }
   });
 
@@ -152,33 +150,30 @@ router.post('/', (req, res) => {
 router.get('/', async (req, res) => {
   try {
 
-    const borders = await Borders.find()
-      .sort({ borderId: 'desc' })
+    const boards = await Boards.find()
+      .sort({ boardsId: 'desc' })
       .limit(5)
       .select("-password -_id -__v");
 
-    res.json({
-      borders
-
-    })
-
+    res.json({ boards })
   } catch (error) {
-    console.log(error);
+    res.json({ error })
   }
 });
 
 // 추가로 가져오기
-router.get('/:borderId', async (req, res) => {
-  const borderId = req.params.borderId;
+router.get('/:boardsId', async (req, res) => {
+  const boardsId = req.params.boardsId;
+  console.log(boardsId);
   try {
-    const borders = await Borders.find()
-      .where("borderId")
-      .lt(borderId)
-      .sort({ borderId: 'desc' })
+    const boards = await Boards.find()
+      .where("boardsId")
+      .lt(boardsId)
+      .sort({ boardsId: 'desc' })
       .limit(5)
       .select("-password -_id -__v");
 
-    res.json({ borders })
+    res.json({ boards })
   } catch (error) {
     console.log(error);
   }
@@ -186,40 +181,41 @@ router.get('/:borderId', async (req, res) => {
 
 
 // 게시판 삭제
-router.delete('/:borderId', async (req, res) => {
-  const borderId = req.params.borderId;
+router.delete('/:boardsId', async (req, res) => {
+  const boardsId = req.params.boardsId;
   const pwd = req.body.password;
+
   try {
 
-    const border = await Borders.findOne().where('borderId').equals(borderId);
+    const boards = await Boards.findOne().where('boardsId').equals(boardsId);
 
-    if (!border.authenticate(pwd)) {
+    if (!boards.authenticate(pwd)) {
       const e = new Error("비밀번호가 틀립니다.");
       e.status = 403;
       throw e;
     }
 
-    if (border === null) {
+    if (boards === null) {
       const e = new Error("이미 삭제 된 게시판입니다.");
       e.status = 404;
       e.redirect = true;
       throw e;
     }
-
-    const result = await Borders.findOneAndRemove()
-      .where('borderId')
-      .equals(borderId)
+    const result = await Boards.findOneAndRemove()
+      .where('boardsId')
+      .equals(boardsId)
       .select("-_id -password -__v");
 
     const { fileName } = result;
     if (fileName) {
       fs.unlink(`${STATIC_PATH}${fileName}`, (err) =>
         err === null
-          ? res.json({ result })
+          ? res.json({ board: result })
           : res.status(503).json({ message: " 파일 삭제에서 오류" })
       );
+    } else {
+      res.json({ board: result });
     }
-
   } catch (error) {
     const { status } = error;
     if (error.redirect) {

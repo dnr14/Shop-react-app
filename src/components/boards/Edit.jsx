@@ -1,5 +1,5 @@
 import React, { useCallback, useState } from "react";
-import { StyledDiv } from "style/border/Edit.styled";
+import { StyledDiv } from "style/boards/Edit.styled";
 
 const Edit = () => {
   const [text, setText] = useState("");

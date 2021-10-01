@@ -1,5 +1,5 @@
 import React, { memo, useCallback, useRef } from "react";
-import { StyledForm } from "style/border/Form.styled";
+import { StyledForm } from "style/boards/Form.styled";
 import Edit from "./Edit";
 import Gender from "./Gender";
 

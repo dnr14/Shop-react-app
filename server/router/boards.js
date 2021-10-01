@@ -77,7 +77,7 @@ router.post('/', (req, res) => {
             createAt: new Date().toLocaleString(),
             body: comment,
             fileName: ``,
-            mimeType: ``,
+            format: ``,
             originalFileName: ``,
             gender: gender
           });
@@ -117,7 +117,7 @@ router.post('/', (req, res) => {
             createAt: new Date().toLocaleString(),
             body: comment,
             fileName: `${filename}`,
-            mimeType: `${mimetype.split('/')[1]}`,
+            format: `${mimetype.split('/')[1]}`,
             originalFileName: `${originalname}`,
             gender: gender
           });
@@ -179,7 +179,6 @@ router.get('/:boardsId', async (req, res) => {
   }
 });
 
-
 // 게시판 삭제
 router.delete('/:boardsId', async (req, res) => {
   const boardsId = req.params.boardsId;
@@ -226,6 +225,42 @@ router.delete('/:boardsId', async (req, res) => {
     } else {
       res.json({ message: error.message });
     }
+  }
+});
+
+// 게시판 수정
+router.put('/:boardsId', async (req, res) => {
+
+  try {
+    const { password } = req.body;
+    const { body } = req.body;
+    const { boardsId } = req.params;
+    console.log(boardsId, body, password);
+    const boards = await Boards.findOne().where("boardsId").equals(boardsId);
+
+    if (boards === null) {
+      const error = new Error("없는 게시물입니다.");
+      error.status = 400;
+      throw error;
+    }
+
+    if (!boards.authenticate(password)) {
+      const error = new Error("비밀번호가 틀립니다.");
+      error.status = 403;
+      throw error;
+    }
+    const result = await Boards.findOneAndUpdate({ boardsId }, {
+      "$set": { body }
+    }, { new: true }).select("-_id -__v -password")
+
+    res.json({ board: result });
+  } catch (error) {
+    console.log(error);
+    const { status } = error;
+    if (status) {
+      return res.status(status).json({ message: error.message });
+    }
+    res.json({ error });
   }
 });
 

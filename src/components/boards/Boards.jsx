@@ -9,7 +9,7 @@ const Boards = ({
   handleBorderSubmit,
   boards,
   observer,
-  modifyBoard,
+  openUpdateModal,
   removeBoard,
   isLoading,
 }) => {
@@ -30,7 +30,7 @@ const Boards = ({
                 <Board
                   key={board.boardsId}
                   board={board}
-                  modifyBoard={modifyBoard}
+                  openUpdateModal={openUpdateModal}
                   removeBoard={removeBoard}
                 />
               ))

@@ -40,7 +40,7 @@ const boardsSchema = new Schema({
     type: String,
     select: true
   },
-  mimeType: {
+  format: {
     type: String,
     select: true
   }

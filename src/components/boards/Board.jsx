@@ -1,7 +1,7 @@
 import React, { memo, useCallback } from "react";
 import { StyledDiv } from "style/boards/Board.styled";
 
-const Board = ({ board, removeBoard, modifyBoard }) => {
+const Board = ({ board, removeBoard, openUpdateModal }) => {
   const getNewlineCount = useCallback((body) => {
     const regex = /(\\r|\\n|\r|\n)/g;
     let count = 0;
@@ -36,7 +36,7 @@ const Board = ({ board, removeBoard, modifyBoard }) => {
           <span>{board.gender ? "👧" : "👨‍🦲"}</span>
         </div>
         <div>
-          <button onClick={modifyBoard(board.boardsId)}>UPDATE</button>
+          <button onClick={openUpdateModal(board.boardsId)}>UPDATE</button>
           <button onClick={removeBoard(board.boardsId)}>DELETE</button>
         </div>
       </div>

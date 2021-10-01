@@ -1,12 +1,16 @@
 import Boards from "components/boards/Boards";
 import React, { useCallback, useEffect, useRef, useState } from "react";
 import * as boardsApi from "axios/api/boards";
-import axios from "axios";
+import UpdateModal from "components/boards/UpdateModal";
 
 const BoardsContainer = () => {
-  const [boards, setBorders] = useState(null);
+  const [boards, setBoards] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
   const observerRef = useRef();
+  const [updateModalShow, setUpdateModalShow] = useState({
+    visible: false,
+    data: null,
+  });
   const lastRef = useRef(false);
 
   const preImgLoading = useCallback(
@@ -35,7 +39,7 @@ const BoardsContainer = () => {
             lastRef.current = true;
             return observer.unobserve(entry.target);
           }
-          setBorders((prev) => [...prev, ...response.data.boards]);
+          setBoards((prevBoards) => [...prevBoards, ...response.data.boards]);
         };
         timer = setTimeout(hasMore, 1000);
       }
@@ -53,12 +57,13 @@ const BoardsContainer = () => {
       formData.append("id", e.target.id.value);
       formData.append("password", e.target.password.value);
       formData.append("gender", e.target.man.checked === true ? 0 : 1);
-      setIsLoading((prev) => !prev);
+      setIsLoading((prevIsLoading) => !prevIsLoading);
       const response = await boardsApi.createBoard(formData);
-      setIsLoading((prev) => !prev);
-      setBorders((prev) => [response.data.result, ...prev]);
+      setBoards((prevBoards) => [response.data.result, ...prevBoards]);
     } catch (error) {
-      throw error;
+      alert(error.response.data.message);
+    } finally {
+      setIsLoading((prevIsLoading) => !prevIsLoading);
     }
   }, []);
 
@@ -69,48 +74,89 @@ const BoardsContainer = () => {
         setIsLoading((prev) => !prev);
         const response = await boardsApi.getBoards();
         await preImgLoading(response.data.boards);
-        setIsLoading((prev) => !prev);
-        setBorders(response.data.boards);
+        setBoards(response.data.boards);
       } catch (error) {
-        console.log(error);
+        alert(error.response.data.message);
+      } finally {
+        setIsLoading((prev) => !prev);
       }
     })();
   }, [preImgLoading]);
 
-  const modifyBoard = useCallback((id) => (e) => {}, []);
+  const openUpdateModal = useCallback(
+    (boardsId) => () => {
+      const [currentBoard] = boards.filter((board) => board.boardsId === boardsId);
+      setUpdateModalShow((prevUpdateModalState) => ({
+        ...prevUpdateModalState,
+        visible: !prevUpdateModalState.visible,
+        data: currentBoard,
+      }));
+    },
+    [boards]
+  );
+
   const removeBoard = useCallback(
-    (id) => () => {
+    (boardsId) => () => {
       const pwd = prompt("비밀번호를 입력하세요.");
       if (pwd) {
-        setIsLoading((prev) => !prev);
-        axios
-          .delete(`/api/boards/${id}`, {
-            data: { password: pwd },
-          })
-          .then((response) => {
-            setIsLoading((prev) => !prev);
-            setBorders((prev) =>
-              prev.filter((board) => board.boardsId !== response.data.board.boardsId)
+        setIsLoading((prevIsLoading) => !prevIsLoading);
+        (async () => {
+          try {
+            const response = await boardsApi.deleteBoard(boardsId, pwd);
+            const currentBoard = response.data.board;
+            setBoards((prevBoards) =>
+              prevBoards.filter(
+                (prevBoard) => prevBoard.boardsId !== currentBoard.boardsId
+              )
             );
-          })
-          .catch((error) => {
+          } catch (error) {
             alert(error.response.data.message);
-            setIsLoading((prev) => !prev);
-          });
+          } finally {
+            setIsLoading((prevIsLoading) => !prevIsLoading);
+          }
+        })();
       }
     },
     []
   );
 
+  const modifyBoard = (boardsId) => async (e) => {
+    e.preventDefault();
+    setIsLoading((prevIsLoading) => !prevIsLoading);
+    try {
+      const updateBody = e.target.updateBody.value;
+      const password = e.target.password.value;
+      const response = await boardsApi.modifyBoard(boardsId, updateBody, password);
+      const updateBoard = response.data.board;
+      setBoards((prevBoards) => {
+        const a = prevBoards.map((prevBoard) =>
+          prevBoards.boardsId === updateBoard.boardsId ? { ...updateBoard } : prevBoard
+        );
+        console.log(a);
+
+        return a;
+      });
+    } catch (error) {
+      alert(error.data.message);
+    } finally {
+      setIsLoading((prevIsLoading) => !prevIsLoading);
+    }
+  };
+
   return (
     <>
       <Boards
         handleBorderSubmit={handleBorderSubmit}
-        modifyBoard={modifyBoard}
+        openUpdateModal={openUpdateModal}
         removeBoard={removeBoard}
         observer={observer}
         boards={boards}
         isLoading={isLoading}
+      />
+      <UpdateModal
+        updateModalShow={updateModalShow}
+        setUpdateModalShow={setUpdateModalShow}
+        modifyBoard={modifyBoard}
       />
     </>
   );

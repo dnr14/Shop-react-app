@@ -42,7 +42,7 @@ const Board = ({ board, removeBoard, openUpdateModal }) => {
       </div>
       <div>
         <textarea
-          defaultValue={board.body}
+          value={board.body}
           rows={getNewlineCount(board.body)}
           disabled={true}
           readOnly={true}
@@ -52,4 +52,5 @@ const Board = ({ board, removeBoard, openUpdateModal }) => {
   );
 };
 
-export default memo(Board);
+const ifDifferentRedraw = (prev, next) => prev.board.body === next.board.body;
+export default memo(Board, ifDifferentRedraw);

@@ -1,13 +1,30 @@
-import React, { useCallback } from "react";
-import { Mobal, Fiexd } from "style/boards/UpdateModal.styled";
+import React, { memo, useCallback, useEffect, useRef } from "react";
+import { Mobal, Fiexd, Cancel } from "style/boards/UpdateModal.styled";
 import PropTypes from "prop-types";
 
 const UpdateModal = ({ updateModalShow, setUpdateModalShow, modifyBoard }) => {
   const currentBoard = updateModalShow.data ?? {};
-  const cancel = useCallback(
-    () => setUpdateModalShow({ visible: false, data: null }),
-    [setUpdateModalShow]
-  );
+  const pwdRef = useRef(null);
+  const textRef = useRef(null);
+  const cancel = useCallback(() => {
+    pwdRef.current.value = "";
+    setUpdateModalShow({ visible: false, data: null });
+  }, [setUpdateModalShow]);
+
+  useEffect(() => {
+    textRef.current.value = currentBoard.body ?? "";
+  }, [currentBoard.body]);
+
+  useEffect(() => {
+    if (updateModalShow.data !== null) {
+      document.body.style.cssText = `
+        overflow-y: hidden;
+        `;
+    }
+    return () => {
+      document.body.style.cssText = "";
+    };
+  }, [updateModalShow]);
 
   return (
     <Fiexd visible={updateModalShow.visible}>
@@ -15,22 +32,41 @@ const UpdateModal = ({ updateModalShow, setUpdateModalShow, modifyBoard }) => {
         <form onSubmit={modifyBoard(currentBoard.boardsId)}>
           <header>
             <h1>댓글 수정</h1>
+            <Cancel>
+              <div onClick={cancel}>
+                <span></span>
+                <span></span>
+              </div>
+            </Cancel>
           </header>
           <main>
             <section>
-              <div>작성자 : {currentBoard.createId}</div>
               <div>
-                비밀번호 <input type="password" name="password" defaultValue="" />
+                <span>작성자</span>
+                <span>{currentBoard.createId}</span>
               </div>
-              <textarea name="updateBody" defaultValue={currentBoard.body} />
+              <div>
+                <span>비밀번호</span>
+                <input
+                  type="password"
+                  name="password"
+                  ref={pwdRef}
+                  autoComplete="current-passowrd"
+                  placeholder="비밀번호"
+                />
+              </div>
+              <div>
+                <textarea
+                  name="updateBody"
+                  placeholder="수정 할 내용을 입력하세요."
+                  ref={textRef}
+                />
+              </div>
             </section>
           </main>
           <footer>
             <div>
               <button type="submit">수 정</button>
-              <button type="button" onClick={cancel}>
-                취 소
-              </button>
             </div>
           </footer>
         </form>
@@ -50,4 +86,4 @@ UpdateModal.defaultProps = {
   },
 };
 
-export default UpdateModal;
+export default memo(UpdateModal);

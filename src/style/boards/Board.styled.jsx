@@ -15,6 +15,7 @@ export const StyledDiv = styled.div`
         display: flex;
         align-items: center;
         flex-wrap: wrap;
+        gap: 10px;
         span {
           display: inline-block;
           letter-spacing: 0.1rem;
@@ -68,6 +69,7 @@ export const StyledDiv = styled.div`
             border: none;
             position: relative;
             cursor: pointer;
+            color: #fff;
 
             &::after {
               position: absolute;

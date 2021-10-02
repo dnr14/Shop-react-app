@@ -1,14 +1,14 @@
 import React, { useCallback, useState } from "react";
 import { StyledDiv } from "style/boards/Edit.styled";
 
-const Edit = () => {
+const Edit = ({ register }) => {
   const [text, setText] = useState("");
   const handleChange = useCallback((e) => setText(e.target.value), []);
 
   return (
     <StyledDiv>
       <textarea
-        name="edit"
+        {...register("edit")}
         placeholder="댓글을 입력해주세요."
         value={text}
         onChange={handleChange}

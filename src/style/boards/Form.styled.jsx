@@ -18,6 +18,7 @@ export const StyledForm = styled.form`
         flex: 1;
         &:first-child {
           display: flex;
+          flex-direction: column;
           gap: 10px;
           ${maxWidthByBreakPointSmaillMobile(
             css`
@@ -26,10 +27,9 @@ export const StyledForm = styled.form`
           )}
 
           input {
-            flex: 1;
             padding: 0.3rem;
             font-weight: bold;
-            letter-spacing: 0.05rem;
+            letter-spacing: 0.1rem;
             border-radius: 5px;
             border: 0;
             box-shadow: 0 0 2px rgba(149, 165, 166, 1);
@@ -48,6 +48,11 @@ export const StyledForm = styled.form`
             &:focus::-webkit-input-placeholder {
               opacity: 0;
             }
+          }
+
+          span {
+            color: red;
+            font-size: 0.8rem;
           }
         }
 

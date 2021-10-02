@@ -12,7 +12,7 @@ export const Container = styled.main`
   `)}
 
   ${({ radius }) =>
-    radius?.length === 0 &&
+    radius.length === 0 &&
     css`
       border-bottom-left-radius: 20px;
       border-bottom-right-radius: 20px;

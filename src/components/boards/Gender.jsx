@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-const Gender = () => {
+const Gender = ({ register }) => {
   const [gender, setGender] = useState({
     man: true,
     girl: false,
@@ -32,7 +32,7 @@ const Gender = () => {
       <label>
         <input
           type="checkbox"
-          name="man"
+          {...register("man")}
           checked={gender.man}
           onChange={handleGanderChange}
         />
@@ -41,7 +41,7 @@ const Gender = () => {
       <label>
         <input
           type="checkbox"
-          name="girl"
+          {...register("girl")}
           checked={gender.girl}
           onChange={handleGanderChange}
         />

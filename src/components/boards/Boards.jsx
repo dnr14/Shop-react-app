@@ -16,7 +16,7 @@ const Boards = ({
   return (
     <StyledMaxWidth>
       <Loading loading={isLoading} />
-      <Container radius={boards}>
+      <Container radius={boards.length}>
         <section>
           <LayOut>
             <div>
@@ -25,7 +25,7 @@ const Boards = ({
             <Form handleBorderSubmit={handleBorderSubmit} />
           </LayOut>
           <LayOut>
-            {boards && boards.length ? (
+            {boards?.length ? (
               boards.map((board) => (
                 <Board
                   key={board.boardsId}
@@ -37,8 +37,8 @@ const Boards = ({
             ) : (
               <Empty>게시글이 없습니다.</Empty>
             )}
+            <div ref={observer} />
           </LayOut>
-          <div ref={observer} />
         </section>
       </Container>
     </StyledMaxWidth>

@@ -106,6 +106,17 @@ const GlobalStyled = createGlobalStyle`
     h1{
       font-size: inherit;
     }
+    button{
+      display: inline-block;
+      font-family: inherit;
+      vertical-align: middle;
+      cursor: pointer ;
+      white-space: nowrap;
+      text-decoration: none;
+      background: transparent; 
+      outline: 0;
+      border: none;
+    }
 
 `;
 

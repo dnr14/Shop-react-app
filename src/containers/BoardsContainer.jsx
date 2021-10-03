@@ -82,7 +82,7 @@ const BoardsContainer = () => {
         await preImgLoading(response.data.boards);
         setBoards(response.data.boards);
       } catch (error) {
-        alert(error.response.data.message);
+        alert(error.response?.data?.message);
       } finally {
         setIsLoading((prev) => !prev);
       }

@@ -118,8 +118,8 @@ router.post('/search', async (req, res) => {
       .where("id")
       .equals(id)
       .where('email')
-      .equals(email).
-      select("-_id")
+      .equals(email)
+      .select("-_id")
 
 
     if (!user) {
@@ -168,9 +168,6 @@ router.put('/search', async (req, res) => {
 router.get('/verify', verifyToken, (req, res) => {
   res.json(req.decoded);
 });
-
-
-
 
 
 // // res.writeHead(503, { 'Content-type': 'application/json; charset=euc-kr' });

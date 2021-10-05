@@ -5,7 +5,7 @@ const BREAK_POINT_TABLET = 992;
 const BREAK_POINT_PC = 1200;
 
 const MOBILE_FONT_SIZE = css`
-  font-size: 12px;
+  font-size: 10px;
 `;
 const TABLE_FONT_SIZE = css`
   font-size: 13px;
@@ -48,8 +48,6 @@ export const minWidthByBreakPointTable = (props) => css`
 `;
 
 const GlobalStyled = createGlobalStyle`
-
-    @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100;300;400;500;700;900&display=swap');
 
    *{
       font-family: 'Noto Sans KR', sans-serif;
@@ -116,6 +114,16 @@ const GlobalStyled = createGlobalStyle`
       background: transparent; 
       outline: 0;
       border: none;
+    }
+
+    select::-ms-expand { 
+      display: none;
+    }
+    select {
+      -o-appearance: none;
+      -webkit-appearance: none;
+      -moz-appearance: none;
+      appearance: none;
     }
 
 `;

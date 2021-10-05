@@ -19,16 +19,31 @@ const ExpenditureContainer = ({ state, handleSubmit, handleChange }) => {
           error={state.dateError}
           handleChange={handleChange}
         >
-          지출날짜
+          <span>지출 날짜</span>
         </DateSelect>
-        <PriceInput error={state.priceError} price={state.price} handleChange={handleChange}>
-          지출 가격
+        <PriceInput
+          error={state.priceError}
+          price={state.price}
+          handleChange={handleChange}
+        >
+          <span>지출 가격</span>
         </PriceInput>
-        <CategorySelect error={state.categoryError} category={state.category} handleChange={handleChange}>
-          지출 카테고리
+        <CategorySelect
+          error={state.categoryError}
+          category={state.category}
+          handleChange={handleChange}
+        >
+          <span>지출 카테고리</span>
         </CategorySelect>
 
-        <Submit color="#fff" padding="10px" fontWeight="bold" backgroundColor="rgba(46,204,113,1)" borderRadius="10px">
+        <Submit
+          color="#fff"
+          padding="10px"
+          fontWeight="bold"
+          width="100%"
+          backgroundColor="rgba(46,204,113,1)"
+          borderRadius="10px"
+        >
           등록
         </Submit>
       </form>

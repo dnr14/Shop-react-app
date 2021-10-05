@@ -17,19 +17,20 @@ const IncomeContainer = ({ state, handleSubmit, handleChange }) => {
           minutes={state.dates.minutes}
           handleChange={handleChange}
         >
-          수입 날짜
+          <span>수입 날짜</span>
         </DateSelect>
         <PriceInput
           error={state.priceError}
           price={state.price}
           handleChange={handleChange}
         >
-          수입 가격
+          <span>수입 가격</span>
         </PriceInput>
         <Submit
           color="#fff"
           padding="10px"
           font-weight="bold"
+          width="100%"
           backgroundColor="rgba(46,204,113,1)"
           borderRadius="10px"
         >

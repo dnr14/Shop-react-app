@@ -1,30 +1,29 @@
 import React, { memo } from "react";
-import { setNumberThreeCommaDraw } from "utils/NumberUtil";
+import { getNumberThreeCommaDraw } from "utils/NumberUtil";
 import Error from "./Error";
 import InsertTableLayout from "./InsertTableLayout";
+import { StyledInput } from "style/insert/PriceInput.styled";
+import { StyledDiv } from "style/insert/DateSelect.styled";
 
 const PricetAreEqual = (prevProps, nextProps) => {
   if (prevProps.error !== nextProps.error) return false;
   if (nextProps.price === prevProps.price) return true;
 };
 
-const InsertInput = ({ error, children, price, handleChange }) => {
+const PriceInput = ({ error, children, price, handleChange }) => {
   return (
     <InsertTableLayout>
-      <div>{children}</div>
-      <div>
-        <input
-          type="text"
-          name="price"
-          value={price && setNumberThreeCommaDraw(price)}
-          onChange={handleChange}
-          placeholder="0원"
-        />
-        <span>원</span>
-      </div>
+      <StyledDiv>{children}</StyledDiv>
+      <StyledInput
+        type="text"
+        name="price"
+        value={price && getNumberThreeCommaDraw(price)}
+        onChange={handleChange}
+        placeholder="0원"
+      />
       <Error>{error}</Error>
     </InsertTableLayout>
   );
 };
 
-export default memo(InsertInput, PricetAreEqual);
+export default memo(PriceInput, PricetAreEqual);

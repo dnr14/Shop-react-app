@@ -1,25 +1,8 @@
-import Horus from "components/insert/Horus";
-import Minutes from "components/insert/Minutes";
 import React, { memo } from "react";
-import { maxWidthByBreakPointMobile } from "style/Styled";
-import styled, { css } from "styled-components";
 import Error from "./Error";
 import InsertTableLayout from "./InsertTableLayout";
-
-const StyledDiv = styled.div`
-  display: flex;
-  flex-wrap: wrap;
-  gap: 10px;
-
-  ${maxWidthByBreakPointMobile(css`
-    input {
-      width: 100%;
-    }
-    select {
-      flex: 1;
-    }
-  `)}
-`;
+import { StyledDiv } from "style/insert/DateSelect.styled";
+import SelectBox from "./SelectBox";
 
 const dateSelectAreEqual = (prevProps, nextProps) => {
   if (prevProps.error !== nextProps.error) return false;
@@ -44,9 +27,12 @@ const DateSelect = memo(function DateSelect({
     <InsertTableLayout>
       <StyledDiv>{children}</StyledDiv>
       <StyledDiv>
-        <input type="date" name="date" value={selectedDate} onChange={handleChange} />
-        <Horus hours={hours} handleChange={handleChange} />
-        <Minutes minutes={minutes} handleChange={handleChange} />
+        <SelectBox
+          hours={hours}
+          minutes={minutes}
+          selectedDate={selectedDate}
+          handleChange={handleChange}
+        />
       </StyledDiv>
       <Error>{error}</Error>
     </InsertTableLayout>

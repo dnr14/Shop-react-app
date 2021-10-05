@@ -4,8 +4,10 @@ import queryString from "query-string";
 import Pagination from "components/select/Pagination";
 import DataSort from "components/select/DataSort";
 import DataTable from "components/select/DataTable";
+import { useHistory } from "react-router";
 
-const ExpenditureContainer = ({ history: { location } }) => {
+const ExpenditureContainer = () => {
+  const { location } = useHistory();
   const { pathname, search } = location;
   const [pageNationState] = useState(getPageNationInitialData("expenditureData"));
   const currentQuery = useMemo(() => queryString.parse(search), [search]);
@@ -14,11 +16,11 @@ const ExpenditureContainer = ({ history: { location } }) => {
     return getDataSort(getCurrentPage(pageNationState, currentQuery), currentQuery);
   }, [pageNationState, currentQuery]);
 
-  const text = useMemo(
+  const sortText = useMemo(
     () => ({
       date: "지출 날짜",
       price: "지출",
-      insertDate: "등록 날짜",
+      insertDate: "등록날짜",
       category: "카테고리",
     }),
     []
@@ -26,7 +28,12 @@ const ExpenditureContainer = ({ history: { location } }) => {
 
   return (
     <>
-      <DataSort pathname={pathname} currentQuery={currentQuery} text={text} isCategory />
+      <DataSort
+        pathname={pathname}
+        currentQuery={currentQuery}
+        text={sortText}
+        isCategory
+      />
       <DataTable data={showPages} isCategory />
       <Pagination
         pathname={pathname}

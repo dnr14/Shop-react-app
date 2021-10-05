@@ -23,7 +23,7 @@ const Routers = () => {
         <PrivateRouter path="/me" component={UserContainer} />
         <PrivateRouter path="/logout" component={LogoutContainer} />
         <Route path="/boder" component={BoardsContainer} />
-        <Route path="/" component={NotFount} exact />
+        <Route path="/" component={Home} exact />
         <Route component={NotFount} />
       </Switch>
     </>

@@ -1,5 +1,5 @@
 const PAGENATION_NUMBER_COUNT = 5; //페이지네이션 번호 개수
-const PAGE_SHOW_COUNT = 5; // 한 페이지에 보여줄 개수
+const PAGE_SHOW_COUNT = 10; // 한 페이지에 보여줄 개수
 
 export function getCurrentPage(pageNationState, currentQuery) {
   const { data } = pageNationState;

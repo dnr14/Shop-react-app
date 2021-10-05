@@ -49,11 +49,6 @@ export const StyledForm = styled.form`
               opacity: 0;
             }
           }
-
-          span {
-            color: red;
-            font-size: 0.8rem;
-          }
         }
 
         &:last-child {
@@ -128,4 +123,9 @@ export const StyledForm = styled.form`
       }
     }
   }
+`;
+
+export const Errors = styled.span`
+  color: red !important;
+  font-size: 0.8rem !important;
 `;

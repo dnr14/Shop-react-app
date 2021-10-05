@@ -1,21 +1,6 @@
 import { Col, Row } from "style/Styled";
 import React, { memo } from "react";
-import styled, { css } from "styled-components";
-
-const StyledButton = styled.button`
-  ${css`
-    ${({ customStyle }) => customStyle};
-  `}
-  cursor: pointer;
-  box-shadow: 2px 2px 5px rgba(52, 73, 94, 1);
-  border: 1px solid transparent;
-
-  &:active {
-    background-color: #fff;
-    color: #000;
-    border: 1px solid;
-  }
-`;
+import { StyledButton } from "style/insert/Submit.styled";
 
 const Submit = memo(function Submit({ children, ...rest }) {
   return (

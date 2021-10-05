@@ -38,7 +38,6 @@ export const StyledDiv = styled.div`
       & > img {
         padding: 1rem 0;
         max-width: 100%;
-        max-height: auto;
         object-fit: cover;
       }
     }

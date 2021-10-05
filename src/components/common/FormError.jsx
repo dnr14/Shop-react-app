@@ -6,7 +6,7 @@ import PropTypes from "prop-types";
 
 const StyledDiv = styled.div`
   text-align: center;
-  margin: 5px 0;
+  margin: 0.5rem 0;
   color: #c0392b;
 `;
 

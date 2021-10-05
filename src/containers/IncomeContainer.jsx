@@ -12,10 +12,11 @@ const IncomeContainer = ({ history: { location } }) => {
   const currentQuery = useMemo(() => queryString.parse(search), [search]);
   const showPages = useMemo(() => {
     if (currentQuery.page === undefined) currentQuery.page = 1;
-    return getDataSort(getCurrentPage(pageNationState, currentQuery), currentQuery);
+    const currentPage = getCurrentPage(pageNationState, currentQuery);
+    return getDataSort(currentPage, currentQuery);
   }, [pageNationState, currentQuery]);
 
-  const text = useMemo(
+  const sortText = useMemo(
     () => ({
       date: "수입 날짜",
       price: "수입",
@@ -26,7 +27,7 @@ const IncomeContainer = ({ history: { location } }) => {
 
   return (
     <>
-      <DataSort pathname={pathname} currentQuery={currentQuery} text={text} />
+      <DataSort pathname={pathname} currentQuery={currentQuery} text={sortText} />
       <DataTable data={showPages} />
       <Pagination
         pathname={pathname}

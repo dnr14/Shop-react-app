@@ -26,7 +26,6 @@ const BoardsContainer = () => {
     const observerCallback = ([entry], observer) => {
       // 첫 랜더 후 api 통해 borders를 가져오기 전에 타겟에 접근 했다면 실행 x
       if (entry.isIntersecting && boards.length !== 0) {
-        console.log("감지");
         //서버에게 자주 호출하는 걸 방지 하기 위해  디바운스
         if (timer) clearTimeout(timer);
         const hasMore = async () => {
@@ -47,31 +46,30 @@ const BoardsContainer = () => {
     observerRef.current.observe(node);
   };
 
-  const handleBorderSubmit = useCallback(async (data) => {
-    try {
-      // e.preventDefault();
-      console.log(data);
-      const { id, edit, man, password, file } = data;
-      const formData = new FormData();
-      // formData.append("photo", e.target.file.files[0]);
-      // formData.append("comment", e.target.edit.value);
-      // formData.append("id", e.target.id.value);
-      // formData.append("password", e.target.password.value);
-      // formData.append("gender", e.target.man.checked === true ? 0 : 1);
-      formData.append("photo", file[0]);
-      formData.append("comment", edit);
-      formData.append("id", id);
-      formData.append("password", password);
-      formData.append("gender", man === true ? 0 : 1);
-      setIsLoading((prevIsLoading) => !prevIsLoading);
-      const response = await boardsApi.createBoard(formData);
-      setBoards((prevBoards) => [response.data.result, ...prevBoards]);
-    } catch (error) {
-      alert(error.response.data.message);
-    } finally {
-      setIsLoading((prevIsLoading) => !prevIsLoading);
-    }
-  }, []);
+  // form 데이터 전송
+  const handleBorderSubmit = useCallback(
+    (reset) => async (data) => {
+      try {
+        console.log(data);
+        const { id, edit, man, password, file } = data;
+        const formData = new FormData();
+        formData.append("photo", file[0]);
+        formData.append("comment", edit);
+        formData.append("id", id);
+        formData.append("password", password);
+        formData.append("gender", man === true ? 0 : 1);
+        setIsLoading((prevIsLoading) => !prevIsLoading);
+        const response = await boardsApi.createBoard(formData);
+        setBoards((prevBoards) => [response.data.result, ...prevBoards]);
+      } catch (error) {
+        alert(error.response.data.message);
+      } finally {
+        setIsLoading((prevIsLoading) => !prevIsLoading);
+        reset();
+      }
+    },
+    []
+  );
 
   // 첫 마운팅 후 통신
   useEffect(() => {
@@ -127,12 +125,10 @@ const BoardsContainer = () => {
   );
 
   const modifyBoard = useCallback(
-    (boardsId) => async (e) => {
-      e.preventDefault();
+    (boardsId, reset) => async (data) => {
       setIsLoading((prevIsLoading) => !prevIsLoading);
       try {
-        const updateBody = e.target.updateBody.value;
-        const password = e.target.password.value;
+        const { updateBody, password } = data;
         const response = await boardsApi.modifyBoard(boardsId, updateBody, password);
         if (!response.data?.board) throw new Error("서버에서 데이터를 못받아왔습니다.");
         const updateBoard = response.data.board;
@@ -141,6 +137,7 @@ const BoardsContainer = () => {
             board.boardsId === updateBoard.boardsId ? updateBoard : board
           )
         );
+        reset();
         setUpdateModalShow({ visible: false, data: null });
       } catch (error) {
         alert(error.data.message);
@@ -150,7 +147,6 @@ const BoardsContainer = () => {
     },
     []
   );
-
   return (
     <>
       <Boards

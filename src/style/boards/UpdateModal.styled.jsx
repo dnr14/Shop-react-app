@@ -123,6 +123,11 @@ export const Mobal = styled.div`
                 outline: none;
               }
             }
+            span {
+              display: inline-block;
+              padding-left: 1rem;
+              padding-top: 1rem;
+            }
           }
         }
       }

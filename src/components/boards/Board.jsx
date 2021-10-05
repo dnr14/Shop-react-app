@@ -1,16 +1,22 @@
 import React, { memo, useCallback } from "react";
 import { StyledDiv } from "style/boards/Board.styled";
+import { getNewlineCount as textUtile } from "utils/TextUtil";
 
 const Board = ({ board, removeBoard, openUpdateModal }) => {
-  const getNewlineCount = useCallback((body) => {
-    const regex = /(\\r|\\n|\r|\n)/g;
-    let count = 0;
+  const getNewlineCount = useCallback((body) => textUtile(body), []);
+  const dateFormatChange = useCallback((data) => {
+    let newData = `${data}초`;
     while (true) {
-      const result = regex.exec(body);
-      if (result === null) break;
-      count += 1;
+      const yyyymmdd_index = newData.indexOf(".");
+      const hhmmss_index = newData.indexOf(":");
+      if (yyyymmdd_index === -1) break;
+      if (yyyymmdd_index === 4) newData = newData.replace(".", "년");
+      if (yyyymmdd_index === 8) newData = newData.replace(".", "월");
+      if (yyyymmdd_index === 11) newData = newData.replace(".", "일");
+      if (hhmmss_index === 17) newData = newData.replace(":", `시 `);
+      if (hhmmss_index === 21) newData = newData.replace(":", `분 `);
     }
-    return count;
+    return newData;
   }, []);
 
   return (
@@ -22,7 +28,7 @@ const Board = ({ board, removeBoard, openUpdateModal }) => {
         </div>
         <div>
           <span>작성시간 </span>
-          <span>{board.createAt}</span>
+          <span>{dateFormatChange(board.createAt)}</span>
         </div>
       </div>
       <div>

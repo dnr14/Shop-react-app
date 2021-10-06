@@ -5,7 +5,7 @@ import Gender from "./Gender";
 import { useForm } from "react-hook-form";
 import { isSpecialSymbol, isKoreaLengCheck, isWhiteSpaceCheck } from "utils/Validation";
 
-const Form = ({ handleBorderSubmit }) => {
+const Form = ({ handleBoardsSubmit }) => {
   const {
     register,
     handleSubmit,
@@ -21,7 +21,7 @@ const Form = ({ handleBorderSubmit }) => {
   );
 
   return (
-    <StyledForm onSubmit={handleSubmit(handleBorderSubmit(reset))}>
+    <StyledForm onSubmit={handleSubmit(handleBoardsSubmit(reset))}>
       <div>
         <div>
           <input

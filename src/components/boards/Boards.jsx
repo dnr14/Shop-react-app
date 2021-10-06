@@ -6,7 +6,7 @@ import Board from "./Board";
 import Loading from "components/common/Loading";
 
 const Boards = ({
-  handleBorderSubmit,
+  handleBoardsSubmit,
   boards,
   observer,
   openUpdateModal,
@@ -22,7 +22,7 @@ const Boards = ({
             <div>
               <span>게시글 {boards?.length}</span>
             </div>
-            <Form handleBorderSubmit={handleBorderSubmit} />
+            <Form handleBoardsSubmit={handleBoardsSubmit} />
           </LayOut>
           <LayOut>
             {boards?.length ? (

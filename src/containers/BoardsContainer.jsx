@@ -47,7 +47,7 @@ const BoardsContainer = () => {
   };
 
   // form 데이터 전송
-  const handleBorderSubmit = useCallback(
+  const handleBoardsSubmit = useCallback(
     (reset) => async (data) => {
       try {
         console.log(data);
@@ -150,7 +150,7 @@ const BoardsContainer = () => {
   return (
     <>
       <Boards
-        handleBorderSubmit={handleBorderSubmit}
+        handleBoardsSubmit={handleBoardsSubmit}
         openUpdateModal={openUpdateModal}
         removeBoard={removeBoard}
         observer={observer}

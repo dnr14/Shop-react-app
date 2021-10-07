@@ -1,5 +1,5 @@
 const PAGENATION_NUMBER_COUNT = 5; //페이지네이션 번호 개수
-const PAGE_SHOW_COUNT = 10; // 한 페이지에 보여줄 개수
+const PAGE_SHOW_COUNT = 5; // 한 페이지에 보여줄 개수
 
 export function getCurrentPage(pageNationState, currentQuery) {
   const { data } = pageNationState;
@@ -30,7 +30,7 @@ const getDataSliceByIndex = (data, startPage, endPage) => {
   return data
     .reverse()
     .slice(startPage, endPage)
-    .map((itme, idx) => ({ ...itme, idx: startPage + 1 + idx }));
+    .map((item, idx) => ({ ...item, idx: startPage + 1 + idx, }));
 }
 
 
@@ -51,13 +51,12 @@ export function getPageNationNumbers(pageGroup, lastPage, lastPageGroup) {
 
 
 export function getDataSort(data, sort) {
+  if (data.length === 0) return;
   const { date, price, insertDate, category } = sort;
 
   const [first] = data;
   let { idx } = first;
   let resultArray = data;
-
-
 
   if (category === undefined && date === undefined && price === undefined && insertDate === undefined) return data;
 
@@ -83,7 +82,7 @@ export function getDataSort(data, sort) {
 
   if (category !== undefined) {
     resultArray =
-      insertDate === "desc"
+      category === "desc"
         ? data.sort((a, b) => (a.category <= b.category ? 1 : -1))
         : data.sort((a, b) => (a.category >= b.category ? 1 : -1));
   }

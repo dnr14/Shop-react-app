@@ -52,10 +52,6 @@ export const StyledDiv = styled.div`
       }
     }
 
-    select:focus + span > img {
-      transform: rotate(180deg);
-    }
-
     & > span {
       position: absolute;
       top: 0;

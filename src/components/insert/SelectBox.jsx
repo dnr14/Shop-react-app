@@ -7,7 +7,7 @@ const SelectBox = ({ hours, minutes, selectedDate, handleChange }) => {
     <>
       <input type="date" name="date" value={selectedDate} onChange={handleChange} />
       <div>
-        <select value={hours} onChange={handleChange} name="hours">
+        <select value={hours} name="hours" onChange={handleChange}>
           {getOneToTwentyForeHoure().map((houre, idx) => (
             <option key={idx} value={houre}>{`${houre}시`}</option>
           ))}

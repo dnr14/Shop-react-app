@@ -2,8 +2,37 @@ import { Link } from "react-router-dom";
 import styled, { css } from "styled-components";
 import up from "images/dropUp.svg";
 
+export const StyledButton = styled.button`
+  position: absolute;
+  padding: 0.5rem 1rem;
+  border: 1px solid transparent;
+  border-radius: 5px;
+  background-color: rgba(46, 204, 113, 0.8);
+  color: #fff;
+  margin-bottom: 1rem;
+  box-shadow: 3px 3px 5px rgb(127 140 141 / 50%);
+  bottom: -3rem;
+
+  :hover {
+    background-color: rgba(46, 204, 113, 1);
+  }
+`;
+
 export const StyledDiv = styled.div`
   margin-top: 1rem;
+  position: relative;
+
+  & > div {
+    &:nth-child(3) {
+      & > div {
+        &:nth-child(1) {
+          & > div {
+            justify-content: center;
+          }
+        }
+      }
+    }
+  }
 `;
 export const InnerDiv = styled.div`
   display: flex;

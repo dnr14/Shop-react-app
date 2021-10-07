@@ -11,6 +11,8 @@ const useChange = (init, location) => {
     setState(init);
   }, [location, init])
 
+
+
   const handleChange = useCallback(e => {
     const { name } = e.target;
 
@@ -86,14 +88,21 @@ const useChange = (init, location) => {
 
     if (name === "income") {
       if (!isDateValidation.result && !isPriceValidation.result) {
-        addItem(`${name}Data`, { date, price, time, insertTime: new Date().getTime() });
+        const array = JSON.parse(localStorage.getItem(`${name}Data`));
+        const last = array[array.length - 1];
+        const id = last === undefined ? 1 : last.id + 1;
+        addItem(`${name}Data`, { id, date, price, time, insertTime: new Date().getTime() });
         setState({ ...init, insertData: { date, price, time } });
         return;
       }
     } else {
       if (!isDateValidation.result && !isPriceValidation.result && !isCategoryValidation) {
         const category = state.category;
-        addItem(`${name}Data`, { date, price, category, time, insertTime: new Date().getTime() });
+        const array = JSON.parse(localStorage.getItem(`${name}Data`));
+        const last = array[array.length - 1];
+        const id = last === undefined ? 1 : last.id + 1;
+
+        addItem(`${name}Data`, { id, date, price, category, time, insertTime: new Date().getTime() });
         setState({ ...init, insertData: { date, price, category, time } });
         return;
       }

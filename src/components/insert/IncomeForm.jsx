@@ -5,11 +5,22 @@ import React, { useEffect } from "react";
 import { setInitialData } from "utils/LocalStorageUtil";
 import Result from "components/insert/Result";
 
-const IncomeContainer = ({ state, handleSubmit, handleChange }) => {
+const IncomeContainer = ({
+  state,
+  handleSubmit,
+  handleChange,
+  handleBlur,
+  handleClick,
+}) => {
   useEffect(() => setInitialData("incomeData"), []);
   return (
     <>
-      <form onSubmit={handleSubmit} name="income">
+      <form
+        onSubmit={handleSubmit}
+        onBlur={handleBlur}
+        onClick={handleClick}
+        name="income"
+      >
         <DateSelect
           error={state.dateError}
           selectedDate={state.dates.selectedDate}

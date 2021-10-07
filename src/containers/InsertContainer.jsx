@@ -2,7 +2,7 @@ import Links from "components/insert/Links";
 import Title from "components/common/Title";
 import IncomeForm from "components/insert/IncomeForm";
 import ExpenditureForm from "components/insert/ExpenditureForm";
-import React from "react";
+import React, { useRef } from "react";
 import { Route } from "react-router-dom";
 import { StyledMaxWidth } from "style/Styled";
 import { getYYMMDD_HHMMSS } from "utils/DateUtil";
@@ -23,6 +23,23 @@ const InsertContainer = ({ match, location }) => {
   const [state, handleSubmit, handleChange] = useChange(INITIAL_STATE, location);
   const { path } = match;
 
+  const _swich = useRef(false);
+
+  const handleBlur = (e) => {
+    if (e.target instanceof HTMLSelectElement) {
+      e.target.nextSibling.firstChild.style = "";
+      _swich.current = false;
+    }
+  };
+  const handleClick = (e) => {
+    if (e.target instanceof HTMLSelectElement) {
+      e.target.nextSibling.firstChild.style = _swich.current
+        ? ""
+        : "transform: rotate(180deg)";
+      _swich.current = !_swich.current;
+    }
+  };
+
   return (
     <StyledMaxWidth>
       <StyledMain>
@@ -36,6 +53,8 @@ const InsertContainer = ({ match, location }) => {
                 state={state}
                 handleChange={handleChange}
                 handleSubmit={handleSubmit}
+                handleBlur={handleBlur}
+                handleClick={handleClick}
               />
             )}
           />
@@ -46,6 +65,8 @@ const InsertContainer = ({ match, location }) => {
                 state={state}
                 handleChange={handleChange}
                 handleSubmit={handleSubmit}
+                handleBlur={handleBlur}
+                handleClick={handleClick}
               />
             )}
           />

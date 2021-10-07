@@ -3,22 +3,47 @@ import CurrentSort from "./CurrentSort";
 import { Col, Row } from "style/Styled";
 import { makeUrl } from "utils/urlUtil";
 import { StyledDiv, InnerDiv, StyledLink } from "style/select/DataSort.styled";
+import { StyledButton } from "style/select/DataSort.styled";
 
-const DataSort = ({ pathname, currentQuery, text, isCategory }) => {
+const DataSort = ({
+  pathname,
+  currentQuery,
+  columnText,
+  removeRows,
+  isCategory,
+  tableColumnSize,
+  removeRowIds,
+}) => {
   const { date, price, insertDate, category } = currentQuery;
-  const lgSizeArray = isCategory ? [1, 3, 2, 2, 4] : [1, 4, 3, 0, 4];
-  // 1 3 2 2 2 true
-  // 1 3 2 0 2 false
 
   return (
     <StyledDiv>
-      <CurrentSort pathname={pathname} currentQuery={currentQuery} text={text} />
-      <Row addStyle={{ margin: "10px 0" }}>
+      <div>
+        {removeRowIds.length === 0 || (
+          <StyledButton onClick={removeRows}>삭제</StyledButton>
+        )}
+      </div>
+      <CurrentSort
+        pathname={pathname}
+        currentQuery={currentQuery}
+        columnText={columnText}
+      />
+      <Row addStyle={{ margin: "0.5rem 0" }}>
         <Col
-          xs={lgSizeArray[0]}
-          sm={lgSizeArray[0]}
-          md={lgSizeArray[0]}
-          lg={lgSizeArray[0]}
+          xs={tableColumnSize[0]}
+          sm={tableColumnSize[0]}
+          md={tableColumnSize[0]}
+          lg={tableColumnSize[0]}
+        >
+          <InnerDiv>
+            <span>체크</span>
+          </InnerDiv>
+        </Col>
+        <Col
+          xs={tableColumnSize[1]}
+          sm={tableColumnSize[1]}
+          md={tableColumnSize[1]}
+          lg={tableColumnSize[1]}
         >
           <InnerDiv>
             <span>글 번호</span>
@@ -27,13 +52,13 @@ const DataSort = ({ pathname, currentQuery, text, isCategory }) => {
 
         {isCategory && (
           <Col
-            xs={lgSizeArray[3]}
-            sm={lgSizeArray[3]}
-            md={lgSizeArray[3]}
-            lg={lgSizeArray[3]}
+            xs={tableColumnSize[2]}
+            sm={tableColumnSize[2]}
+            md={tableColumnSize[2]}
+            lg={tableColumnSize[2]}
           >
             <InnerDiv>
-              <span>{text.category}</span>
+              <span>{columnText.category}</span>
               {category && category === "asc" ? (
                 <StyledLink
                   to={`${makeUrl(pathname, currentQuery, { category: "desc" })}`}
@@ -49,13 +74,13 @@ const DataSort = ({ pathname, currentQuery, text, isCategory }) => {
           </Col>
         )}
         <Col
-          xs={lgSizeArray[1]}
-          sm={lgSizeArray[1]}
-          md={lgSizeArray[1]}
-          lg={lgSizeArray[1]}
+          xs={tableColumnSize[3]}
+          sm={tableColumnSize[3]}
+          md={tableColumnSize[3]}
+          lg={tableColumnSize[3]}
         >
           <InnerDiv>
-            <span>{text.date}</span>
+            <span>{columnText.date}</span>
             {date && date === "asc" ? (
               <StyledLink
                 to={`${makeUrl(pathname, currentQuery, { date: "desc" })}`}
@@ -71,13 +96,13 @@ const DataSort = ({ pathname, currentQuery, text, isCategory }) => {
         </Col>
 
         <Col
-          xs={lgSizeArray[4]}
-          sm={lgSizeArray[4]}
-          md={lgSizeArray[4]}
-          lg={lgSizeArray[4]}
+          xs={tableColumnSize[4]}
+          sm={tableColumnSize[4]}
+          md={tableColumnSize[4]}
+          lg={tableColumnSize[4]}
         >
           <InnerDiv>
-            <span>{text.insertDate}</span>
+            <span>{columnText.insertDate}</span>
             {insertDate && insertDate === "asc" ? (
               <StyledLink
                 to={`${makeUrl(pathname, currentQuery, { insertDate: "desc" })}`}
@@ -92,13 +117,13 @@ const DataSort = ({ pathname, currentQuery, text, isCategory }) => {
           </InnerDiv>
         </Col>
         <Col
-          xs={lgSizeArray[2]}
-          sm={lgSizeArray[2]}
-          md={lgSizeArray[2]}
-          lg={lgSizeArray[2]}
+          xs={tableColumnSize[5]}
+          sm={tableColumnSize[5]}
+          md={tableColumnSize[5]}
+          lg={tableColumnSize[5]}
         >
           <InnerDiv>
-            <span>{text.price}</span>
+            <span>{columnText.price}</span>
             {price && price === "asc" ? (
               <StyledLink
                 to={`${makeUrl(pathname, currentQuery, { price: "desc" })}`}

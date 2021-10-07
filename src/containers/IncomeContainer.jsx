@@ -16,7 +16,7 @@ const IncomeContainer = ({ history: { location } }) => {
     return getDataSort(currentPage, currentQuery);
   }, [pageNationState, currentQuery]);
 
-  const sortText = useMemo(
+  const columnText = useMemo(
     () => ({
       date: "수입 날짜",
       price: "수입",
@@ -24,11 +24,17 @@ const IncomeContainer = ({ history: { location } }) => {
     }),
     []
   );
+  const tableColumnSize = [1, 4, 3, 0, 4];
 
   return (
     <>
-      <DataSort pathname={pathname} currentQuery={currentQuery} text={sortText} />
-      <DataTable data={showPages} />
+      <DataSort
+        pathname={pathname}
+        currentQuery={currentQuery}
+        columnText={columnText}
+        tableColumnSize={tableColumnSize}
+      />
+      <DataTable data={showPages} tableColumnSize={tableColumnSize} />
       <Pagination
         pathname={pathname}
         currentQuery={currentQuery}

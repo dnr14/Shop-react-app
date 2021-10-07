@@ -5,58 +5,90 @@ import { setDateFormat } from "utils/DateUtil";
 import { getNumberThreeCommaDraw } from "utils/NumberUtil";
 import { Cotainer } from "style/select/DataTable.styled";
 
-const DataTable = ({ data, isCategory }) => {
-  const lgSizeArray = isCategory ? [1, 3, 2, 2, 4] : [1, 4, 3, 0, 4];
-
+const DataTable = ({ data, isCategory, tableColumnSize, handleClick }) => {
   return (
     <Cotainer>
-      {data.map((item, idx) => (
-        <Row key={idx} addStyle={{ margin: "1rem 0" }}>
-          <Col
-            xs={lgSizeArray[0]}
-            sm={lgSizeArray[0]}
-            md={lgSizeArray[0]}
-            lg={lgSizeArray[0]}
-          >
-            <span>{item.idx}</span>
-          </Col>
+      {data &&
+        data.map((item, idx) => (
+          <Row key={item.id}>
+            <label>
+              <Col
+                xs={tableColumnSize[0]}
+                sm={tableColumnSize[0]}
+                md={tableColumnSize[0]}
+                lg={tableColumnSize[0]}
+              >
+                <span>
+                  <input
+                    type="checkbox"
+                    id={`check${idx}`}
+                    onChange={handleClick(item.id)}
+                    onClick={(e) => {
+                      console.log("click", e);
+                    }}
+                  />
+                  <label htmlFor={`check${idx}`}></label>
+                </span>
+              </Col>
+              <Col
+                xs={tableColumnSize[1]}
+                sm={tableColumnSize[1]}
+                md={tableColumnSize[1]}
+                lg={tableColumnSize[1]}
+              >
+                <span>{item.idx}</span>
+              </Col>
 
-          {isCategory && (
-            <Col
-              xs={lgSizeArray[3]}
-              sm={lgSizeArray[3]}
-              md={lgSizeArray[3]}
-              lg={lgSizeArray[3]}
-            >
-              <span>{item.category}</span>
-            </Col>
-          )}
-          <Col
-            xs={lgSizeArray[1]}
-            sm={lgSizeArray[1]}
-            md={lgSizeArray[1]}
-            lg={lgSizeArray[1]}
-          >
-            <span>{setDateFormat(item.date)}</span>
-          </Col>
-          <Col
-            xs={lgSizeArray[4]}
-            sm={lgSizeArray[4]}
-            md={lgSizeArray[4]}
-            lg={lgSizeArray[4]}
-          >
-            <span>{new Date(item.insertTime).toLocaleString()}</span>
-          </Col>
-          <Col
-            xs={lgSizeArray[2]}
-            sm={lgSizeArray[2]}
-            md={lgSizeArray[2]}
-            lg={lgSizeArray[2]}
-          >
-            <span>{getNumberThreeCommaDraw(item.price)}원</span>
-          </Col>
-        </Row>
-      ))}
+              {isCategory && (
+                <Col
+                  xs={tableColumnSize[2]}
+                  sm={tableColumnSize[2]}
+                  md={tableColumnSize[2]}
+                  lg={tableColumnSize[2]}
+                >
+                  <span>{item.category}</span>
+                </Col>
+              )}
+              <Col
+                xs={tableColumnSize[3]}
+                sm={tableColumnSize[3]}
+                md={tableColumnSize[3]}
+                lg={tableColumnSize[3]}
+              >
+                <span>{setDateFormat(item.date)}</span>
+              </Col>
+              <Col
+                xs={tableColumnSize[4]}
+                sm={tableColumnSize[4]}
+                md={tableColumnSize[4]}
+                lg={tableColumnSize[4]}
+              >
+                <span>{new Date(item.insertTime).toLocaleString()}</span>
+              </Col>
+              <Col
+                xs={tableColumnSize[5]}
+                sm={tableColumnSize[5]}
+                md={tableColumnSize[5]}
+                lg={tableColumnSize[5]}
+              >
+                <span>{getNumberThreeCommaDraw(item.price)}원</span>
+                <div
+                  onClick={(e) => {
+                    console.log(e);
+                  }}
+                >
+                  <i
+                    onClickCapture={(e) => {
+                      e.stopPropagation();
+                      e.nativeEvent.stopImmediatePropagation();
+                      e.target.style.background = "red";
+                    }}
+                  />
+                </div>
+              </Col>
+            </label>
+          </Row>
+        ))}
     </Cotainer>
   );
 };

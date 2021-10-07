@@ -9,6 +9,7 @@ import { StyledMain } from "style/select/SelectContainer.styled";
 
 const SelectContainer = ({ match }) => {
   const { path } = match;
+
   return (
     <StyledMaxWidth>
       <StyledMain>

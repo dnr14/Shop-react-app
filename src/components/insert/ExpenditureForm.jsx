@@ -6,12 +6,23 @@ import PriceInput from "components/insert/PriceInput";
 import CategorySelect from "components/insert/CategorySelect";
 import Result from "components/insert/Result";
 
-const ExpenditureContainer = ({ state, handleSubmit, handleChange }) => {
+const ExpenditureContainer = ({
+  state,
+  handleSubmit,
+  handleChange,
+  handleBlur,
+  handleClick,
+}) => {
   useEffect(() => setInitialData("expenditureData"), []);
 
   return (
     <>
-      <form onSubmit={handleSubmit} name="expenditure">
+      <form
+        onSubmit={handleSubmit}
+        onClick={handleClick}
+        onBlur={handleBlur}
+        name="expenditure"
+      >
         <DateSelect
           selectedDate={state.dates.selectedDate}
           hours={state.dates.hours}

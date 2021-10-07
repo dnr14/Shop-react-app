@@ -32,8 +32,8 @@ const Form = ({ handleBoardsSubmit }) => {
             {...register("id", {
               validate: {
                 specialSymbol: (value) => !isSpecialSymbol(value),
-                koreaLengCheck: (value) => !isKoreaLengCheck(value),
-                whiteSpaceCheck: (value) => !isWhiteSpaceCheck(value),
+                koreaLeng: (value) => !isKoreaLengCheck(value),
+                whiteSpace: (value) => !isWhiteSpaceCheck(value),
               },
               minLength: 4,
               maxLength: 8,
@@ -45,8 +45,8 @@ const Form = ({ handleBoardsSubmit }) => {
             {errors.id?.type === "minLength" && "* 최소 4자 이상입니다."}
             {errors.id?.type === "maxLength" && "* 최대 8자 입니다."}
             {errors.id?.type === "specialSymbol" && "* 특수문자가 들어갔습니다."}
-            {errors.id?.type === "koreaLengCheck" && "* 한글이 들어갔습니다."}
-            {errors.id?.type === "whiteSpaceCheck" && "* 공백이 들어갔습니다."}
+            {errors.id?.type === "koreaLeng" && "* 한글이 들어갔습니다."}
+            {errors.id?.type === "whiteSpace" && "* 공백이 들어갔습니다."}
           </Errors>
 
           <input
@@ -56,7 +56,7 @@ const Form = ({ handleBoardsSubmit }) => {
             autoComplete="current-passowrd"
             {...register("password", {
               validate: {
-                whiteSpaceCheck: (value) => !isWhiteSpaceCheck(value),
+                whiteSpace: (value) => !isWhiteSpaceCheck(value),
               },
               required: true,
               maxLength: 10,
@@ -67,7 +67,7 @@ const Form = ({ handleBoardsSubmit }) => {
             {errors.password?.type === "maxLength" && "* 최대 10자 입니다."}
             {errors.password?.type === "minLength" && "* 최소 4자 이상입니다."}
             {errors.password?.type === "required" && "* 비밀번호는 필수 입니다."}
-            {errors.password?.type === "whiteSpaceCheck" && "* 공백이 들어갔습니다."}
+            {errors.password?.type === "whiteSpace" && "* 공백이 들어갔습니다."}
           </Errors>
         </div>
         <Gender register={register} />

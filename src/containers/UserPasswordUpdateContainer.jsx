@@ -5,6 +5,7 @@ import useUserPasswordUpdateAsync from "hooks/useUserPasswordUpdateAsync";
 import { useHistory } from "react-router";
 
 const UserPasswordUpdateContainer = ({ user }) => {
+  //eslint-disable-next-line
   const [form, _, handleChange] = useMemberShipForm(false);
   const [fetchState, setFatch] = useUserPasswordUpdateAsync();
   const [visible, setVisible] = useState(false);

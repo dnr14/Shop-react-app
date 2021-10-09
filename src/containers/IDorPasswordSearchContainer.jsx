@@ -21,7 +21,7 @@ const ERROR_INIT = {
 const IDorPasswordSearchContainer = () => {
   const match = useRouteMatch();
   const location = useLocation();
-
+  // eslint-disable-next-line
   const [form, _, handleChange] = useMemberShipForm();
   const [loading, setLoading] = useState(LOADING_INIT);
   const [success, setSuccess] = useState(SUCCESS_INIT);

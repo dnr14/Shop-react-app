@@ -11,6 +11,7 @@ const FETCH_STATE_INIT = {
 };
 
 const NewPasswordContainer = ({ info }) => {
+  // eslint-disable-next-line
   const [form, _, handleChange] = useMemberShipForm(false);
   const [fetchState, setFetchState] = useState(FETCH_STATE_INIT);
   const [visible, setVisible] = useState(false);

@@ -5,6 +5,7 @@ import Pagination from "components/select/Pagination";
 import DataSort from "components/select/DataSort";
 import DataTable from "components/select/DataTable";
 import { useHistory } from "react-router";
+import Modal from "components/select/Modal";
 
 const LOCAL_STORAGE_ID = "expenditureData";
 
@@ -14,6 +15,9 @@ const ExpenditureContainer = () => {
   const [pageNationState, setPageNagetion] = useState(
     getPageNationInitialData(LOCAL_STORAGE_ID)
   );
+  //모달 열림 닫힘
+  const [isVisible, setIsVisible] = useState(false);
+  const [updateData, setUpdateData] = useState({});
 
   const [removeRowIds, setRemoveRowIds] = useState([]);
   const [showPages, setShowPages] = useState([]);
@@ -29,7 +33,7 @@ const ExpenditureContainer = () => {
     [currentQuery]
   );
 
-  const handleClick = useCallback(
+  const boardRemoveCheckBox = useCallback(
     (id) => (e) => {
       setRemoveRowIds((prevIds) =>
         e.target.checked
@@ -65,6 +69,61 @@ const ExpenditureContainer = () => {
     setShowPages(pages);
   }, [pageNationState, currentQuery, getPages]);
 
+  const boardModify = useCallback(
+    (id) => (e) => {
+      e.preventDefault();
+      const data = showPages.find((el) => el.id === id);
+      console.log("data===>", data);
+      setUpdateData(data);
+      setIsVisible(true);
+    },
+    [showPages, setUpdateData]
+  );
+
+  // 모달
+  const submit = (id, cb, close) => (data) => {
+    console.log(data);
+    // 지출 목록
+    // const categoryValue = e.target.category.value;
+    // // 지출 날짜
+    // const expenditureDateValue = e.target.expenditureDate.value;
+    // // 지출 시간
+    // const expenditureHoureTimeValue = e.target.expenditureHoureTime.value;
+    // const expenditureMinutesTime = e.target.expenditureMinutesTime.value;
+    // const expenditureFullDate = `${expenditureDateValue} ${expenditureHoureTimeValue}:${expenditureMinutesTime}:00`;
+    // const expenditureTime = new Date(expenditureFullDate).getTime();
+    // // 등록 날짜
+    // const insertDateValue = e.target.insertDate.value;
+    // // 등록 시간
+    // const insertHoureTime = e.target.insertHoureTime.value;
+    // const insertMinutesTime = e.target.insertMinutesTime.value;
+    // const insertFullDate = `${insertDateValue} ${insertHoureTime}:${insertMinutesTime}:00`;
+    // const insertTime = new Date(insertFullDate).getTime();
+    // // 지출 금액
+    // const expenditureMoney = e.target.expenditureMoney.value;
+    // const expenditure = {
+    //   category: categoryValue,
+    //   date: expenditureFullDate,
+    //   insertTime,
+    //   price: expenditureMoney,
+    //   time: expenditureTime,
+    //   update: true,
+    // };
+    // const old_expenditures = JSON.parse(localStorage.getItem(LOCAL_STORAGE_ID));
+    // const new_expenditures = old_expenditures.map((el) =>
+    //   el.id === id ? { ...el, ...expenditure } : el
+    // );
+    // localStorage.setItem(LOCAL_STORAGE_ID, JSON.stringify(new_expenditures));
+    // cb(false);
+    // close.current = true;
+    // const pagesinit = getPageNationInitialData(LOCAL_STORAGE_ID);
+    // // 현재 보여질 페이지를 구한다.
+    // const pages = getPages(pagesinit);
+    // // 페이지네이션 and 페이지를 랜더링해준다.
+    // setPageNagetion(pagesinit);
+    // setShowPages(pages);
+  };
+
   const columnText = useMemo(
     () => ({
       date: "지출 날짜",
@@ -74,10 +133,17 @@ const ExpenditureContainer = () => {
     }),
     []
   );
+
   const tableColumnSize = useMemo(() => [1, 1, 2, 3, 3, 2], []);
 
   return (
     <>
+      <Modal
+        isVisible={isVisible}
+        setIsVisible={setIsVisible}
+        submit={submit}
+        updateData={updateData}
+      />
       <DataSort
         pathname={pathname}
         currentQuery={currentQuery}
@@ -91,7 +157,8 @@ const ExpenditureContainer = () => {
         data={showPages}
         tableColumnSize={tableColumnSize}
         isCategory
-        handleClick={handleClick}
+        boardRemoveCheckBox={boardRemoveCheckBox}
+        boardModify={boardModify}
       />
       <Pagination
         pathname={pathname}

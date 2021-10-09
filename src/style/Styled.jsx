@@ -10,19 +10,19 @@ const MOBILE_FONT_SIZE = css`
 const TABLE_FONT_SIZE = css`
   font-size: 13px;
 `;
-
+// 450px
 export const maxWidthByBreakPointSmaillMobile = (props) => css`
   @media only screen and (max-width: ${BREAK_POINT_SMAILL_MOBILE}px) {
     ${props}
   }
 `;
-
+//768px
 export const maxWidthByBreakPointMobile = (props) => css`
   @media only screen and (max-width: ${BREAK_POINT_MOBILE}px) {
     ${props}
   }
 `;
-
+//992px
 export const maxWidthByBreakPointTable = (props) => css`
   @media only screen and (max-width: ${BREAK_POINT_TABLET}px) {
     ${props}

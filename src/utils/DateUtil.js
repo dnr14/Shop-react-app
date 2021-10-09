@@ -50,3 +50,28 @@ export const setDateFormat = date => {
 
   return `${yymmdd} ${hhmmss}`;
 }
+
+export const setInputCheckBoxDateType = time => {
+  const date = new Date(time);
+  const YYYY = date.getFullYear();
+  const MM = isFillWithZero(date.getMonth() + 1);
+  const DD = isFillWithZero(date.getDate());
+
+  return `${YYYY}-${MM}-${DD}`;
+
+}
+export const setInputCheckBoxTimeType = time => {
+  const date = new Date(time);
+  const HH = isFillWithZero(date.getHours());
+  const MM = isFillWithZero(date.getMinutes());
+
+  return {
+    getHours() {
+      return HH;
+    },
+    getMinutes() {
+      return MM;
+    }
+  };
+
+}

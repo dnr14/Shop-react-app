@@ -11,6 +11,7 @@ const DataTable = ({
   tableColumnSize,
   boardRemoveCheckBox,
   boardModify,
+  allCheck,
 }) => {
   return (
     <Cotainer>
@@ -23,6 +24,7 @@ const DataTable = ({
             tableColumnSize={tableColumnSize}
             boardRemoveCheckBox={boardRemoveCheckBox}
             boardModify={boardModify}
+            allCheck={allCheck}
           />
         ))}
     </Cotainer>

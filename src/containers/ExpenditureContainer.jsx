@@ -18,7 +18,6 @@ const ExpenditureContainer = () => {
   //모달 열림 닫힘
   const [isVisible, setIsVisible] = useState(false);
   const [updateData, setUpdateData] = useState({});
-
   const [removeRowIds, setRemoveRowIds] = useState([]);
   const [showPages, setShowPages] = useState([]);
 
@@ -35,6 +34,7 @@ const ExpenditureContainer = () => {
 
   const boardRemoveCheckBox = useCallback(
     (id) => (e) => {
+      console.log("boardRemoveCheckBox==>", id);
       setRemoveRowIds((prevIds) =>
         e.target.checked
           ? [...new Set([...prevIds, id])]
@@ -43,6 +43,7 @@ const ExpenditureContainer = () => {
     },
     []
   );
+  console.log(removeRowIds);
 
   // 변수명
   const removeRows = useCallback(() => {

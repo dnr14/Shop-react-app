@@ -5,6 +5,7 @@ import PropTypes from "prop-types";
 import { getOneToTwentyForeHoure, getZeroToFiftyNineMinutes } from "utils/DateUtil";
 import { setInputCheckBoxDateType, setInputCheckBoxTimeType } from "utils/DateUtil";
 import { useForm } from "react-hook-form";
+import { isWhiteSpaceCheck, isKoreaLengCheck } from "utils/Validation";
 
 const TIEM = 500;
 const Modal = ({ isVisible, setIsVisible, updateData, submit }) => {
@@ -65,9 +66,7 @@ const Modal = ({ isVisible, setIsVisible, updateData, submit }) => {
             </main>
             <footer>
               <div>
-                <button type="submit" id="__next">
-                  업데이트
-                </button>
+                <button type="submit">업데이트</button>
               </div>
             </footer>
           </form>
@@ -118,6 +117,8 @@ const ExpenditureDate = ({ expenditureDate, register, errors }) => {
             {errors.expenditureDate?.type === "empty" && "* 올바른 값이 아닙니다."}
             {errors.expenditureHoureTime?.type === "formatError" &&
               "* 올바른 시간이 아닙니다."}
+            {errors.expenditureMinutesTime?.type === "formatError" &&
+              "* 올바른 시간이 아닙니다."}
           </span>
         </div>
         <div>
@@ -141,7 +142,6 @@ const ExpenditureDate = ({ expenditureDate, register, errors }) => {
             })}
             defaultValue={setInputCheckBoxTimeType(expenditureDate).getHours()}
           >
-            <option value="111">111</option>
             {getOneToTwentyForeHoure().map((el, idx) => (
               <option key={idx} value={el}>
                 {el}시
@@ -154,7 +154,11 @@ const ExpenditureDate = ({ expenditureDate, register, errors }) => {
         </div>
         <div>
           <select
-            name="expenditureMinutesTime"
+            {...register("expenditureMinutesTime", {
+              validate: {
+                formatError: (houreTime) => !/^[0-5][0-9].+/gi.test(houreTime),
+              },
+            })}
             defaultValue={setInputCheckBoxTimeType(expenditureDate).getMinutes()}
           >
             {getZeroToFiftyNineMinutes().map((el, idx) => (
@@ -171,23 +175,38 @@ const ExpenditureDate = ({ expenditureDate, register, errors }) => {
     </>
   );
 };
-const InsertDate = ({ insertTime }) => {
+const InsertDate = ({ insertTime, register, errors }) => {
   return (
     <>
       <FlexBox>
         <div>
           <span>등록날짜</span>
+          <span>
+            {errors.insertDate?.type === "empty" && "* 올바른 값이 아닙니다."}
+            {errors.insertHoureTime?.type === "formatError" &&
+              "* 올바른 시간이 아닙니다."}
+            {errors.insertMinutesTime?.type === "formatError" &&
+              "* 올바른 시간이 아닙니다."}
+          </span>
         </div>
         <div>
           <input
-            name="insertDate"
+            {...register("insertDate", {
+              validate: {
+                empty: (date) => date !== "",
+              },
+            })}
             type="date"
             defaultValue={setInputCheckBoxDateType(insertTime)}
           />
         </div>
         <div>
           <select
-            name="insertHoureTime"
+            {...register("insertHoureTime", {
+              validate: {
+                formatError: (houreTime) => !/^[0-2][1-4].+/gi.test(houreTime),
+              },
+            })}
             defaultValue={setInputCheckBoxTimeType(insertTime).getHours()}
           >
             {getOneToTwentyForeHoure().map((el, idx) => (
@@ -202,7 +221,11 @@ const InsertDate = ({ insertTime }) => {
         </div>
         <div>
           <select
-            name="insertMinutesTime"
+            {...register("insertMinutesTime", {
+              validate: {
+                formatError: (houreTime) => !/^[0-5][0-9].+/gi.test(houreTime),
+              },
+            })}
             defaultValue={setInputCheckBoxTimeType(insertTime).getMinutes()}
           >
             {getZeroToFiftyNineMinutes().map((el, idx) => (
@@ -219,14 +242,32 @@ const InsertDate = ({ insertTime }) => {
     </>
   );
 };
-const ExpenditureMoney = ({ expenditureMoney }) => {
+const ExpenditureMoney = ({ expenditureMoney, register, errors }) => {
+  console.log("expenditureMony Errors ====>", errors);
   return (
     <FlexBox>
       <div>
         <span>지출금액</span>
+        <span>
+          {errors.expenditureMoney?.type === "maxLength" && "*최대 11자 입니다."}
+          {errors.expenditureMoney?.type === "whiteSpaceCheck" && "*공백을 입력했습니다."}
+          {errors.expenditureMoney?.type === "isKoreaLengCheck" &&
+            "*한글을 입력했습니다."}
+        </span>
       </div>
       <div>
-        <input name="expenditureMoney" type="text" defaultValue={expenditureMoney} />
+        <input
+          {...register("expenditureMoney", {
+            maxLength: 11,
+            validate: {
+              whiteSpaceCheck: (value) => !isWhiteSpaceCheck(value),
+              isKoreaLengCheck: (value) => !isKoreaLengCheck(value),
+            },
+          })}
+          type="text"
+          maxLength="12"
+          defaultValue={expenditureMoney}
+        />
       </div>
     </FlexBox>
   );

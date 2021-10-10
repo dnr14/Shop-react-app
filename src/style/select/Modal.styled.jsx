@@ -96,6 +96,7 @@ export const StyledWrapper = styled.div`
         background-color: ${PERSONAL_COLOR};
         transition: box-shadow 0.35s ease-in;
         box-shadow: 0;
+        width: 100%;
       }
       & > button:hover {
         box-shadow: 0 0 20px rgba(127, 140, 141, 0.5);

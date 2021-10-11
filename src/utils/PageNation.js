@@ -5,7 +5,7 @@ export function getCurrentPage(pageNationState, currentQuery) {
   const { data } = pageNationState;
   const lastPage = Math.ceil(data.length / PAGE_SHOW_COUNT);
   const currnetPage = Number(currentQuery.page);
-
+  if (data.length === 0) return [];
   if (lastPage >= currnetPage) {
     pageNationState.pageGroup = Math.ceil(currnetPage / PAGENATION_NUMBER_COUNT);
     const startPage = (currnetPage - 1) * PAGE_SHOW_COUNT;
@@ -51,7 +51,7 @@ export function getPageNationNumbers(pageGroup, lastPage, lastPageGroup) {
 
 
 export function getDataSort(data, sort) {
-  if (data.length === 0) return;
+  if (data.length === 0) return [];
   const { date, price, insertDate, category } = sort;
 
   const [first] = data;

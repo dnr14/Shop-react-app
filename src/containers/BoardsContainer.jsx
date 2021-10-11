@@ -50,7 +50,6 @@ const BoardsContainer = () => {
   const handleBoardsSubmit = useCallback(
     (reset) => async (data) => {
       try {
-        console.log(data);
         const { id, edit, man, password, file } = data;
         const formData = new FormData();
         formData.append("photo", file[0]);

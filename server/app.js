@@ -15,8 +15,6 @@ db();
 app.use(logger());
 app.use(express.json());
 app.use(express.static(ROOT));
-
-
 app.use("/api/users", usersRouter);
 app.use("/api/auth", authRouter);
 app.use("/api/boards", boardsRouter);

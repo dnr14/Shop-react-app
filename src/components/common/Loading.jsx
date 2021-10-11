@@ -1,4 +1,4 @@
-import React, { memo } from "react";
+import React, { memo, useState } from "react";
 import styled from "styled-components";
 import loadingIMG from "images/loading.gif";
 import PropTypes from "prop-types";

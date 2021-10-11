@@ -9,12 +9,13 @@ const DataTable = ({
   data,
   isCategory,
   tableColumnSize,
-  boardRemoveCheckBox,
+  visible,
+  removeRowsCheckedClick,
   boardModify,
   allCheck,
 }) => {
   return (
-    <Cotainer>
+    <Cotainer visible={visible}>
       {data &&
         data.map((item) => (
           <Data
@@ -22,7 +23,7 @@ const DataTable = ({
             item={item}
             isCategory={isCategory}
             tableColumnSize={tableColumnSize}
-            boardRemoveCheckBox={boardRemoveCheckBox}
+            removeRowsCheckedClick={removeRowsCheckedClick}
             boardModify={boardModify}
             allCheck={allCheck}
           />
@@ -35,7 +36,7 @@ const Data = function Data({
   item,
   boardModify,
   tableColumnSize,
-  boardRemoveCheckBox,
+  removeRowsCheckedClick,
   isCategory,
 }) {
   return (
@@ -51,7 +52,7 @@ const Data = function Data({
             <input
               type="checkbox"
               id={`check${item.id}`}
-              onChange={boardRemoveCheckBox(item.id)}
+              onChange={removeRowsCheckedClick(item.id)}
             />
             <label htmlFor={`check${item.id}`}></label>
           </span>

@@ -13,6 +13,19 @@ export const StyledButton = styled.button`
   box-shadow: 3px 3px 5px rgb(127 140 141 / 50%);
   bottom: -3rem;
 
+  visibility: hidden;
+  opacity: 0;
+  transition: opacity 0.5s, visibility 0.5s, transform 0.5s ease-in;
+  transform: translateX(-20px);
+
+  ${({ visible }) =>
+    visible &&
+    css`
+      transform: translateX(0px);
+      opacity: 1;
+      visibility: unset;
+    `}
+
   :hover {
     background-color: rgba(46, 204, 113, 1);
   }

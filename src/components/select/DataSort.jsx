@@ -18,11 +18,9 @@ const DataSort = ({
 
   return (
     <StyledDiv>
-      <div>
-        {removeRowIds.length === 0 || (
-          <StyledButton onClick={removeRows}>삭제</StyledButton>
-        )}
-      </div>
+      <StyledButton visible={removeRowIds.length !== 0} onClick={removeRows}>
+        삭제
+      </StyledButton>
       <CurrentSort
         pathname={pathname}
         currentQuery={currentQuery}

@@ -7,6 +7,14 @@ export const Cotainer = styled.div`
   min-height: 25rem;
   word-break: keep-all;
 
+  opacity: 0;
+  transition: opacity 0.5s ease-in;
+  ${({ visible }) =>
+    visible &&
+    css`
+      opacity: 1;
+    `}
+
   span {
     display: flex;
     width: 100%;

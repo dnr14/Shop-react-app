@@ -1,128 +1,88 @@
-import React, { useCallback, useEffect, useMemo, useState } from "react";
-import getPageNationInitialData, { getCurrentPage, getDataSort } from "utils/PageNation";
-import queryString from "query-string";
+import React, { useMemo, useState } from "react";
+import getPageNationInitialData from "utils/PageNation";
 import Pagination from "components/select/Pagination";
 import DataSort from "components/select/DataSort";
 import DataTable from "components/select/DataTable";
 import { useHistory } from "react-router";
 import Modal from "components/select/Modal";
-
+import Loading from "components/common/Loading";
+import useBoards from "hooks/useBoards";
+import styled, { css } from "styled-components";
 const LOCAL_STORAGE_ID = "expenditureData";
 
 const ExpenditureContainer = () => {
   const { location } = useHistory();
-  const { pathname, search } = location;
-  const [pageNationState, setPageNagetion] = useState(
-    getPageNationInitialData(LOCAL_STORAGE_ID)
-  );
-  //모달 열림 닫힘
-  const [isVisible, setIsVisible] = useState(false);
-  const [updateData, setUpdateData] = useState({});
-  const [removeRowIds, setRemoveRowIds] = useState([]);
-  const [showPages, setShowPages] = useState([]);
-
-  const currentQuery = useMemo(() => queryString.parse(search), [search]);
-
-  const getPages = useCallback(
-    (pagesInit) => {
-      if (currentQuery.page === undefined) currentQuery.page = 1;
-      const currentPages = getCurrentPage(pagesInit, currentQuery);
-      return getDataSort(currentPages, currentQuery);
-    },
-    [currentQuery]
-  );
-
-  const boardRemoveCheckBox = useCallback(
-    (id) => (e) => {
-      console.log("boardRemoveCheckBox==>", id);
-      setRemoveRowIds((prevIds) =>
-        e.target.checked
-          ? [...new Set([...prevIds, id])]
-          : prevIds.filter((prevId) => prevId !== id)
-      );
-    },
-    []
-  );
-  console.log(removeRowIds);
-
-  // 변수명
-  const removeRows = useCallback(() => {
-    const expendArray = JSON.parse(localStorage.getItem(LOCAL_STORAGE_ID));
-    const newArray = expendArray.filter((el) =>
-      removeRowIds.includes(el.id) ? false : true
-    );
-    //체크 된 row를 제거 후 다시 로컬 스토리지에 저장한다.
-    localStorage.setItem(LOCAL_STORAGE_ID, JSON.stringify(newArray));
-    // 현재 보여질 페이지네이션을 구한다.
-    const pagesinit = getPageNationInitialData(LOCAL_STORAGE_ID);
-    // 현재 보여질 페이지를 구한다.
-    const pages = getPages(pagesinit);
-    // 페이지네이션 and 페이지를 랜더링해준다.
-    setPageNagetion(pagesinit);
-    setShowPages(pages);
-    setRemoveRowIds([]);
-  }, [removeRowIds, getPages]);
-
-  useEffect(() => {
-    if (currentQuery.page === undefined) currentQuery.page = 1;
-    const pagesinit = getPageNationInitialData(LOCAL_STORAGE_ID);
-    const pages = getPages(pagesinit);
-    setShowPages(pages);
-  }, [pageNationState, currentQuery, getPages]);
-
-  const boardModify = useCallback(
-    (id) => (e) => {
-      e.preventDefault();
-      const data = showPages.find((el) => el.id === id);
-      console.log("data===>", data);
-      setUpdateData(data);
-      setIsVisible(true);
-    },
-    [showPages, setUpdateData]
-  );
+  const { pathname } = location;
+  const {
+    removeRowIds,
+    isVisible,
+    updateData,
+    currentQuery,
+    showPages,
+    pageNationState,
+    isLoading,
+    isOpacity,
+    setIsVisible,
+    removeRows,
+    removeRowsCheckedClick,
+    setPageNagetion,
+    setShowPages,
+    setIsLoading,
+    boardModify,
+    getPages,
+  } = useBoards(LOCAL_STORAGE_ID);
 
   // 모달
   const submit = (id, cb, close) => (data) => {
-    console.log(data);
-    // 지출 목록
-    // const categoryValue = e.target.category.value;
-    // // 지출 날짜
-    // const expenditureDateValue = e.target.expenditureDate.value;
-    // // 지출 시간
-    // const expenditureHoureTimeValue = e.target.expenditureHoureTime.value;
-    // const expenditureMinutesTime = e.target.expenditureMinutesTime.value;
-    // const expenditureFullDate = `${expenditureDateValue} ${expenditureHoureTimeValue}:${expenditureMinutesTime}:00`;
-    // const expenditureTime = new Date(expenditureFullDate).getTime();
-    // // 등록 날짜
-    // const insertDateValue = e.target.insertDate.value;
-    // // 등록 시간
-    // const insertHoureTime = e.target.insertHoureTime.value;
-    // const insertMinutesTime = e.target.insertMinutesTime.value;
-    // const insertFullDate = `${insertDateValue} ${insertHoureTime}:${insertMinutesTime}:00`;
-    // const insertTime = new Date(insertFullDate).getTime();
-    // // 지출 금액
-    // const expenditureMoney = e.target.expenditureMoney.value;
-    // const expenditure = {
-    //   category: categoryValue,
-    //   date: expenditureFullDate,
-    //   insertTime,
-    //   price: expenditureMoney,
-    //   time: expenditureTime,
-    //   update: true,
-    // };
-    // const old_expenditures = JSON.parse(localStorage.getItem(LOCAL_STORAGE_ID));
-    // const new_expenditures = old_expenditures.map((el) =>
-    //   el.id === id ? { ...el, ...expenditure } : el
-    // );
-    // localStorage.setItem(LOCAL_STORAGE_ID, JSON.stringify(new_expenditures));
-    // cb(false);
-    // close.current = true;
-    // const pagesinit = getPageNationInitialData(LOCAL_STORAGE_ID);
-    // // 현재 보여질 페이지를 구한다.
-    // const pages = getPages(pagesinit);
-    // // 페이지네이션 and 페이지를 랜더링해준다.
-    // setPageNagetion(pagesinit);
-    // setShowPages(pages);
+    const {
+      category,
+      expenditureDate,
+      expenditureHoureTime,
+      expenditureMinutesTime,
+      expenditureMoney,
+      insertDate,
+      insertHoureTime,
+      insertMinutesTime,
+    } = data;
+
+    // 지출 날짜  지출 시간
+    const expenditureFullDate = `${expenditureDate} ${expenditureHoureTime}:${expenditureMinutesTime}:00`;
+    const expenditureTime = new Date(expenditureFullDate).getTime();
+    // 등록 날짜 등록 시간
+    const insertFullDate = `${insertDate} ${insertHoureTime}:${insertMinutesTime}:00`;
+    const insertTime = new Date(insertFullDate).getTime();
+
+    // 지출 목록, 지출한 날짜 + 시간 , 지출 등록한 날짜 + 시간 , 지출 금액, 지출날짜 숫자값 , 업데이트 유무
+    const expenditureData = {
+      category: category,
+      date: expenditureFullDate,
+      insertTime,
+      price: expenditureMoney,
+      time: expenditureTime,
+      update: true,
+    };
+
+    (async () => {
+      setIsLoading((prevState) => !prevState);
+      const old_expenditures = JSON.parse(localStorage.getItem(LOCAL_STORAGE_ID));
+      const new_expenditures = old_expenditures.map((el) =>
+        el.id === id ? { ...el, ...expenditureData } : el
+      );
+      // 모달이 바로 닫히지 않도록 지연을 주었다.
+      localStorage.setItem(LOCAL_STORAGE_ID, JSON.stringify(new_expenditures));
+      await new Promise((re) => setTimeout(() => re(alert("완료가 되었습니다.")), 1000));
+      // 모달 닫기
+      cb(false);
+      close.current = true;
+      // // 현재 보여질 페이지를 구한다.
+      const pagesinit = getPageNationInitialData(LOCAL_STORAGE_ID);
+      const pages = getPages(pagesinit);
+      // // 페이지네이션 and 페이지를 랜더링해준다.
+      setPageNagetion(pagesinit);
+      setShowPages(pages);
+    })().finally(() => {
+      setIsLoading((prevState) => !prevState);
+    });
   };
 
   const columnText = useMemo(
@@ -134,16 +94,19 @@ const ExpenditureContainer = () => {
     }),
     []
   );
+  console.log(showPages);
 
   const tableColumnSize = useMemo(() => [1, 1, 2, 3, 3, 2], []);
 
   return (
     <>
+      <Loading loading={isLoading} />
       <Modal
         isVisible={isVisible}
+        updateData={updateData}
         setIsVisible={setIsVisible}
         submit={submit}
-        updateData={updateData}
+        isCategory
       />
       <DataSort
         pathname={pathname}
@@ -157,17 +120,20 @@ const ExpenditureContainer = () => {
       <DataTable
         data={showPages}
         tableColumnSize={tableColumnSize}
-        isCategory
-        boardRemoveCheckBox={boardRemoveCheckBox}
+        visible={isOpacity}
+        removeRowsCheckedClick={removeRowsCheckedClick}
         boardModify={boardModify}
+        isCategory
       />
-      <Pagination
-        pathname={pathname}
-        currentQuery={currentQuery}
-        pageGroup={pageNationState.pageGroup}
-        lastPageGroup={pageNationState.lastPageGroup}
-        lastPage={pageNationState.lastPage}
-      />
+      {showPages.length !== 0 && (
+        <Pagination
+          pathname={pathname}
+          currentQuery={currentQuery}
+          pageGroup={pageNationState.pageGroup}
+          lastPageGroup={pageNationState.lastPageGroup}
+          lastPage={pageNationState.lastPage}
+        />
+      )}
     </>
   );
 };

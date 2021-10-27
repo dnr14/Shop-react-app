@@ -1,10 +1,9 @@
 import express from "express";
-import multer from 'multer';
+import multer from "multer";
 import Indexes from "../mongodb/models/Indexes";
 import Boards from "../mongodb/models/Boards";
-import fs from 'fs';
-import path from 'path';
-
+import fs from "fs";
+import path from "path";
 
 const STATIC_PATH = "./public/uploads/";
 
@@ -14,36 +13,40 @@ const limits = {
   fields: 5, // 파일 형식이 아닌 필드의 최대 개수 (기본 값 무제한)
   fileSize: 16777216, //multipart 형식 폼에서 최대 파일 사이즈(bytes) "16MB 설정" (기본 값 무제한)
   files: 2, //multipart 형식 폼에서 파일 필드 최대 개수 (기본 값 무제한)
-}
+};
 
 const fileFilter = (req, file, callback) => {
-  const typeArray = file.mimetype.split('/');
+  const typeArray = file.mimetype.split("/");
   const fileType = typeArray[1]; // 이미지 확장자 추출
 
   //이미지 확장자 구분 검사
-  if (fileType === 'jpg' || fileType === 'jpeg' || fileType === 'png') {
-    callback(null, true)
+  if (fileType === "jpg" || fileType === "jpeg" || fileType === "png") {
+    callback(null, true);
   } else {
-    return callback({ message: "*.jpg, *.jpeg, *.png 파일만 업로드가 가능합니다." }, false)
+    return callback(
+      { message: "*.jpg, *.jpeg, *.png 파일만 업로드가 가능합니다." },
+      false
+    );
   }
-}
+};
 
 const router = express.Router();
 const upload = multer({
   storage: multer.diskStorage({
     destination: function (req, file, cb) {
       cb(null, STATIC_PATH);
-    }, filename: function (req, file, cb) {
+    },
+    filename: function (req, file, cb) {
       cb(null, new Date().valueOf() + path.extname(file.originalname));
-    }
+    },
   }),
   limits,
-  fileFilter
-}).single('photo');
+  fileFilter,
+}).single("photo");
 
 // 게시글 생성
-router.post('/', (req, res) => {
-  upload(req, res, err => {
+router.post("/", (req, res) => {
+  upload(req, res, (err) => {
     if (err) {
       res.status(503).json({ message: err.message });
       return;
@@ -59,13 +62,12 @@ router.post('/', (req, res) => {
     // console.log("업로드된 파일의 전체 경로 ", path);
     // console.log("파일의 바이트(byte 사이즈)", size);
 
-
     if (req.file === undefined || req.file === "undefined") {
-
       (async () => {
-
         try {
-          const indexes = await Indexes.findOne().where("name").equals("boards");
+          const indexes = await Indexes.findOne()
+            .where("name")
+            .equals("boards");
           if (indexes === null) {
             throw new Error("인덱스가 없습니다.");
           }
@@ -79,33 +81,31 @@ router.post('/', (req, res) => {
             fileName: ``,
             format: ``,
             originalFileName: ``,
-            gender: gender
+            gender: gender,
           });
-
-
 
           const result = await boards.save();
           res.status(200).json({ result });
 
-          await Indexes.updateOne({ name: "boards" }, {
-            "$set": { "currentIndex": indexes.currentIndex + 1 }
-          });
-
-
+          await Indexes.updateOne(
+            { name: "boards" },
+            {
+              $set: { currentIndex: indexes.currentIndex + 1 },
+            }
+          );
         } catch (error) {
-          res.status(400).json({ message: error })
+          res.status(400).json({ message: error });
         }
-      })()
-
+      })();
     } else {
       // const { fieldname, originalname, encoding, mimetype, destination, filename, path, size } = req.file;
       const { originalname, mimetype, filename } = req.file;
 
       (async () => {
-
         try {
-
-          const indexes = await Indexes.findOne().where("name").equals("boards");
+          const indexes = await Indexes.findOne()
+            .where("name")
+            .equals("boards");
           if (indexes === null) {
             throw new Error("인덱스가 없습니다.");
           }
@@ -117,21 +117,23 @@ router.post('/', (req, res) => {
             createAt: new Date().toLocaleString(),
             body: comment,
             fileName: `${filename}`,
-            format: `${mimetype.split('/')[1]}`,
+            format: `${mimetype.split("/")[1]}`,
             originalFileName: `${originalname}`,
-            gender: gender
+            gender: gender,
           });
-
 
           const result = await boards.save();
 
-          await Indexes.updateOne({ name: "boards" }, {
-            "$set": { "currentIndex": indexes.currentIndex + 1 }
-          });
+          await Indexes.updateOne(
+            { name: "boards" },
+            {
+              $set: { currentIndex: indexes.currentIndex + 1 },
+            }
+          );
 
           res.status(200).json({ result });
         } catch (error) {
-          console.log(error);;
+          console.log(error);
           fs.unlink(`${STATIC_PATH}${filename}`, (err) => {
             if (err === null) {
               res.status(503).json({ message: " 서버에서 오류" });
@@ -143,50 +145,47 @@ router.post('/', (req, res) => {
       })();
     }
   });
-
 });
 
 // 게시글 가져오기
-router.get('/', async (req, res) => {
+router.get("/", async (req, res) => {
   try {
-
     const boards = await Boards.find()
-      .sort({ boardsId: 'desc' })
+      .sort({ boardsId: "desc" })
       .limit(5)
       .select("-password -_id -__v");
 
-    res.json({ boards })
+    res.json({ boards });
   } catch (error) {
-    res.json({ error })
+    res.json({ error });
   }
 });
 
 // 추가로 가져오기
-router.get('/:boardsId', async (req, res) => {
+router.get("/:boardsId", async (req, res) => {
   const boardsId = req.params.boardsId;
   console.log(boardsId);
   try {
     const boards = await Boards.find()
       .where("boardsId")
       .lt(boardsId)
-      .sort({ boardsId: 'desc' })
+      .sort({ boardsId: "desc" })
       .limit(5)
       .select("-password -_id -__v");
 
-    res.json({ boards })
+    res.json({ boards });
   } catch (error) {
     console.log(error);
   }
 });
 
 // 게시판 삭제
-router.delete('/:boardsId', async (req, res) => {
+router.delete("/:boardsId", async (req, res) => {
   const boardsId = req.params.boardsId;
   const pwd = req.body.password;
 
   try {
-
-    const boards = await Boards.findOne().where('boardsId').equals(boardsId);
+    const boards = await Boards.findOne().where("boardsId").equals(boardsId);
 
     if (!boards.authenticate(pwd)) {
       const e = new Error("비밀번호가 틀립니다.");
@@ -201,7 +200,7 @@ router.delete('/:boardsId', async (req, res) => {
       throw e;
     }
     const result = await Boards.findOneAndRemove()
-      .where('boardsId')
+      .where("boardsId")
       .equals(boardsId)
       .select("-_id -password -__v");
 
@@ -218,7 +217,7 @@ router.delete('/:boardsId', async (req, res) => {
   } catch (error) {
     const { status } = error;
     if (error.redirect) {
-      return res.redirect('/');
+      return res.redirect("/");
     }
     if (status) {
       res.status(status).json({ message: error.message });
@@ -229,8 +228,7 @@ router.delete('/:boardsId', async (req, res) => {
 });
 
 // 게시판 수정
-router.put('/:boardsId', async (req, res) => {
-
+router.put("/:boardsId", async (req, res) => {
   try {
     const { password } = req.body;
     const { body } = req.body;
@@ -249,9 +247,13 @@ router.put('/:boardsId', async (req, res) => {
       error.status = 403;
       throw error;
     }
-    const result = await Boards.findOneAndUpdate({ boardsId }, {
-      "$set": { body }
-    }, { new: true }).select("-_id -__v -password")
+    const result = await Boards.findOneAndUpdate(
+      { boardsId },
+      {
+        $set: { body },
+      },
+      { new: true }
+    ).select("-_id -__v -password");
 
     res.json({ board: result });
   } catch (error) {

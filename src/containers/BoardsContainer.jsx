@@ -15,7 +15,9 @@ const BoardsContainer = () => {
 
   const preImgLoading = useCallback(
     async (boards) =>
-      boards.forEach((board) => board.fileName && (new Image().src = board.fileName)),
+      boards.forEach(
+        (board) => board.fileName && (new Image().src = board.fileName)
+      ),
     []
   );
 
@@ -72,10 +74,12 @@ const BoardsContainer = () => {
 
   // 첫 마운팅 후 통신
   useEffect(() => {
+    console.log(1);
     (async () => {
       try {
         setIsLoading((prev) => !prev);
         const response = await boardsApi.getBoards();
+        console.log(response);
         await preImgLoading(response.data.boards);
         setBoards(response.data.boards);
       } catch (error) {
@@ -88,7 +92,9 @@ const BoardsContainer = () => {
 
   const openUpdateModal = useCallback(
     (boardsId) => () => {
-      const [currentBoard] = boards.filter((board) => board.boardsId === boardsId);
+      const [currentBoard] = boards.filter(
+        (board) => board.boardsId === boardsId
+      );
       setUpdateModalShow((prevUpdateModalState) => ({
         ...prevUpdateModalState,
         visible: !prevUpdateModalState.visible,
@@ -128,8 +134,13 @@ const BoardsContainer = () => {
       setIsLoading((prevIsLoading) => !prevIsLoading);
       try {
         const { updateBody, password } = data;
-        const response = await boardsApi.modifyBoard(boardsId, updateBody, password);
-        if (!response.data?.board) throw new Error("서버에서 데이터를 못받아왔습니다.");
+        const response = await boardsApi.modifyBoard(
+          boardsId,
+          updateBody,
+          password
+        );
+        if (!response.data?.board)
+          throw new Error("서버에서 데이터를 못받아왔습니다.");
         const updateBoard = response.data.board;
         setBoards((prevBoards) =>
           prevBoards.map((board) =>

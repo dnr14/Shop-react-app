@@ -4,18 +4,19 @@ import { getNewlineCount as textUtile } from "utils/TextUtil";
 
 const Board = ({ board, removeBoard, openUpdateModal }) => {
   const getNewlineCount = useCallback((body) => textUtile(body), []);
+  // 무한루프가 걸린다. 고치자
   const dateFormatChange = useCallback((data) => {
     let newData = `${data}초`;
-    while (true) {
-      const yyyymmdd_index = newData.indexOf(".");
-      const hhmmss_index = newData.indexOf(":");
-      if (yyyymmdd_index === -1) break;
-      if (yyyymmdd_index === 4) newData = newData.replace(".", "년");
-      if (yyyymmdd_index === 8) newData = newData.replace(".", "월");
-      if (yyyymmdd_index === 11) newData = newData.replace(".", "일");
-      if (hhmmss_index === 17) newData = newData.replace(":", `시 `);
-      if (hhmmss_index === 21) newData = newData.replace(":", `분 `);
-    }
+    // while (true) {
+    //   const yyyymmdd_index = newData.indexOf(".");
+    //   const hhmmss_index = newData.indexOf(":");
+    //   if (yyyymmdd_index === -1) break;
+    //   if (yyyymmdd_index === 4) newData = newData.replace(".", "년");
+    //   if (yyyymmdd_index === 8) newData = newData.replace(".", "월");
+    //   if (yyyymmdd_index === 11) newData = newData.replace(".", "일");
+    //   if (hhmmss_index === 17) newData = newData.replace(":", `시 `);
+    //   if (hhmmss_index === 21) newData = newData.replace(":", `분 `);
+    // }
     return newData;
   }, []);
 
@@ -33,7 +34,10 @@ const Board = ({ board, removeBoard, openUpdateModal }) => {
       </div>
       <div>
         {board?.fileName && (
-          <img src={`http://localhost:5000/public/${board.fileName}`} alt="img" />
+          <img
+            src={`http://localhost:5000/public/${board.fileName}`}
+            alt="img"
+          />
         )}
       </div>
       <div>

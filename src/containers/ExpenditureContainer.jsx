@@ -1,4 +1,4 @@
-import React, { useMemo, useState } from "react";
+import React, { useMemo } from "react";
 import getPageNationInitialData from "utils/PageNation";
 import Pagination from "components/select/Pagination";
 import DataSort from "components/select/DataSort";
@@ -7,7 +7,6 @@ import { useHistory } from "react-router";
 import Modal from "components/select/Modal";
 import Loading from "components/common/Loading";
 import useBoards from "hooks/useBoards";
-import styled, { css } from "styled-components";
 const LOCAL_STORAGE_ID = "expenditureData";
 
 const ExpenditureContainer = () => {
@@ -64,13 +63,17 @@ const ExpenditureContainer = () => {
 
     (async () => {
       setIsLoading((prevState) => !prevState);
-      const old_expenditures = JSON.parse(localStorage.getItem(LOCAL_STORAGE_ID));
+      const old_expenditures = JSON.parse(
+        localStorage.getItem(LOCAL_STORAGE_ID)
+      );
       const new_expenditures = old_expenditures.map((el) =>
         el.id === id ? { ...el, ...expenditureData } : el
       );
       // 모달이 바로 닫히지 않도록 지연을 주었다.
       localStorage.setItem(LOCAL_STORAGE_ID, JSON.stringify(new_expenditures));
-      await new Promise((re) => setTimeout(() => re(alert("완료가 되었습니다.")), 1000));
+      await new Promise((re) =>
+        setTimeout(() => re(alert("완료가 되었습니다.")), 1000)
+      );
       // 모달 닫기
       cb(false);
       close.current = true;

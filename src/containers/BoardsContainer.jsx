@@ -27,9 +27,9 @@ const BoardsContainer = () => {
     let timer;
     const observerCallback = ([entry], observer) => {
       // 첫 랜더 후 api 통해 borders를 가져오기 전에 타겟에 접근 했다면 실행 x
+      if (timer) clearTimeout(timer);
       if (entry.isIntersecting && boards.length !== 0) {
         //서버에게 자주 호출하는 걸 방지 하기 위해  디바운스
-        if (timer) clearTimeout(timer);
         const hasMore = async () => {
           const { boardsId } = boards[boards.length - 1];
           const response = await boardsApi.getMore(boardsId);

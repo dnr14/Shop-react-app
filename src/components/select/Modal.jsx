@@ -1,9 +1,15 @@
 import React, { useEffect, useRef, useState } from "react";
-import { StyledWrapper, FlexBox } from "style/select/Modal.styled";
-import dropDown from "images/dropDown.svg";
+import { StyledWrapper, FlexBox } from "assets/style/select/Modal.styled";
+import dropDown from "assets/images/dropDown.svg";
 import PropTypes from "prop-types";
-import { getOneToTwentyForeHoure, getZeroToFiftyNineMinutes } from "utils/DateUtil";
-import { setInputCheckBoxDateType, setInputCheckBoxTimeType } from "utils/DateUtil";
+import {
+  getOneToTwentyForeHoure,
+  getZeroToFiftyNineMinutes,
+} from "utils/DateUtil";
+import {
+  setInputCheckBoxDateType,
+  setInputCheckBoxTimeType,
+} from "utils/DateUtil";
 import { useForm } from "react-hook-form";
 import { isWhiteSpaceCheck, isKoreaLengCheck } from "utils/Validation";
 
@@ -24,7 +30,8 @@ const Modal = ({ isVisible, setIsVisible, updateData, submit, isCategory }) => {
 
   useEffect(() => {
     if (isVisible) reset();
-    if (!visible && isVisible && !close.current) setTimeout(() => setVisible(true), TIEM);
+    if (!visible && isVisible && !close.current)
+      setTimeout(() => setVisible(true), TIEM);
     if (close.current) {
       setTimeout(() => setIsVisible(false), TIEM);
       close.current = false;
@@ -35,7 +42,9 @@ const Modal = ({ isVisible, setIsVisible, updateData, submit, isCategory }) => {
     <>
       {isVisible && (
         <StyledWrapper visible={visible}>
-          <form onSubmit={handleSubmit(submit(updateData.id, setVisible, close))}>
+          <form
+            onSubmit={handleSubmit(submit(updateData.id, setVisible, close))}
+          >
             <header>
               <h1>입출 업데이트</h1>
               <span onClick={modalClose} />
@@ -131,7 +140,8 @@ const ExpenditureDate = ({ expenditureDate, register, errors }) => {
         <div>
           <span>지출날짜</span>
           <span>
-            {errors.expenditureDate?.type === "empty" && "* 올바른 값이 아닙니다."}
+            {errors.expenditureDate?.type === "empty" &&
+              "* 올바른 값이 아닙니다."}
             {errors.expenditureHoureTime?.type === "formatError" &&
               "* 올바른 시간이 아닙니다."}
             {errors.expenditureMinutesTime?.type === "formatError" &&
@@ -176,7 +186,9 @@ const ExpenditureDate = ({ expenditureDate, register, errors }) => {
                 formatError: (houreTime) => !/^[0-5][0-9].+/gi.test(houreTime),
               },
             })}
-            defaultValue={setInputCheckBoxTimeType(expenditureDate).getMinutes()}
+            defaultValue={setInputCheckBoxTimeType(
+              expenditureDate
+            ).getMinutes()}
           >
             {getZeroToFiftyNineMinutes().map((el, idx) => (
               <option key={idx} value={el}>
@@ -334,8 +346,10 @@ const ExpenditureMoney = ({ expenditureMoney, register, errors }) => {
       <div>
         <span>지출금액</span>
         <span>
-          {errors.expenditureMoney?.type === "maxLength" && "*최대 11자 입니다."}
-          {errors.expenditureMoney?.type === "whiteSpaceCheck" && "*공백을 입력했습니다."}
+          {errors.expenditureMoney?.type === "maxLength" &&
+            "*최대 11자 입니다."}
+          {errors.expenditureMoney?.type === "whiteSpaceCheck" &&
+            "*공백을 입력했습니다."}
           {errors.expenditureMoney?.type === "isKoreaLengCheck" &&
             "*한글을 입력했습니다."}
         </span>
@@ -365,8 +379,10 @@ const IncomeMoney = ({ incomeMoney, register, errors }) => {
         <span>수입금액</span>
         <span>
           {errors.incomeMoney?.type === "maxLength" && "*최대 11자 입니다."}
-          {errors.incomeMoney?.type === "whiteSpaceCheck" && "*공백을 입력했습니다."}
-          {errors.incomeMoney?.type === "isKoreaLengCheck" && "*한글을 입력했습니다."}
+          {errors.incomeMoney?.type === "whiteSpaceCheck" &&
+            "*공백을 입력했습니다."}
+          {errors.incomeMoney?.type === "isKoreaLengCheck" &&
+            "*한글을 입력했습니다."}
         </span>
       </div>
       <div>

@@ -1,9 +1,9 @@
 import React, { memo } from "react";
-import { Col } from "style/Styled";
-import { Row } from "style/Styled";
+import { Col } from "assets/style/GlobalStyled";
+import { Row } from "assets/style/GlobalStyled";
 import { setDateFormat } from "utils/DateUtil";
 import { getNumberThreeCommaDraw } from "utils/NumberUtil";
-import { Cotainer } from "style/select/DataTable.styled";
+import { Cotainer } from "assets/style/select/DataTable.styled";
 
 const DataTable = ({
   data,

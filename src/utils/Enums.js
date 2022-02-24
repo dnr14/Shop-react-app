@@ -13,7 +13,7 @@ export const MEMBERSHIP_ERRORS = Object.freeze({
     textKoreaLengError: "한글을 입력했습니다.",
     spaceError: "공백을 입력했습니다.",
     emailPatternError: "이메일 형식이 아닙니다.",
-    maxLengthError: "아이디는 최대 25자 입니다.",
+    maxLengthError: "이메일은 최대 25자 입니다.",
   }),
   password: Object.freeze({
     maxLengthError: "비밀번호는 최대 15자 입니다.",

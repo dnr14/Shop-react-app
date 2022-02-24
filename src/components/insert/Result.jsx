@@ -1,6 +1,6 @@
 import React, { memo, useCallback } from "react";
-import { Row, Col } from "style/Styled";
-import { Container } from "style/insert/Result.styled";
+import { Row, Col } from "assets/style/GlobalStyled";
+import { Container } from "assets/style/insert/Result.styled";
 import { setDateFormat } from "utils/DateUtil";
 import { getNumberThreeCommaDraw } from "utils/NumberUtil";
 

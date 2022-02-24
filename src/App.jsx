@@ -1,19 +1,18 @@
 import { BrowserRouter } from "react-router-dom";
-import HeaderContainer from "containers/HeaderContainer";
-import AuthContextProvider from "contexts/AuthContextProvider";
-import Routers from "components/routers/Routers";
+import AuthProvider from "contexts/AuthProvider";
+import Routers from "routers/Routers";
+import { Layout } from "assets/style/GlobalStyled";
+import Header from "components/header/Header";
 
-function App() {
+export default function App() {
   return (
-    <>
-      <AuthContextProvider>
-        <BrowserRouter>
-          <HeaderContainer />
+    <AuthProvider>
+      <BrowserRouter>
+        <Header />
+        <Layout>
           <Routers />
-        </BrowserRouter>
-      </AuthContextProvider>
-    </>
+        </Layout>
+      </BrowserRouter>
+    </AuthProvider>
   );
 }
-
-export default App;

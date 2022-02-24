@@ -1,8 +1,8 @@
 import React, { memo } from "react";
 import Error from "./Error";
 import InsertTableLayout from "./InsertTableLayout";
-import down from "images/dropDown.svg";
-import { StyledDiv } from "style/insert/DateSelect.styled";
+import down from "assets/images/dropDown.svg";
+import { StyledDiv } from "assets/style/insert/DateSelect.styled";
 
 const categorySelectAreEqual = (prevProps, nextProps) => {
   if (prevProps.error !== nextProps.error) return false;

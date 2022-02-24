@@ -1,42 +1,73 @@
-import { StyledMaxWidth } from "style/Styled";
-import { Row } from "style/Styled";
+import { getBackGroundBrandColor1 } from "assets/style/GlobalStyled";
+import { getFlex } from "assets/style/GlobalStyled";
+import { getWhiteColor1 } from "assets/style/GlobalStyled";
+import { useCallback, useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 import styled from "styled-components";
-import HeaderLinks from "./HeaderLinks";
-import HeaderMenuBar from "./HeaderMenuBar";
-import HeaderTitle from "./HeaderTitle";
+import Links from "./Links";
+import Hamburger from "./Hamburger";
 
-const StyledHeader = styled.header`
-  background-color: rgba(46, 204, 113, 1);
-  letter-spacing: 0.2rem;
-`;
+const Header = () => {
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [headerWidth, setHeaderWidth] = useState(window.innerWidth);
 
-const Header = ({ isMenuOpen, handleClick, headerWidth, pureLinsks }) => {
+  const handleClick = useCallback(
+    ({ type }) =>
+      type !== "blur"
+        ? setIsMenuOpen((prevState) => !prevState)
+        : setIsMenuOpen(false),
+    [setIsMenuOpen]
+  );
+
+  useEffect(() => {
+    let timer;
+
+    const resize = window.addEventListener("resize", (e) => {
+      // 디바운스 처리
+      if (timer) {
+        clearInterval(timer);
+      }
+      timer = setTimeout(() => {
+        const { innerWidth } = e.target;
+        setHeaderWidth(innerWidth);
+      }, 200);
+    });
+    return () => {
+      window.removeEventListener("resize", resize);
+    };
+  }, []);
+
   return (
-    <StyledHeader>
-      <StyledMaxWidth>
-        <Row>
-          <HeaderTitle xs={6} sm={6} md={3} lg={3} />
-          <HeaderMenuBar
-            xs={6}
-            sm={6}
-            md={0}
-            lg={0}
-            isMenuOpen={isMenuOpen}
-            handleClick={handleClick}
-          />
-          <HeaderLinks
-            xs={12}
-            sm={12}
-            md={9}
-            lg={9}
-            isMenuOpen={isMenuOpen}
-            headerWidth={headerWidth}
-            pureLinsks={pureLinsks}
-          />
-        </Row>
-      </StyledMaxWidth>
-    </StyledHeader>
+    <HeaderWrapper>
+      <HeaderInnerWrapper>
+        <HeaderTitle>
+          <Link to="/">간단 가계부</Link>
+        </HeaderTitle>
+        <Hamburger isMenuOpen={isMenuOpen} handleClick={handleClick} />
+        <Links isMenuOpen={isMenuOpen} headerWidth={headerWidth} />
+      </HeaderInnerWrapper>
+    </HeaderWrapper>
   );
 };
+
+const HeaderWrapper = styled.header`
+  ${getBackGroundBrandColor1}
+`;
+const HeaderInnerWrapper = styled.div`
+  max-width: 1200px;
+  margin: 0 auto;
+  ${getFlex("space-between", "")}
+  padding:0 20px;
+  flex-wrap: wrap;
+`;
+
+const HeaderTitle = styled.div`
+  ${getFlex("center", "center")}
+  a {
+    ${getWhiteColor1}
+    font-weight: 900;
+    font-size: 1.5rem;
+  }
+`;
 
 export default Header;

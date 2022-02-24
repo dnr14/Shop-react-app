@@ -1,5 +1,5 @@
 import React from "react";
-import { Col, Row } from "style/Styled";
+import { Col, Row } from "assets/style/GlobalStyled";
 
 const InsertTableLayout = ({ children }) => {
   return (

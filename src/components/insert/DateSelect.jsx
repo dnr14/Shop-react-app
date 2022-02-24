@@ -1,7 +1,7 @@
 import React, { memo } from "react";
 import Error from "./Error";
 import InsertTableLayout from "./InsertTableLayout";
-import { StyledDiv } from "style/insert/DateSelect.styled";
+import { StyledDiv } from "assets/style/insert/DateSelect.styled";
 import SelectBox from "./SelectBox";
 
 const dateSelectAreEqual = (prevProps, nextProps) => {

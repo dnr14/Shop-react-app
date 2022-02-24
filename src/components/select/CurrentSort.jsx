@@ -1,7 +1,7 @@
 import React, { memo } from "react";
-import { Row, Col } from "style/Styled";
+import { Row, Col } from "assets/style/GlobalStyled";
 import { makeUrl } from "utils/urlUtil";
-import { StyledDiv, StyledLink } from "style/select/CurrentSort.styled";
+import { StyledDiv, StyledLink } from "assets/style/select/CurrentSort.styled";
 
 const CurrentSort = ({ pathname, currentQuery, columnText }) => {
   return (
@@ -14,7 +14,9 @@ const CurrentSort = ({ pathname, currentQuery, columnText }) => {
               <div key={idx}>
                 {
                   <StyledLink
-                    to={`${makeUrl(pathname, currentQuery, { [`${_key}`]: undefined })}`}
+                    to={`${makeUrl(pathname, currentQuery, {
+                      [`${_key}`]: undefined,
+                    })}`}
                     position={currentQuery[`${_key}`]}
                   >
                     <span>{columnText[`${_key}`]}</span>

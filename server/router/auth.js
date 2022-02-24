@@ -1,9 +1,9 @@
-import express from 'express';
+import express from "express";
 import Users from "../mongodb/models/Users";
 import verifyToken from "../middleware/verifyToken";
-import jwt from 'jsonwebtoken';
-import dotenv from 'dotenv';
-import bcrypt from 'bcrypt-nodejs';
+import jwt from "jsonwebtoken";
+import dotenv from "dotenv";
+import bcrypt from "bcrypt-nodejs";
 dotenv.config();
 
 const router = express.Router();
@@ -14,8 +14,12 @@ router.post("/login", async (req, res) => {
   const user = await Users.findOne({ id }).select({ password: 1 });
 
   try {
-
-    if (id === undefined || id === null || password === undefined || password === null) {
+    if (
+      id === undefined ||
+      id === null ||
+      password === undefined ||
+      password === null
+    ) {
       const error = new Error("잘못된 값입니다.");
       error.status = 403;
       throw error;
@@ -37,20 +41,18 @@ router.post("/login", async (req, res) => {
     const payload = {
       userInfo: {
         id: user.id,
-        email: user.email
-      }
-    }
+        email: user.email,
+      },
+    };
 
     const tokenOption = {
       expiresIn: JWT_TIME, // 10분
-      issuer: 'localhost',
-    }
+      issuer: "localhost",
+    };
 
     const access_token = jwt.sign(payload, process.env.JWT_SECRET, tokenOption);
     res.status(200).json({ success: true, error: null, access_token });
-
   } catch (error) {
-
     if (error.status) {
       res.status(`${error.status}`).json({
         success: false,
@@ -60,27 +62,24 @@ router.post("/login", async (req, res) => {
     } else {
       res.json({ error: "서버 에러" });
     }
-
   }
 });
 
-router.get('/search/:email', async (req, res) => {
-
+router.get("/search/:email", async (req, res) => {
   const { email } = req.params;
 
   try {
     if (!String(email).trim()) {
-      console.log("데이터가없다")
+      console.log("데이터가없다");
       const error = new Error("잘못된 요청입니다.");
       error.status = 400;
       throw error;
     }
 
-    const user = await Users
-      .findOne()
-      .where('email')
+    const user = await Users.findOne()
+      .where("email")
       .equals(email)
-      .select("-_id")
+      .select("-_id");
 
     if (!user) {
       const error = new Error("없는 이메일입니다.");
@@ -90,8 +89,8 @@ router.get('/search/:email', async (req, res) => {
 
     res.json({
       success: true,
-      user
-    })
+      user,
+    });
   } catch (error) {
     const { status } = error;
 
@@ -101,11 +100,8 @@ router.get('/search/:email', async (req, res) => {
       res.json({ message: error });
     }
   }
-
-
-
 });
-router.post('/search', async (req, res) => {
+router.post("/search", async (req, res) => {
   try {
     const { id, email } = req.body;
     if (!id || !email) {
@@ -117,10 +113,9 @@ router.post('/search', async (req, res) => {
     const user = await Users.findOne()
       .where("id")
       .equals(id)
-      .where('email')
+      .where("email")
       .equals(email)
-      .select("-_id")
-
+      .select("-_id");
 
     if (!user) {
       const error = new Error("없는 정보 입니다.");
@@ -128,9 +123,7 @@ router.post('/search', async (req, res) => {
       throw error;
     }
 
-
     res.json({ success: true, user });
-
   } catch (error) {
     const { status } = error;
     if (status) {
@@ -139,16 +132,16 @@ router.post('/search', async (req, res) => {
       res.json({ message: error.message });
     }
   }
-
-
 });
-router.put('/search', async (req, res) => {
+router.put("/search", async (req, res) => {
   try {
     const { id, email, newPassword } = req.body;
-    console.log(id, email, newPassword)
-    const reuslt = await Users.updateOne({ id, email }, {
-      "$set": { "password": bcrypt.hashSync(newPassword) }
-    })
+    const reuslt = await Users.updateOne(
+      { id, email },
+      {
+        $set: { password: bcrypt.hashSync(newPassword) },
+      }
+    );
 
     if (reuslt.matchedCount === 0) {
       const error = new Error("비밀번호 변경에 실패했습니다.");
@@ -156,19 +149,15 @@ router.put('/search', async (req, res) => {
       throw error;
     }
     res.json({ success: true, message: "비밀번호 변경에 성공했습니다." });
-
   } catch (error) {
-
     res.status(error.status).send(error.message);
-
   }
 });
 
 //유효한 토큰인지 검증 해 준다.
-router.get('/verify', verifyToken, (req, res) => {
+router.get("/verify", verifyToken, (req, res) => {
   res.json(req.decoded);
 });
-
 
 // // res.writeHead(503, { 'Content-type': 'application/json; charset=euc-kr' });
 // res.write(JSON.stringify({ message: "실패" }))

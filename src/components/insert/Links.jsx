@@ -1,6 +1,6 @@
 import React, { memo } from "react";
-import { Col, Row } from "style/Styled";
-import { activeStyle, StyledNavLink } from "style/insert/Links.styled";
+import { Col, Row } from "assets/style/GlobalStyled";
+import { activeStyle, StyledNavLink } from "assets/style/insert/Links.styled";
 
 const Links = ({ path }) => {
   return (

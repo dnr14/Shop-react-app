@@ -2,8 +2,8 @@ import React, { memo } from "react";
 import { getNumberThreeCommaDraw } from "utils/NumberUtil";
 import Error from "./Error";
 import InsertTableLayout from "./InsertTableLayout";
-import { StyledInput } from "style/insert/PriceInput.styled";
-import { StyledDiv } from "style/insert/DateSelect.styled";
+import { StyledInput } from "assets/style/insert/PriceInput.styled";
+import { StyledDiv } from "assets/style/insert/DateSelect.styled";
 
 const PricetAreEqual = (prevProps, nextProps) => {
   if (prevProps.error !== nextProps.error) return false;

@@ -1,9 +1,13 @@
 import React, { memo } from "react";
 import CurrentSort from "./CurrentSort";
-import { Col, Row } from "style/Styled";
+import { Col, Row } from "assets/style/GlobalStyled";
 import { makeUrl } from "utils/urlUtil";
-import { StyledDiv, InnerDiv, StyledLink } from "style/select/DataSort.styled";
-import { StyledButton } from "style/select/DataSort.styled";
+import {
+  StyledDiv,
+  InnerDiv,
+  StyledLink,
+} from "assets/style/select/DataSort.styled";
+import { StyledButton } from "assets/style/select/DataSort.styled";
 
 const DataSort = ({
   pathname,
@@ -59,7 +63,9 @@ const DataSort = ({
               <span>{columnText.category}</span>
               {category && category === "asc" ? (
                 <StyledLink
-                  to={`${makeUrl(pathname, currentQuery, { category: "desc" })}`}
+                  to={`${makeUrl(pathname, currentQuery, {
+                    category: "desc",
+                  })}`}
                   position={category}
                 ></StyledLink>
               ) : (
@@ -103,7 +109,9 @@ const DataSort = ({
             <span>{columnText.insertDate}</span>
             {insertDate && insertDate === "asc" ? (
               <StyledLink
-                to={`${makeUrl(pathname, currentQuery, { insertDate: "desc" })}`}
+                to={`${makeUrl(pathname, currentQuery, {
+                  insertDate: "desc",
+                })}`}
                 position={insertDate}
               ></StyledLink>
             ) : (

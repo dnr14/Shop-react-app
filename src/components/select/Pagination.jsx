@@ -3,9 +3,15 @@ import { Link, NavLink } from "react-router-dom";
 import queryString from "query-string";
 import { getPageNationNumbers } from "utils/PageNation";
 import { makeUrl } from "utils/urlUtil";
-import { PagiNationUl } from "style/select/Pagination.styled";
+import { PagiNationUl } from "assets/style/select/Pagination.styled";
 
-const Pagination = ({ pathname, currentQuery, pageGroup, lastPageGroup, lastPage }) => {
+const Pagination = ({
+  pathname,
+  currentQuery,
+  pageGroup,
+  lastPageGroup,
+  lastPage,
+}) => {
   const [nextPage, prevPage, pagenation] = useMemo(
     () => getPageNationNumbers(pageGroup, lastPage, lastPageGroup),
     [pageGroup, lastPage, lastPageGroup]

@@ -1,9 +1,27 @@
-import React, { memo, useState } from "react";
+import React, { memo } from "react";
 import styled from "styled-components";
-import loadingIMG from "images/loading.gif";
+import loadingImg from "assets/images/loading.gif";
 import PropTypes from "prop-types";
 
-const StyledLDiv = styled.div`
+const Loading = ({ loading }) => {
+  if (!loading) return null;
+
+  return (
+    <LoadingWrapper>
+      <img src={loadingImg} alt="loadingImg" />
+    </LoadingWrapper>
+  );
+};
+
+Loading.propTypes = {
+  loading: PropTypes.bool,
+};
+
+Loading.defaultProps = {
+  loading: false,
+};
+
+const LoadingWrapper = styled.div`
   position: fixed;
   right: 0;
   left: 0;
@@ -19,25 +37,5 @@ const StyledLDiv = styled.div`
     left: 50%;
   }
 `;
-
-const Loading = ({ loading }) => {
-  return (
-    <>
-      {loading && (
-        <StyledLDiv>
-          <img src={loadingIMG} alt="loadingbar" />
-        </StyledLDiv>
-      )}
-    </>
-  );
-};
-
-Loading.propTypes = {
-  loading: PropTypes.bool,
-};
-
-Loading.defaultProps = {
-  loading: false,
-};
 
 export default memo(Loading);

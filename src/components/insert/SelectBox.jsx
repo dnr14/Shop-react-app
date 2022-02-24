@@ -1,11 +1,19 @@
 import React from "react";
-import { getOneToTwentyForeHoure, getZeroToFiftyNineMinutes } from "utils/DateUtil";
-import down from "images/dropDown.svg";
+import {
+  getOneToTwentyForeHoure,
+  getZeroToFiftyNineMinutes,
+} from "utils/DateUtil";
+import down from "assets/images/dropDown.svg";
 
 const SelectBox = ({ hours, minutes, selectedDate, handleChange }) => {
   return (
     <>
-      <input type="date" name="date" value={selectedDate} onChange={handleChange} />
+      <input
+        type="date"
+        name="date"
+        value={selectedDate}
+        onChange={handleChange}
+      />
       <div>
         <select value={hours} name="hours" onChange={handleChange}>
           {getOneToTwentyForeHoure().map((houre, idx) => (

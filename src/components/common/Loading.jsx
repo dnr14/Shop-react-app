@@ -30,7 +30,7 @@ const LoadingWrapper = styled.div`
   z-index: 100;
   background: transparent;
   img {
-    width: 10%;
+    width: 5%;
     position: relative;
     transform: translate(-50%, -50%);
     top: 50%;

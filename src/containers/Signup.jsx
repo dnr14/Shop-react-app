@@ -1,4 +1,4 @@
-import SignupForm from "components/signup/SignupForm";
+import SignupForm from "components/SignupForm";
 import React, { useCallback, useEffect, useState } from "react";
 import { useHistory } from "react-router";
 import useSignupForm from "hooks/useSignupForm";

@@ -7,7 +7,9 @@ export function getCurrentPage(pageNationState, currentQuery) {
   const currnetPage = Number(currentQuery.page);
   if (data.length === 0) return [];
   if (lastPage >= currnetPage) {
-    pageNationState.pageGroup = Math.ceil(currnetPage / PAGENATION_NUMBER_COUNT);
+    pageNationState.pageGroup = Math.ceil(
+      currnetPage / PAGENATION_NUMBER_COUNT
+    );
     const startPage = (currnetPage - 1) * PAGE_SHOW_COUNT;
     const endPage = startPage + PAGE_SHOW_COUNT;
     const showData = getDataSliceByIndex(data, startPage, endPage);
@@ -24,15 +26,14 @@ export function getCurrentPage(pageNationState, currentQuery) {
     const showData = getDataSliceByIndex(data, startPage, endPage);
     return showData;
   }
-};
+}
 
 const getDataSliceByIndex = (data, startPage, endPage) => {
   return data
     .reverse()
     .slice(startPage, endPage)
-    .map((item, idx) => ({ ...item, idx: startPage + 1 + idx, }));
-}
-
+    .map((item, idx) => ({ ...item, idx: startPage + 1 + idx }));
+};
 
 // 페이지네이션 번호 생성
 export function getPageNationNumbers(pageGroup, lastPage, lastPageGroup) {
@@ -42,13 +43,17 @@ export function getPageNationNumbers(pageGroup, lastPage, lastPageGroup) {
 
   const pageNationCountArray =
     pageGroup === lastPageGroup
-      ? Array.from({ length: lastPage + 1 - start }, (_, i) => (pageGroup - 1) * PAGENATION_NUMBER_COUNT + 1 + i)
-      : Array.from({ length: PAGENATION_NUMBER_COUNT }, (_, i) => (pageGroup - 1) * PAGENATION_NUMBER_COUNT + 1 + i);
+      ? Array.from(
+          { length: lastPage + 1 - start },
+          (_, i) => (pageGroup - 1) * PAGENATION_NUMBER_COUNT + 1 + i
+        )
+      : Array.from(
+          { length: PAGENATION_NUMBER_COUNT },
+          (_, i) => (pageGroup - 1) * PAGENATION_NUMBER_COUNT + 1 + i
+        );
 
   return [nextPage, prevPage, pageNationCountArray];
-};
-
-
+}
 
 export function getDataSort(data, sort) {
   if (data.length === 0) return [];
@@ -58,8 +63,13 @@ export function getDataSort(data, sort) {
   let { idx } = first;
   let resultArray = data;
 
-  if (category === undefined && date === undefined && price === undefined && insertDate === undefined) return data;
-
+  if (
+    category === undefined &&
+    date === undefined &&
+    price === undefined &&
+    insertDate === undefined
+  )
+    return data;
 
   if (price !== undefined) {
     resultArray =
@@ -69,7 +79,10 @@ export function getDataSort(data, sort) {
   }
 
   if (date !== undefined) {
-    resultArray = date === "desc" ? data.sort((a, b) => (a.time <= b.time ? 1 : -1)) : data.sort((a, b) => (a.time >= b.time ? 1 : -1));
+    resultArray =
+      date === "desc"
+        ? data.sort((a, b) => (a.time <= b.time ? 1 : -1))
+        : data.sort((a, b) => (a.time >= b.time ? 1 : -1));
   }
 
   if (insertDate !== undefined) {
@@ -79,7 +92,6 @@ export function getDataSort(data, sort) {
         : data.sort((a, b) => (a.insertTime >= b.insertTime ? 1 : -1));
   }
 
-
   if (category !== undefined) {
     resultArray =
       category === "desc"
@@ -88,19 +100,28 @@ export function getDataSort(data, sort) {
   }
 
   return resultArray.map((item) => ({ ...item, idx: idx++ }));
-};
+}
 
 const getPageNationInitialData = (getId) => {
   const data = JSON.parse(localStorage.getItem(getId));
+
+  if (data === null) {
+    return {
+      data: [],
+      lastPageGroup: 1,
+      lastPage: 1,
+      pageGroup: 1,
+    };
+  }
+
   return {
     data,
-    lastPageGroup: Math.ceil(data.length / (PAGENATION_NUMBER_COUNT * PAGE_SHOW_COUNT)),
+    lastPageGroup: Math.ceil(
+      data.length / (PAGENATION_NUMBER_COUNT * PAGE_SHOW_COUNT)
+    ),
     lastPage: Math.ceil(data.length / PAGE_SHOW_COUNT),
     pageGroup: 1,
   };
 };
-
-
-
 
 export default getPageNationInitialData;

@@ -28,7 +28,26 @@ const StyledButton = styled.button`
   ${hover}
 
   ${({ ...rest }) => {
-    const { height, padding, width, margin, background } = rest;
+    const { dateSort, visible, height, padding, width, margin, background } =
+      rest;
+
+    if (dateSort) {
+      return css`
+        width: 70px;
+        position: absolute;
+        visibility: hidden;
+        right: 0;
+        opacity: 0;
+        transition: opacity 0.5s, visibility 0.5s, transform 0.5s ease-in;
+        transform: translateX(20px);
+        ${visible &&
+        css`
+          opacity: 1;
+          transform: translateX(0px);
+          visibility: unset;
+        `}
+      `;
+    }
 
     return css`
       background: ${background};

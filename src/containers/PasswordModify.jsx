@@ -2,7 +2,7 @@ import useSignupForm from "hooks/useSignupForm";
 import React, { useCallback, useEffect, useState } from "react";
 import usePasswordModify from "hooks/usePasswordModify";
 import { isEmpty } from "utils/Validation";
-import NewPasswordForm from "components/my/NewPasswordForm";
+import NewPasswordForm from "components/NewPasswordForm";
 import Modal from "components/common/Modal";
 import Title from "components/common/Title";
 import Input from "components/common/Input";

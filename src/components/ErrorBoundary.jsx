@@ -10,7 +10,7 @@ class ErrorBoundary extends Component {
     return { hasError: true, error };
   }
   componentDidCatch(err, errInfo) {
-    console.log("Uncaught error:", err, errInfo);
+    console.error("Uncaught error:", err, errInfo);
   }
 
   render() {

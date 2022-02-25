@@ -1,4 +1,4 @@
-import LoginForm from "components/login/LoginForm";
+import LoginForm from "components/LoginForm";
 import React, { useCallback, useEffect, useState } from "react";
 import useLogin from "hooks/useLogin";
 import { Route, useHistory, useRouteMatch } from "react-router";
@@ -9,7 +9,7 @@ import styled from "styled-components";
 import { mobile } from "assets/style/GlobalStyled";
 import { smallMobile } from "assets/style/GlobalStyled";
 import Modal from "components/common/Modal";
-import IDPasswordFind from "./IDPasswordFind";
+import Find from "./Find";
 
 const Login = () => {
   const { setAccess } = useAuthContext();
@@ -18,12 +18,10 @@ const Login = () => {
   const { path } = useRouteMatch();
   const [loginForm, handleChange] = useForm();
   const [login, fetchLogin] = useLogin();
-  const { loading, error } = login;
+  const { loading } = login;
   const [visible, setVisible] = useState(false);
   const [message, setMessage] = useState(null);
   const { id, password } = loginForm;
-
-  console.log(login);
 
   const handleSubmit = useCallback(
     (e) => {
@@ -73,7 +71,7 @@ const Login = () => {
           visible={visible}
         />
       </Route>
-      <Route path="/login/find" component={IDPasswordFind} />
+      <Route path="/login/find" component={Find} />
       <Modal setVisible={setVisible} message={message} visible={visible} />
     </Wrapper>
   );

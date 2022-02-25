@@ -1,12 +1,13 @@
-
-
-import { useCallback, useEffect, useMemo, useState } from 'react';
+import { useCallback, useEffect, useMemo, useState } from "react";
 import queryString from "query-string";
-import getPageNationInitialData, { getCurrentPage, getDataSort } from 'utils/PageNation';
-import { useHistory } from 'react-router';
+import getPageNationInitialData, {
+  getCurrentPage,
+  getDataSort,
+} from "utils/PageNation";
+import { useHistory } from "react-router";
 
 // localStorage에 저장되어있는 item id 값
-//LOCAL_STORAGE_ID 지출,수입 
+//LOCAL_STORAGE_ID 지출,수입
 const useBoards = (LOCAL_STORAGE_ID) => {
   const { location } = useHistory();
   const { search } = location;
@@ -14,7 +15,7 @@ const useBoards = (LOCAL_STORAGE_ID) => {
   const [removeRowIds, setRemoveRowIds] = useState([]);
   const [showPages, setShowPages] = useState([]);
   const [isVisible, setIsVisible] = useState(false);
-  const [isLoading, setIsLoading] = useState(false);
+  const [loading, setLoading] = useState(false);
   const [isOpacity, setIsOpacity] = useState(false);
   const [pageNationState, setPageNagetion] = useState(
     getPageNationInitialData(LOCAL_STORAGE_ID)
@@ -76,21 +77,22 @@ const useBoards = (LOCAL_STORAGE_ID) => {
     setRemoveRowIds([]);
   }, [removeRowIds, LOCAL_STORAGE_ID, getPages]);
 
-
   useEffect(() => {
     const pagesinit = getPageNationInitialData(LOCAL_STORAGE_ID);
     const pages = getPages(pagesinit);
+    setPageNagetion(pagesinit);
     setShowPages(pages);
-  }, [pageNationState, currentQuery, getPages, LOCAL_STORAGE_ID]);
+  }, [currentQuery, getPages, LOCAL_STORAGE_ID]);
 
   useEffect(() => {
-    setIsLoading(true);
-    (async () => {
-      await new Promise((re) => setTimeout(() => re(), 500));
-      setIsLoading(false);
+    const fetch = async () => {
+      setLoading(true);
+      await new Promise((re) => setTimeout(re, 500));
+      setLoading(false);
       setIsOpacity(true);
-    })();
-  }, []);
+    };
+    fetch();
+  }, [currentQuery]);
 
   return {
     removeRowIds,
@@ -99,14 +101,14 @@ const useBoards = (LOCAL_STORAGE_ID) => {
     currentQuery,
     showPages,
     pageNationState,
-    isLoading,
+    loading,
     isOpacity,
     setIsVisible,
     removeRows,
     removeRowsCheckedClick,
     setPageNagetion,
     setShowPages,
-    setIsLoading,
+    setLoading,
     boardModify,
     getPages,
   };

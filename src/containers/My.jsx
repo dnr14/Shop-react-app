@@ -1,6 +1,6 @@
 import NotFount from "components/NotFound";
 import ErrorBoundary from "components/ErrorBoundary";
-import MyInfo from "components/my/MyInfo";
+import MyInfo from "components/MyInfo";
 import { useAuthContext } from "contexts/AuthProvider";
 import useMyInfo from "hooks/useMyInfo";
 import useUserWithdrawal from "hooks/useUserWithdrawal";
@@ -11,7 +11,7 @@ import PasswordModify from "./PasswordModify";
 import withdrawalImg from "assets/images/withdrawal.jpg";
 import { Link } from "react-router-dom";
 import Button from "components/common/Button";
-import Withdrawal from "components/my/Withdrawal";
+import Withdrawal from "components/Withdrawal";
 
 const My = () => {
   const [my, fetchMyInfo] = useMyInfo();

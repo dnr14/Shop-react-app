@@ -1,8 +1,8 @@
 import PublicRouter from "./PublicRouter";
 import React from "react";
 import { Route, Switch } from "react-router";
-import InsertContainer from "containers/InsertContainer";
-import SelectContainer from "containers/SelectContainer";
+import Insert from "containers/Insert";
+import Select from "containers/Select";
 import Signup from "containers/Signup";
 import Login from "containers/Login";
 import NotFount from "components/NotFound";
@@ -17,11 +17,20 @@ const Routers = () => {
       <PublicRouter path="/signup" component={Signup} restricted />
       <PrivateRouter path="/my" component={My} />
       <Route path="/board" component={Board} />
-      <Route path="/insert" component={InsertContainer} />
-      <Route path="/select" component={SelectContainer} />
+      <Route path="/insert" component={Insert} />
+      <Route path="/select" component={Select} />
       <Route path="*" component={NotFount} />
     </Switch>
   );
+};
+
+const Home = () => {
+  // 프론트 이미지 요청 ===> express img url 보내줌 ===> 프론트 img url로 요청==> img 그려짐
+  // 프론트 요청 ==> express 이미지 읽고 ==> base64로 보내줌
+  // db에는 base64 저장 x
+  // s3로 이미지서버를 따로 두던지 해야된다.
+
+  return <div>홈</div>;
 };
 
 export default Routers;

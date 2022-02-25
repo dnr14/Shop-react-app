@@ -27,7 +27,7 @@ const Income = () => {
     getPages,
   } = useBoards(LOCAL_STORAGE_ID);
 
-  const onSubmit = (id, cb, close) => async (data) => {
+  const onSubmit = (id, cb, close) => async data => {
     const {
       incomeDate,
       incomeHoureTime,
@@ -55,15 +55,11 @@ const Income = () => {
 
     setLoading(true);
     const old_incomes = JSON.parse(localStorage.getItem(LOCAL_STORAGE_ID));
-    const new_incomes = old_incomes.map((el) =>
-      el.id === id ? { ...el, ...incomeData } : el
-    );
+    const new_incomes = old_incomes.map(el => (el.id === id ? { ...el, ...incomeData } : el));
     console.log(new_incomes);
     // // 모달이 바로 닫히지 않도록 지연을 주었다.
     localStorage.setItem(LOCAL_STORAGE_ID, JSON.stringify(new_incomes));
-    await new Promise((re) =>
-      setTimeout(() => re(alert("완료가 되었습니다.")), 1000)
-    );
+    await new Promise(re => setTimeout(() => re(alert("완료가 되었습니다.")), 1000));
     // // 모달 닫기
     cb(false);
     close.current = true;
@@ -82,17 +78,12 @@ const Income = () => {
       price: "수입",
       insertDate: "등록 날짜",
     }),
-    []
+    [],
   );
 
   return (
     <div>
-      <Sort
-        text={text}
-        currentQuery={currentQuery}
-        removeRowIds={removeRowIds}
-        removeRows={removeRows}
-      />
+      <Sort text={text} currentQuery={currentQuery} removeRowIds={removeRowIds} removeRows={removeRows} />
       <DataTable
         loading={loading}
         datas={showPages}
@@ -108,12 +99,7 @@ const Income = () => {
           lastPage={pageNationState.lastPage}
         />
       )}
-      <ListModal
-        isVisible={isVisible}
-        updateData={updateData}
-        setIsVisible={setIsVisible}
-        onSubmit={onSubmit}
-      />
+      <ListModal isVisible={isVisible} updateData={updateData} setIsVisible={setIsVisible} onSubmit={onSubmit} />
     </div>
   );
 };

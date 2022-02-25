@@ -1,4 +1,4 @@
-export const dateValidation = (date) => {
+export const dateValidation = date => {
   const obj = {
     error: "no Error",
     result: false,
@@ -12,7 +12,7 @@ export const dateValidation = (date) => {
   return obj;
 };
 
-export const priceValidation = (price) => {
+export const priceValidation = price => {
   const obj = {
     error: "no Error",
     result: false,
@@ -25,23 +25,23 @@ export const priceValidation = (price) => {
   return obj;
 };
 
-export const isEmpty = (value) => {
+export const isEmpty = value => {
   let result = false;
   if (value === "" || value === "0") result = true;
   return result;
 };
 
-export const isSpecialSymbol = (value) => {
+export const isSpecialSymbol = value => {
   const regExp = /[\\{\\}\\[\]\\/?,@;:|\\)*~`!^\-_+<>\\#$%&\\\\=\\(\\'\\"]/gi;
   return regExp.test(value) ? true : false;
 };
 
-export const isKoreaLengCheck = (value) => {
+export const isKoreaLengCheck = value => {
   const regExp = /[가-힣ㄱ-ㅎㅏ-ㅣ]/gi;
   return regExp.test(value) ? true : false;
 };
 
-export const isWhiteSpaceCheck = (value) => {
+export const isWhiteSpaceCheck = value => {
   const regExp = /\s/gi;
   return regExp.test(value) ? true : false;
 };

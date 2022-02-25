@@ -5,16 +5,7 @@ import Label from "components/common/Label";
 import React, { memo } from "react";
 import styled from "styled-components";
 
-const SignupInput = ({
-  labelText,
-  type,
-  name,
-  placeholder,
-  onChange,
-  value,
-  error,
-  message,
-}) => {
+const SignupInput = ({ labelText, type, name, placeholder, onChange, value, error, message }) => {
   return (
     <SignupInputWrapper>
       <Label flex={2} text={labelText} />

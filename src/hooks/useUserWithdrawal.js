@@ -1,9 +1,5 @@
 import { getFetchUserWithdrawal } from "api/auth";
-import {
-  userWithdrawal,
-  userWithdrawalError,
-  userWithdrawalSuccess,
-} from "modules/actions/withdrawalAction";
+import { userWithdrawal, userWithdrawalError, userWithdrawalSuccess } from "modules/actions/withdrawalAction";
 import withdrawalReducer from "modules/reducers/withdrawalReducer";
 import { useCallback, useReducer } from "react";
 
@@ -16,7 +12,7 @@ const init = {
 const useUserWithdrawal = () => {
   const [state, dispatch] = useReducer(withdrawalReducer, init);
 
-  const fetch = useCallback(async (id) => {
+  const fetch = useCallback(async id => {
     dispatch(userWithdrawal());
     try {
       await getFetchUserWithdrawal(id);

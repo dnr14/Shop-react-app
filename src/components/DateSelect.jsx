@@ -1,9 +1,6 @@
 import React, { memo } from "react";
 import styled from "styled-components";
-import {
-  getOneToTwentyForeHoure,
-  getZeroToFiftyNineMinutes,
-} from "utils/DateUtil";
+import { getOneToTwentyForeHoure, getZeroToFiftyNineMinutes } from "utils/DateUtil";
 import { getGrayColor1, getBoxShadow3 } from "assets/style/GlobalStyled";
 import SelectBox from "components/common/SelectBox";
 import InnerWrapper from "./common/InnerWrapper";
@@ -26,12 +23,7 @@ const DateSelect = ({ selectedDate, hours, minutes, handleChange }) => {
         <span>날짜</span>
       </InnerWrapper>
       <InnerWrapper>
-        <DateBox
-          type="date"
-          name="date"
-          value={selectedDate}
-          onChange={handleChange}
-        />
+        <DateBox type="date" name="date" value={selectedDate} onChange={handleChange} />
       </InnerWrapper>
       <InnerWrapper>
         <SelectBox name="hours" value={hours} handleChange={handleChange}>
@@ -41,11 +33,7 @@ const DateSelect = ({ selectedDate, hours, minutes, handleChange }) => {
         </SelectBox>
       </InnerWrapper>
       <InnerWrapper>
-        <SelectBox
-          name="minutes"
-          value={String(minutes).padStart("2", "0")}
-          handleChange={handleChange}
-        >
+        <SelectBox name="minutes" value={String(minutes).padStart("2", "0")} handleChange={handleChange}>
           {getZeroToFiftyNineMinutes().map((minute, idx) => (
             <option key={idx} value={minute}>{`${minute}분`}</option>
           ))}

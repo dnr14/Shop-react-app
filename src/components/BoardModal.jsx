@@ -49,11 +49,7 @@ const BoardModal = ({ modalState, setModalState, handleBoardUpdate }) => {
   return (
     <ModalWrapper visible={visible}>
       <MobalInnerWrapper visible={visible}>
-        <Form
-          onSubmit={handleSubmit(
-            handleBoardUpdate(currentBoard.boardsId, reset)
-          )}
-        >
+        <Form onSubmit={handleSubmit(handleBoardUpdate(currentBoard.boardsId, reset))}>
           <ModalHeader>수정하기</ModalHeader>
           <main>
             <p>작성자 {currentBoard.createId}</p>

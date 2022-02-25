@@ -14,12 +14,7 @@ const Result = ({ data }) => {
       <p className="email">이메일 </p>
       <Input defaultValue={data.email} readOnly />
       <Link to="/login">
-        <Button
-          text="로그인 하기"
-          width="100%"
-          padding="5px 0"
-          margin="10px 0 0 0"
-        />
+        <Button text="로그인 하기" width="100%" padding="5px 0" margin="10px 0 0 0" />
       </Link>
     </ResultWrapper>
   );

@@ -24,12 +24,12 @@ const NewPassword = ({ info }) => {
   const [visible, setVisible] = useState(false);
   const history = useHistory();
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = async e => {
     e.preventDefault();
     const password = form.password.value;
 
     if (password === "" || password === null || password === undefined) {
-      setFetchState((prevState) => ({
+      setFetchState(prevState => ({
         ...prevState,
         error: "비밀번호를 입력해주세요.",
       }));
@@ -37,7 +37,7 @@ const NewPassword = ({ info }) => {
       return;
     }
 
-    setFetchState((prevState) => ({
+    setFetchState(prevState => ({
       ...prevState,
       loading: !prevState.loading,
     }));
@@ -65,19 +65,9 @@ const NewPassword = ({ info }) => {
           placeholder="비밀번호를 입력해주세요."
         />
         <ErrorMessage message={form.password.errorText} />
-        <Button
-          type="submit"
-          text="변경"
-          width="100%"
-          margin="10px 0 0 0"
-          padding="5px 0"
-        />
+        <Button type="submit" text="변경" width="100%" margin="10px 0 0 0" padding="5px 0" />
       </Form>
-      <Modal
-        message={fetchState.error}
-        visible={visible}
-        setVisible={setVisible}
-      />
+      <Modal message={fetchState.error} visible={visible} setVisible={setVisible} />
     </>
   );
 };

@@ -4,12 +4,7 @@ import Form from "components/common/Form";
 import styled from "styled-components";
 import withLoading from "hoc/withLoading";
 import Editt from "components/common/Edit";
-import {
-  getFileOption,
-  getIdOption,
-  getPasswordOption,
-  getTextAreaOption,
-} from "utils/hookFormUtil";
+import { getFileOption, getIdOption, getPasswordOption, getTextAreaOption } from "utils/hookFormUtil";
 import Input from "components/common/Input";
 import ErrorMessage from "components/common/ErrorMessage";
 import Button from "components/common/Button";
@@ -37,29 +32,26 @@ const BoardForm = ({ handleBoardsSubmit }) => {
   const textAreaWatch = watch("textArea");
   const { password, file, textArea, id } = errors;
 
-  const handleFileChange = useCallback(
-    (e) => (inputRef.current.value = e.target.value),
-    []
-  );
+  const handleFileChange = useCallback(e => (inputRef.current.value = e.target.value), []);
 
-  const handleGanderChange = (e) => {
+  const handleGanderChange = e => {
     if (e.target.name === "girl") {
-      setGender((prev) =>
+      setGender(prev =>
         prev.girl === true
           ? prev
           : {
               man: false,
               girl: true,
-            }
+            },
       );
     } else {
-      setGender((prev) =>
+      setGender(prev =>
         prev.man === true
           ? prev
           : {
               man: true,
               girl: false,
-            }
+            },
       );
     }
   };
@@ -68,21 +60,11 @@ const BoardForm = ({ handleBoardsSubmit }) => {
     <Form onSubmit={handleSubmit(handleBoardsSubmit(reset))}>
       <GenderWrapper>
         <Gender>
-          <input
-            type="checkbox"
-            {...register("man")}
-            checked={genderState.man}
-            onChange={handleGanderChange}
-          />
+          <input type="checkbox" {...register("man")} checked={genderState.man} onChange={handleGanderChange} />
           <span>👨‍🦲</span>
         </Gender>
         <Gender>
-          <input
-            type="checkbox"
-            {...register("girl")}
-            checked={genderState.girl}
-            onChange={handleGanderChange}
-          />
+          <input type="checkbox" {...register("girl")} checked={genderState.girl} onChange={handleGanderChange} />
           <span>👧</span>
         </Gender>
       </GenderWrapper>
@@ -106,11 +88,7 @@ const BoardForm = ({ handleBoardsSubmit }) => {
         </InputWrapper>
       </InnerWrapper>
       <EditWrapper>
-        <Editt
-          register={register("textArea", getTextAreaOption())}
-          error={textArea}
-          editWatch={textAreaWatch}
-        />
+        <Editt register={register("textArea", getTextAreaOption())} error={textArea} editWatch={textAreaWatch} />
         <Button text="등록" type="submit" />
       </EditWrapper>
       <FileWrapper>

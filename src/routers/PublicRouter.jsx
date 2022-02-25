@@ -4,12 +4,7 @@ import { getAccessToken } from "utils/LocalStorageUtil";
 
 const PublicRouter = ({ component: Component, restricted, ...rest }) => {
   return (
-    <Route
-      {...rest}
-      render={(props) =>
-        isLogin() && restricted ? <Redirect to="/" /> : <Component {...props} />
-      }
-    />
+    <Route {...rest} render={props => (isLogin() && restricted ? <Redirect to="/" /> : <Component {...props} />)} />
   );
 };
 

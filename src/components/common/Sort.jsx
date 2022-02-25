@@ -34,12 +34,7 @@ const Sort = ({ currentQuery, text, isCategory, removeRowIds, removeRows }) => {
 
   return (
     <SortWrapper>
-      <Button
-        text="삭제"
-        dateSort
-        visible={removeRowIds.length ? true : false}
-        onClick={removeRows}
-      />
+      <Button text="삭제" dateSort visible={removeRowIds.length ? true : false} onClick={removeRows} />
       <SortTagsWrapper>{tags}</SortTagsWrapper>
       <Head>
         <InnerWrapper className="first">
@@ -48,40 +43,20 @@ const Sort = ({ currentQuery, text, isCategory, removeRowIds, removeRows }) => {
         {isCategory && (
           <InnerWrapper>
             <span>{text.category}</span>
-            <SortImg
-              name="category"
-              pathname={pathname}
-              position={category}
-              currentQuery={currentQuery}
-            />
+            <SortImg name="category" pathname={pathname} position={category} currentQuery={currentQuery} />
           </InnerWrapper>
         )}
         <InnerWrapper>
           <span>{text.date}</span>
-          <SortImg
-            name="date"
-            pathname={pathname}
-            currentQuery={currentQuery}
-            position={date}
-          />
+          <SortImg name="date" pathname={pathname} currentQuery={currentQuery} position={date} />
         </InnerWrapper>
         <InnerWrapper>
           <span>{text.insertDate}</span>
-          <SortImg
-            name="insertDate"
-            pathname={pathname}
-            currentQuery={currentQuery}
-            position={insertDate}
-          />
+          <SortImg name="insertDate" pathname={pathname} currentQuery={currentQuery} position={insertDate} />
         </InnerWrapper>
         <InnerWrapper>
           <span>{text.price}</span>
-          <SortImg
-            name="price"
-            pathname={pathname}
-            currentQuery={currentQuery}
-            position={price}
-          />
+          <SortImg name="price" pathname={pathname} currentQuery={currentQuery} position={price} />
         </InnerWrapper>
       </Head>
     </SortWrapper>
@@ -90,20 +65,10 @@ const Sort = ({ currentQuery, text, isCategory, removeRowIds, removeRows }) => {
 
 function SortImg({ name, pathname, currentQuery, position }) {
   if (position === "asc") {
-    return (
-      <CustomLink
-        to={`${makeUrl(pathname, currentQuery, { [`${name}`]: "desc" })}`}
-        position={position}
-      />
-    );
+    return <CustomLink to={`${makeUrl(pathname, currentQuery, { [`${name}`]: "desc" })}`} position={position} />;
   }
 
-  return (
-    <CustomLink
-      to={`${makeUrl(pathname, currentQuery, { [`${name}`]: "asc" })}`}
-      position={position}
-    />
-  );
+  return <CustomLink to={`${makeUrl(pathname, currentQuery, { [`${name}`]: "asc" })}`} position={position} />;
 }
 
 const SortWrapper = styled.div`

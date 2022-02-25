@@ -14,17 +14,14 @@ const Pagination = ({ currentQuery, pageGroup, lastPageGroup, lastPage }) => {
 
   const [nextPage, prevPage, pagenation] = useMemo(
     () => getPageNationNumbers(pageGroup, lastPage, lastPageGroup),
-    [pageGroup, lastPage, lastPageGroup]
+    [pageGroup, lastPage, lastPageGroup],
   );
 
   return (
     <PaginationWrapper>
       {1 !== pageGroup && (
         <li>
-          <Link
-            to={`${makeUrl(pathname, currentQuery, { page: prevPage })}`}
-            className="prve"
-          />
+          <Link to={`${makeUrl(pathname, currentQuery, { page: prevPage })}`} className="prve" />
         </li>
       )}
       {pagenation.map((page, idx) => {
@@ -41,10 +38,7 @@ const Pagination = ({ currentQuery, pageGroup, lastPageGroup, lastPage }) => {
       })}
       {lastPageGroup !== pageGroup && (
         <li>
-          <Link
-            to={`${makeUrl(pathname, currentQuery, { page: nextPage })}`}
-            className="next"
-          />
+          <Link to={`${makeUrl(pathname, currentQuery, { page: nextPage })}`} className="next" />
         </li>
       )}
     </PaginationWrapper>

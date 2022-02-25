@@ -1,8 +1,4 @@
-import {
-  USER_UPDATE,
-  USER_UPDATE_ERROR,
-  USER_UPDATE_SUCCESS,
-} from "modules/actions/passwordModifyAction";
+import { USER_UPDATE, USER_UPDATE_ERROR, USER_UPDATE_SUCCESS } from "modules/actions/passwordModifyAction";
 
 export default function passwordModifyReducer(_, action) {
   switch (action.type) {

@@ -75,7 +75,7 @@ const IDPasswordFind = () => {
     setLoading(LOADING_INIT);
   }, [isLoading, form, pathname, path]);
 
-  const handleSubmit = (e) => {
+  const handleSubmit = e => {
     e.preventDefault();
 
     if (`${path}/id` === pathname) {
@@ -122,7 +122,7 @@ const IDPasswordFind = () => {
       }
     }
 
-    setLoading((prev) => ({ ...prev, isLoading: true }));
+    setLoading(prev => ({ ...prev, isLoading: true }));
   };
 
   return (
@@ -169,25 +169,13 @@ const IDPasswordFind = () => {
         </Route>
         <Route path="*" component={NotFound} />
       </Switch>
-      <Modal
-        visible={visible}
-        setVisible={setVisible}
-        message={error.message}
-      />
+      <Modal visible={visible} setVisible={setVisible} message={error.message} />
     </div>
   );
 };
 
 function IDPasswordButton() {
-  return (
-    <Button
-      type="submit"
-      text="찾기"
-      margin="10px 0 0 0"
-      width="100%"
-      padding="5px 0"
-    />
-  );
+  return <Button type="submit" text="찾기" margin="10px 0 0 0" width="100%" padding="5px 0" />;
 }
 
 export default IDPasswordFind;

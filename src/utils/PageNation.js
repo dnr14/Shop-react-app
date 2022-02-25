@@ -7,9 +7,7 @@ export function getCurrentPage(pageNationState, currentQuery) {
   const currnetPage = Number(currentQuery.page);
   if (data.length === 0) return [];
   if (lastPage >= currnetPage) {
-    pageNationState.pageGroup = Math.ceil(
-      currnetPage / PAGENATION_NUMBER_COUNT
-    );
+    pageNationState.pageGroup = Math.ceil(currnetPage / PAGENATION_NUMBER_COUNT);
     const startPage = (currnetPage - 1) * PAGE_SHOW_COUNT;
     const endPage = startPage + PAGE_SHOW_COUNT;
     const showData = getDataSliceByIndex(data, startPage, endPage);
@@ -43,14 +41,8 @@ export function getPageNationNumbers(pageGroup, lastPage, lastPageGroup) {
 
   const pageNationCountArray =
     pageGroup === lastPageGroup
-      ? Array.from(
-          { length: lastPage + 1 - start },
-          (_, i) => (pageGroup - 1) * PAGENATION_NUMBER_COUNT + 1 + i
-        )
-      : Array.from(
-          { length: PAGENATION_NUMBER_COUNT },
-          (_, i) => (pageGroup - 1) * PAGENATION_NUMBER_COUNT + 1 + i
-        );
+      ? Array.from({ length: lastPage + 1 - start }, (_, i) => (pageGroup - 1) * PAGENATION_NUMBER_COUNT + 1 + i)
+      : Array.from({ length: PAGENATION_NUMBER_COUNT }, (_, i) => (pageGroup - 1) * PAGENATION_NUMBER_COUNT + 1 + i);
 
   return [nextPage, prevPage, pageNationCountArray];
 }
@@ -63,13 +55,7 @@ export function getDataSort(data, sort) {
   let { idx } = first;
   let resultArray = data;
 
-  if (
-    category === undefined &&
-    date === undefined &&
-    price === undefined &&
-    insertDate === undefined
-  )
-    return data;
+  if (category === undefined && date === undefined && price === undefined && insertDate === undefined) return data;
 
   if (price !== undefined) {
     resultArray =
@@ -99,10 +85,10 @@ export function getDataSort(data, sort) {
         : data.sort((a, b) => (a.category >= b.category ? 1 : -1));
   }
 
-  return resultArray.map((item) => ({ ...item, idx: idx++ }));
+  return resultArray.map(item => ({ ...item, idx: idx++ }));
 }
 
-const getPageNationInitialData = (getId) => {
+const getPageNationInitialData = getId => {
   const data = JSON.parse(localStorage.getItem(getId));
 
   if (data === null) {
@@ -116,9 +102,7 @@ const getPageNationInitialData = (getId) => {
 
   return {
     data,
-    lastPageGroup: Math.ceil(
-      data.length / (PAGENATION_NUMBER_COUNT * PAGE_SHOW_COUNT)
-    ),
+    lastPageGroup: Math.ceil(data.length / (PAGENATION_NUMBER_COUNT * PAGE_SHOW_COUNT)),
     lastPage: Math.ceil(data.length / PAGE_SHOW_COUNT),
     pageGroup: 1,
   };

@@ -1,7 +1,7 @@
 import Loading from "components/common/Loading";
 import React from "react";
 
-const withLoading = (Component) => {
+const withLoading = Component => {
   return ({ loading, ...rest }) => {
     return (
       <>

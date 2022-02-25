@@ -2,19 +2,14 @@ import styled, { css } from "styled-components";
 
 import React, { useCallback, useEffect, useRef, useState } from "react";
 import BoardModal from "components/BoardModal";
-import {
-  getAddBoard,
-  getBoardDelete,
-  getBoards,
-  getBoardUpdate,
-  getMoreBoards,
-} from "api/boards";
+import { getAddBoard, getBoardDelete, getBoards, getBoardUpdate, getMoreBoards } from "api/boards";
 import Item from "components/Item";
 import { tab } from "assets/style/GlobalStyled";
 import { mobile } from "assets/style/GlobalStyled";
 import BoardForm from "components/BoardForm";
 import { getBoxShadow2 } from "assets/style/GlobalStyled";
 import Empty from "components/common/Empty";
+import Title from "components/common/Title";
 
 const MODAL_INIT = {
   visible: false,
@@ -30,14 +25,11 @@ const Board = () => {
   const debounce = useRef(null);
 
   const preImgLoading = useCallback(
-    async (boards) =>
-      boards.forEach(
-        (board) => board.fileName && (new Image().src = board.fileName)
-      ),
-    []
+    async boards => boards.forEach(board => board.fileName && (new Image().src = board.fileName)),
+    [],
   );
 
-  const observer = (node) => {
+  const observer = node => {
     if (node === null || node === undefined || lastRef.current === true) return;
     if (observerRef.current) observerRef.current.disconnect();
     const observerCallback = ([entry], observer) => {
@@ -56,7 +48,7 @@ const Board = () => {
             observer.unobserve(entry.target);
           }
           setLoading(false);
-          setBoards((prev) => [...prev, ...data.boards]);
+          setBoards(prev => [...prev, ...data.boards]);
         };
         debounce.current = setTimeout(hasMore, 1000);
       }
@@ -66,7 +58,7 @@ const Board = () => {
   };
 
   const handleSubmit = useCallback(
-    (reset) =>
+    reset =>
       async ({ id, textArea, man, password, file }) => {
         try {
           setLoading(true);
@@ -77,7 +69,7 @@ const Board = () => {
           formData.append("password", password);
           formData.append("gender", man === true ? 0 : 1);
           const { data } = await getAddBoard(formData);
-          setBoards((prev) => [data.result, ...prev]);
+          setBoards(prev => [data.result, ...prev]);
         } catch (error) {
           alert(error.message);
         } finally {
@@ -85,40 +77,36 @@ const Board = () => {
           reset();
         }
       },
-    []
+    [],
   );
 
   const handleModalOpen = useCallback(
-    (boardsId) => () => {
-      const [currentBoard] = boards.filter(
-        (board) => board.boardsId === boardsId
-      );
-      setModalState((prev) => ({
+    boardsId => () => {
+      const [currentBoard] = boards.filter(board => board.boardsId === boardsId);
+      setModalState(prev => ({
         ...prev,
         visible: !prev.visible,
         data: currentBoard,
       }));
     },
-    [boards]
+    [boards],
   );
 
   const handleBoardDelete = useCallback(
-    (id) => async () => {
+    id => async () => {
       const pwd = prompt("비밀번호를 입력하세요.");
       if (pwd === null || pwd === undefined) return;
       try {
         setLoading(true);
         const { data } = await getBoardDelete(id, pwd);
-        setBoards((prev) =>
-          prev.filter(({ boardsId }) => boardsId !== data.board.boardsId)
-        );
+        setBoards(prev => prev.filter(({ boardsId }) => boardsId !== data.board.boardsId));
       } catch (error) {
         alert(error.message);
       } finally {
         setLoading(false);
       }
     },
-    []
+    [],
   );
 
   const handleBoardUpdate = useCallback(
@@ -130,11 +118,7 @@ const Board = () => {
           if (!data?.board) {
             throw new Error("서버에서 데이터를 못받아왔습니다.");
           }
-          setBoards((prev) =>
-            prev.map((board) =>
-              board.boardsId === data.board.boardsId ? data.board : board
-            )
-          );
+          setBoards(prev => prev.map(board => (board.boardsId === data.board.boardsId ? data.board : board)));
           setModalState(MODAL_INIT);
         } catch (error) {
           alert(error.message);
@@ -143,7 +127,7 @@ const Board = () => {
           setLoading(false);
         }
       },
-    []
+    [],
   );
 
   // 첫 마운팅 후 통신
@@ -164,7 +148,7 @@ const Board = () => {
   }, [preImgLoading]);
 
   const render = boards.length ? (
-    boards.map((board) => (
+    boards.map(board => (
       <Item
         key={board.boardsId}
         board={board}
@@ -178,15 +162,12 @@ const Board = () => {
 
   return (
     <Wrapper radius={boards.length}>
+      <Title text="익명 게시글" background={"#FFF"} margin="0 0 20px 0" />
       <BoardTitle> 게시글 {boards?.length}</BoardTitle>
       <BoardForm handleBoardsSubmit={handleSubmit} loading={loading} />
       {render}
       <div ref={observer} />
-      <BoardModal
-        modalState={modalState}
-        setModalState={setModalState}
-        handleBoardUpdate={handleBoardUpdate}
-      />
+      <BoardModal modalState={modalState} setModalState={setModalState} handleBoardUpdate={handleBoardUpdate} />
     </Wrapper>
   );
 };

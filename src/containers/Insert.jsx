@@ -25,24 +25,19 @@ const Insert = () => {
   const { path } = useRouteMatch();
   const location = useLocation();
 
-  const { loading, state, handleSubmit, handleChange } = useChange(
-    INITIAL_STATE,
-    location
-  );
+  const { loading, state, handleSubmit, handleChange } = useChange(INITIAL_STATE, location);
 
   const switchRef = useRef(false);
 
-  const handleBlur = (e) => {
+  const handleBlur = e => {
     if (e.target instanceof HTMLSelectElement) {
       e.target.nextSibling.firstChild.style = "";
       switchRef.current = false;
     }
   };
-  const handleClick = (e) => {
+  const handleClick = e => {
     if (e.target instanceof HTMLSelectElement) {
-      e.target.nextSibling.firstChild.style = switchRef.current
-        ? ""
-        : "transform: rotate(180deg)";
+      e.target.nextSibling.firstChild.style = switchRef.current ? "" : "transform: rotate(180deg)";
       switchRef.current = !switchRef.current;
     }
   };

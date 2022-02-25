@@ -4,7 +4,7 @@ export const getToday = () => {
   const mm = isFillWithZero(date.getMonth() + 1);
   const dd = isFillWithZero(date.getDate());
   return `${yyyy}-${mm}-${dd}`;
-}
+};
 
 export const getYYMMDD_HHMMSS = () => {
   const date = new Date();
@@ -21,22 +21,21 @@ export const getYYMMDD_HHMMSS = () => {
     hours: hh,
     minutes: mm,
   };
-}
+};
 
 export const getOneToTwentyForeHoure = () => {
   const houre = Array.from({ length: 24 }, (_, i) => String(i + 1).padStart(2, "0"));
   return houre;
-}
+};
 
 export const getZeroToFiftyNineMinutes = () => {
   const Minutes = Array.from({ length: 60 }, (_, i) => String(i).padStart(2, "0"));
   return Minutes;
-}
+};
 
-
-export const isFillWithZero = (date) => {
+export const isFillWithZero = date => {
   return String(date).padStart(2, "0");
-}
+};
 
 export const setDateFormat = date => {
   const ymdArray = ["년", "월", "일"];
@@ -49,7 +48,7 @@ export const setDateFormat = date => {
     .reduce((acc, cur, idx) => (acc += `${cur}${hmsArray[idx]} `), "");
 
   return `${yymmdd} ${hhmmss}`;
-}
+};
 
 export const setInputCheckBoxDateType = time => {
   const date = new Date(time);
@@ -58,8 +57,7 @@ export const setInputCheckBoxDateType = time => {
   const DD = isFillWithZero(date.getDate());
 
   return `${YYYY}-${MM}-${DD}`;
-
-}
+};
 export const setInputCheckBoxTimeType = time => {
   const date = new Date(time);
   const HH = isFillWithZero(date.getHours());
@@ -71,7 +69,6 @@ export const setInputCheckBoxTimeType = time => {
     },
     getMinutes() {
       return MM;
-    }
+    },
   };
-
-}
+};

@@ -1,10 +1,6 @@
 import { useCallback, useReducer } from "react";
 import authReducer from "modules/reducers/loginReducer";
-import {
-  errorAction,
-  loadingAction,
-  successAction,
-} from "modules/actions/loginAction";
+import { errorAction, loadingAction, successAction } from "modules/actions/loginAction";
 import http from "api/http";
 
 const initialState = {

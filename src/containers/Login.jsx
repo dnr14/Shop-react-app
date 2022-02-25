@@ -24,7 +24,7 @@ const Login = () => {
   const { id, password } = loginForm;
 
   const handleSubmit = useCallback(
-    (e) => {
+    e => {
       e.preventDefault();
 
       if (
@@ -43,7 +43,7 @@ const Login = () => {
         return;
       }
     },
-    [id, password, fetchLogin, setMessage]
+    [id, password, fetchLogin, setMessage],
   );
 
   useEffect(() => {

@@ -9,37 +9,36 @@ const http = axios.create({
 });
 
 http.interceptors.request.use(
-  (config) => {
+  config => {
     config.headers.authorization = getAccessToken();
     return config;
   },
-  (err) => {
+  err => {
     return Promise.reject({
       sucess: false,
       message: "요청 중 에러 발생",
     });
-  }
+  },
 );
 
 http.interceptors.response.use(
-  (config) => {
+  config => {
     return config;
   },
-  (error) => {
+  error => {
     const { response } = error;
     const { status, data } = response;
 
     let response_error = null;
     if (status) {
-      if (status >= 500)
-        response_error = new Error("서버 에러 잠시 후 다시 시작해주세요.");
+      if (status >= 500) response_error = new Error("서버 에러 잠시 후 다시 시작해주세요.");
       if (status >= 400) response_error = new Error(errorHandler(data));
     }
     return Promise.reject(response_error);
-  }
+  },
 );
 
-const errorHandler = (data) => {
+const errorHandler = data => {
   const { message } = data;
 
   if (!message) return data.error;

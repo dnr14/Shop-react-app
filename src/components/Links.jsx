@@ -45,16 +45,12 @@ const Links = ({ isMenuOpen, headerWidth }) => {
           </li>
         );
       }),
-    [access, logout]
+    [access, logout],
   );
 
   return (
     <LinksWrapper>
-      <Menus
-        isMenuOpen={isMenuOpen}
-        headerWidth={headerWidth}
-        liLength={links.length}
-      >
+      <Menus isMenuOpen={isMenuOpen} headerWidth={headerWidth} liLength={links.length}>
         {links}
       </Menus>
     </LinksWrapper>

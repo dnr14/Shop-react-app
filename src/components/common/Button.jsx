@@ -1,14 +1,9 @@
 import { getWhiteColor1 } from "assets/style/GlobalStyled";
-import {
-  getBoxShadow1,
-  getBackGroundBrandColor1,
-} from "assets/style/GlobalStyled";
+import { getBoxShadow1, getBackGroundBrandColor1 } from "assets/style/GlobalStyled";
 import React, { memo } from "react";
 import styled, { css } from "styled-components";
 
-const Button = ({ text, ...rest }) => (
-  <StyledButton {...rest}>{text}</StyledButton>
-);
+const Button = ({ text, ...rest }) => <StyledButton {...rest}>{text}</StyledButton>;
 
 const hover = () => css`
   transition: opacity 0.25s ease-in;
@@ -28,8 +23,7 @@ const StyledButton = styled.button`
   ${hover}
 
   ${({ ...rest }) => {
-    const { dateSort, visible, height, padding, width, margin, background } =
-      rest;
+    const { dateSort, visible, height, padding, width, margin, background } = rest;
 
     if (dateSort) {
       return css`

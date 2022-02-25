@@ -53,7 +53,7 @@ const ModalWrapper = styled.main`
     padding: 10px 20px;
     word-break: break-all;
     & > p {
-      letter-spacing: 0.2rem;
+      letter-spacing: 0.1rem;
       font-size: 0.8rem;
       ${getRedColor1}
     }

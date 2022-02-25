@@ -1,8 +1,4 @@
-import {
-  errorAction,
-  loadingAction,
-  successAction,
-} from "modules/actions/myInfoAction";
+import { errorAction, loadingAction, successAction } from "modules/actions/myInfoAction";
 import { useCallback, useReducer } from "react";
 import myInfoReducer from "modules/reducers/myInfoReducer";
 import { getFetchMyInfo } from "api/auth";

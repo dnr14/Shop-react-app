@@ -1,14 +1,9 @@
 import { getNewlineCount } from "./TextUtil";
-import {
-  isKoreaLengCheck,
-  isSpecialSymbol,
-  isWhiteSpaceCheck,
-} from "./Validation";
+import { isKoreaLengCheck, isSpecialSymbol, isWhiteSpaceCheck } from "./Validation";
 
 export const getTextAreaOption = () => ({
   validate: {
-    newlineLimit: (value) =>
-      getNewlineCount(value) > 15 ? "줄바꿈은 최대 15번 입니다." : true,
+    newlineLimit: value => (getNewlineCount(value) > 15 ? "줄바꿈은 최대 15번 입니다." : true),
   },
   maxLength: {
     value: 300,
@@ -22,8 +17,7 @@ export const getTextAreaOption = () => ({
 
 export const getPasswordOption = () => ({
   validate: {
-    whiteSpaceCheck: (value) =>
-      isWhiteSpaceCheck(value) ? "공백이 들어갔습니다." : true,
+    whiteSpaceCheck: value => (isWhiteSpaceCheck(value) ? "공백이 들어갔습니다." : true),
   },
   required: "비밀번호는 필수 입니다.",
   maxLength: {
@@ -38,12 +32,9 @@ export const getPasswordOption = () => ({
 
 export const getIdOption = () => ({
   validate: {
-    specialSymbol: (value) =>
-      isSpecialSymbol(value) ? "특수문자가 들어갔습니다." : true,
-    koreaLeng: (value) =>
-      isKoreaLengCheck(value) ? "한글이 들어갔습니다." : true,
-    whiteSpace: (value) =>
-      isWhiteSpaceCheck(value) ? "공백이 들어갔습니다." : true,
+    specialSymbol: value => (isSpecialSymbol(value) ? "특수문자가 들어갔습니다." : true),
+    koreaLeng: value => (isKoreaLengCheck(value) ? "한글이 들어갔습니다." : true),
+    whiteSpace: value => (isWhiteSpaceCheck(value) ? "공백이 들어갔습니다." : true),
   },
   minLength: {
     value: 4,
@@ -58,7 +49,7 @@ export const getIdOption = () => ({
 
 export const getFileOption = () => ({
   validate: {
-    check: (value) => {
+    check: value => {
       if (value.length === 0) return true;
       const extension = String(value[0].name).split(".")[1];
       if (extension === "jpeg" || extension === "png" || extension === "gif") {

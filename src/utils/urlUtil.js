@@ -1,4 +1,4 @@
-import queryString from 'query-string';
+import queryString from "query-string";
 
 export function makeUrl(path, currentQuery, value) {
   const url = queryString.stringifyUrl({

@@ -28,7 +28,7 @@ const Expenditure = () => {
   } = useBoards(LOCAL_STORAGE_ID);
 
   // 모달
-  const onSubmit = (id, cb, close) => async (data) => {
+  const onSubmit = (id, cb, close) => async data => {
     const {
       category,
       expenditureDate,
@@ -59,14 +59,10 @@ const Expenditure = () => {
 
     setLoading(true);
     const old_expenditures = JSON.parse(localStorage.getItem(LOCAL_STORAGE_ID));
-    const new_expenditures = old_expenditures.map((el) =>
-      el.id === id ? { ...el, ...expenditureData } : el
-    );
+    const new_expenditures = old_expenditures.map(el => (el.id === id ? { ...el, ...expenditureData } : el));
     // 모달이 바로 닫히지 않도록 지연을 주었다.
     localStorage.setItem(LOCAL_STORAGE_ID, JSON.stringify(new_expenditures));
-    await new Promise((re) =>
-      setTimeout(() => re(alert("완료가 되었습니다.")), 1000)
-    );
+    await new Promise(re => setTimeout(() => re(alert("완료가 되었습니다.")), 1000));
     // 모달 닫기
     cb(false);
     close.current = true;
@@ -86,18 +82,12 @@ const Expenditure = () => {
       insertDate: "등록날짜",
       category: "카테고리",
     }),
-    []
+    [],
   );
 
   return (
     <div>
-      <Sort
-        text={text}
-        currentQuery={currentQuery}
-        removeRowIds={removeRowIds}
-        removeRows={removeRows}
-        isCategory
-      />
+      <Sort text={text} currentQuery={currentQuery} removeRowIds={removeRowIds} removeRows={removeRows} isCategory />
       <DataTable
         loading={loading}
         datas={showPages}

@@ -10,16 +10,10 @@ import { getWhiteColor1 } from "assets/style/GlobalStyled";
 import { getBackGroundBrandColor1 } from "assets/style/GlobalStyled";
 import { getBackGroundWhiteColor1 } from "assets/style/GlobalStyled";
 
-const DataTable = ({
-  visible,
-  datas,
-  isCategory,
-  removeRowsCheckedClick,
-  boardModify,
-}) => {
+const DataTable = ({ visible, datas, isCategory, removeRowsCheckedClick, boardModify }) => {
   return (
     <DataTableWrapper visible={visible}>
-      {datas.map((item) => (
+      {datas.map(item => (
         <Item
           key={item.id}
           item={item}
@@ -46,11 +40,7 @@ const Item = ({ item, boardModify, removeRowsCheckedClick, isCategory }) => {
       <InnerWrapper>{getNumberThreeCommaDraw(price)}원</InnerWrapper>
       <AbsoluteWrapper>
         <UpdateImg src={updateImg} alt="updateImg" onClick={boardModify(id)} />
-        <CheckBox
-          type="checkbox"
-          id={labelId}
-          onChange={removeRowsCheckedClick(id)}
-        />
+        <CheckBox type="checkbox" id={labelId} onChange={removeRowsCheckedClick(id)} />
         <label htmlFor={labelId} />
       </AbsoluteWrapper>
     </CheckBoxWrapper>

@@ -1,8 +1,4 @@
-import {
-  USER_DELETE,
-  USER_DELETE_ERROR,
-  USER_DELETE_SUCCESS,
-} from "modules/actions/withdrawalAction";
+import { USER_DELETE, USER_DELETE_ERROR, USER_DELETE_SUCCESS } from "modules/actions/withdrawalAction";
 
 const reducerUtiles = {
   loading() {

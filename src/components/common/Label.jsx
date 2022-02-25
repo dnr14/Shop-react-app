@@ -2,9 +2,7 @@ import React from "react";
 import styled from "styled-components";
 import { css } from "styled-components";
 
-const Label = ({ text, ...rest }) => (
-  <StyledLabel {...rest}>{text}</StyledLabel>
-);
+const Label = ({ text, ...rest }) => <StyledLabel {...rest}>{text}</StyledLabel>;
 
 const StyledLabel = styled.label`
   text-align: center;

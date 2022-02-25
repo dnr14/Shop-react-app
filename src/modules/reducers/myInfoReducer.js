@@ -1,8 +1,4 @@
-import {
-  GET_USER_INFO,
-  GET_USER_INFO_ERROR,
-  GET_USER_INFO_SUCCESS,
-} from "modules/actions/myInfoAction";
+import { GET_USER_INFO, GET_USER_INFO_ERROR, GET_USER_INFO_SUCCESS } from "modules/actions/myInfoAction";
 
 export default function myInfoReducer(previouseState, action) {
   const { type } = action;

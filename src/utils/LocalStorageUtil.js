@@ -13,7 +13,7 @@ export const addItem = (property, data) => {
   }
 };
 
-export const setInitialData = (itemKey) => {
+export const setInitialData = itemKey => {
   if (!localStorage.getItem(itemKey)) {
     localStorage.setItem(itemKey, JSON.stringify([]));
   }
@@ -23,7 +23,7 @@ export const accessTokenRemove = () => {
   localStorage.removeItem("ACCESS_TOKEN");
 };
 
-export const setAccessToken = (value) => {
+export const setAccessToken = value => {
   localStorage.setItem("ACCESS_TOKEN", value);
 };
 

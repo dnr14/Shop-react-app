@@ -11,13 +11,7 @@ const NewPasswordForm = ({ handleSubmit, handleChange, form }) => {
   return (
     <Form onSubmit={handleSubmit}>
       <Label text="현재 비밀번호" />
-      <Input
-        text="기존 비밀번호"
-        type="password"
-        name="password"
-        onChange={handleChange}
-        value={password.value}
-      />
+      <Input text="기존 비밀번호" type="password" name="password" onChange={handleChange} value={password.value} />
       <ErrorMessage message={password.errorText} />
       <Label text="새로운 비밀번호" />
       <Input

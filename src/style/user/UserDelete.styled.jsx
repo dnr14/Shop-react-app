@@ -3,7 +3,7 @@ import styled, { css } from "styled-components";
 export const Container = styled.main`
   text-align: center;
 
-  ${(props) => {
+  ${props => {
     return css`
       .thumb {
         background-image: url(${props.deleteImg});

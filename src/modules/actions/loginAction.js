@@ -16,7 +16,7 @@ export const loadingAction = () => {
   };
 };
 
-export const errorAction = (error) => {
+export const errorAction = error => {
   return {
     type: POST_LOGIN_ERROR,
     error,

@@ -24,9 +24,7 @@ const My = () => {
   const { path } = match;
 
   const handleWithdrawal = useCallback(() => {
-    if (
-      window.confirm("정말로 삭제 하겠습니까? 삭제 시 복구 할 수 없습니다. ")
-    ) {
+    if (window.confirm("정말로 삭제 하겠습니까? 삭제 시 복구 할 수 없습니다. ")) {
       fetchWithdrawal(info.id);
     }
   }, [info, fetchWithdrawal]);
@@ -43,7 +41,7 @@ const My = () => {
   useEffect(() => {
     const { success } = withdrawalState;
     let timer;
-    if (success) timer = setTimeout(() => setCount((prev) => --prev), 1000);
+    if (success) timer = setTimeout(() => setCount(prev => --prev), 1000);
     return () => {
       if (success) {
         clearTimeout(timer);

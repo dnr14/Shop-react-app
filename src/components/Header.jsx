@@ -12,17 +12,14 @@ const Header = () => {
   const [headerWidth, setHeaderWidth] = useState(window.innerWidth);
 
   const handleClick = useCallback(
-    ({ type }) =>
-      type !== "blur"
-        ? setIsMenuOpen((prevState) => !prevState)
-        : setIsMenuOpen(false),
-    [setIsMenuOpen]
+    ({ type }) => (type !== "blur" ? setIsMenuOpen(prevState => !prevState) : setIsMenuOpen(false)),
+    [setIsMenuOpen],
   );
 
   useEffect(() => {
     let timer;
 
-    const resize = window.addEventListener("resize", (e) => {
+    const resize = window.addEventListener("resize", e => {
       // 디바운스 처리
       if (timer) {
         clearInterval(timer);

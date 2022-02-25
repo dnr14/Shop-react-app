@@ -1,8 +1,4 @@
-import {
-  POST_LOGIN,
-  POST_LOGIN_ERROR,
-  POST_LOGIN_SUCCESS,
-} from "modules/actions/loginAction";
+import { POST_LOGIN, POST_LOGIN_ERROR, POST_LOGIN_SUCCESS } from "modules/actions/loginAction";
 
 export default function loginReducer(previouseState, action) {
   const { type } = action;

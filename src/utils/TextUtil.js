@@ -1,4 +1,4 @@
-export const getNewlineCount = (body) => {
+export const getNewlineCount = body => {
   const regex = /(\\r|\\n|\r|\n)/g;
   let count = 0;
   while (true) {

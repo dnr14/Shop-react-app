@@ -1,14 +1,8 @@
 import React, { useEffect, useRef, useState } from "react";
 import dropDown from "assets/images/dropDown.svg";
 import PropTypes from "prop-types";
-import {
-  getOneToTwentyForeHoure,
-  getZeroToFiftyNineMinutes,
-} from "utils/DateUtil";
-import {
-  setInputCheckBoxDateType,
-  setInputCheckBoxTimeType,
-} from "utils/DateUtil";
+import { getOneToTwentyForeHoure, getZeroToFiftyNineMinutes } from "utils/DateUtil";
+import { setInputCheckBoxDateType, setInputCheckBoxTimeType } from "utils/DateUtil";
 import { useForm } from "react-hook-form";
 import { isWhiteSpaceCheck, isKoreaLengCheck } from "utils/Validation";
 
@@ -23,13 +17,7 @@ import { getBrandColor1 } from "assets/style/GlobalStyled";
 import { getRedColor1 } from "assets/style/GlobalStyled";
 
 const TIEM = 500;
-const ListModal = ({
-  isVisible,
-  setIsVisible,
-  updateData,
-  onSubmit,
-  isCategory,
-}) => {
+const ListModal = ({ isVisible, setIsVisible, updateData, onSubmit, isCategory }) => {
   const {
     register,
     handleSubmit,
@@ -38,14 +26,7 @@ const ListModal = ({
   } = useForm();
   const close = useRef(false);
   const [visible, setVisible] = useState(false);
-  const {
-    category,
-    expenditureDate,
-    incomeDate,
-    insertDate,
-    incomeMoney,
-    expenditureMoney,
-  } = errors;
+  const { category, expenditureDate, incomeDate, insertDate, incomeMoney, expenditureMoney } = errors;
 
   const modalClose = () => {
     setVisible(false);
@@ -54,8 +35,7 @@ const ListModal = ({
 
   useEffect(() => {
     if (isVisible) reset();
-    if (!visible && isVisible && !close.current)
-      setTimeout(() => setVisible(true), TIEM);
+    if (!visible && isVisible && !close.current) setTimeout(() => setVisible(true), TIEM);
     if (close.current) {
       setTimeout(() => setIsVisible(false), TIEM);
       close.current = false;
@@ -70,12 +50,7 @@ const ListModal = ({
     <ListModalWrapper visible={visible}>
       <Form onSubmit={handleSubmit(onSubmit(updateData.id, setVisible, close))}>
         <main>
-          <Category
-            isCategory={isCategory}
-            category={updateData.category}
-            register={register}
-            error={category}
-          />
+          <Category isCategory={isCategory} category={updateData.category} register={register} error={category} />
 
           <Date
             names={{
@@ -89,11 +64,7 @@ const ListModal = ({
             error={isCategory ? expenditureDate : incomeDate}
           />
 
-          <InsertDate
-            insertTime={updateData.insertTime}
-            register={register}
-            error={insertDate}
-          />
+          <InsertDate insertTime={updateData.insertTime} register={register} error={insertDate} />
           <Money
             text={isCategory ? "지출금액" : "수입금액"}
             name={isCategory ? "expenditureMoney" : "incomeMoney"}
@@ -155,7 +126,7 @@ const Date = ({ names, defaultValue, text, register, error }) => {
           type="date"
           {...register(names.date, {
             validate: {
-              empty: (date) => (date === "" ? "옳바른값을 입력하세요." : true),
+              empty: date => (date === "" ? "옳바른값을 입력하세요." : true),
             },
           })}
           defaultValue={setInputCheckBoxDateType(defaultValue)}
@@ -166,10 +137,7 @@ const Date = ({ names, defaultValue, text, register, error }) => {
           name={names.houre}
           {...register(names.houre, {
             validate: {
-              formatError: (houreTime) =>
-                /^[0-2][1-4].+/gi.test(houreTime)
-                  ? "올바른 시간이 아닙니다."
-                  : true,
+              formatError: houreTime => (/^[0-2][1-4].+/gi.test(houreTime) ? "올바른 시간이 아닙니다." : true),
             },
           })}
           defaultValue={setInputCheckBoxTimeType(defaultValue).getHours()}
@@ -189,10 +157,7 @@ const Date = ({ names, defaultValue, text, register, error }) => {
           name={names.minutes}
           {...register(names.minutes, {
             validate: {
-              formatError: (houreTime) =>
-                /^[0-5][0-9].+/gi.test(houreTime)
-                  ? "올바른 시간이 아닙니다."
-                  : true,
+              formatError: houreTime => (/^[0-5][0-9].+/gi.test(houreTime) ? "올바른 시간이 아닙니다." : true),
             },
           })}
           defaultValue={setInputCheckBoxTimeType(defaultValue).getMinutes()}
@@ -222,7 +187,7 @@ const InsertDate = ({ insertTime, register, error }) => {
         <input
           {...register("insertDate", {
             validate: {
-              empty: (date) => (date === "" ? "옳바른값을 입력하세요." : true),
+              empty: date => (date === "" ? "옳바른값을 입력하세요." : true),
             },
           })}
           defaultValue={setInputCheckBoxDateType(insertTime)}
@@ -233,7 +198,7 @@ const InsertDate = ({ insertTime, register, error }) => {
         <select
           {...register("insertHoureTime", {
             validate: {
-              formatError: (houreTime) => !/^[0-2][1-4].+/gi.test(houreTime),
+              formatError: houreTime => !/^[0-2][1-4].+/gi.test(houreTime),
             },
           })}
           defaultValue={setInputCheckBoxTimeType(insertTime).getHours()}
@@ -252,7 +217,7 @@ const InsertDate = ({ insertTime, register, error }) => {
         <select
           {...register("insertMinutesTime", {
             validate: {
-              formatError: (houreTime) => !/^[0-5][0-9].+/gi.test(houreTime),
+              formatError: houreTime => !/^[0-5][0-9].+/gi.test(houreTime),
             },
           })}
           defaultValue={setInputCheckBoxTimeType(insertTime).getMinutes()}
@@ -282,10 +247,8 @@ const Money = ({ text, name, defaultValue, register, error }) => {
           name={name}
           {...register(name, {
             validate: {
-              whiteSpaceCheck: (value) =>
-                isWhiteSpaceCheck(value) ? "공백을 입력했습니다." : true,
-              isKoreaLengCheck: (value) =>
-                isKoreaLengCheck(value) ? "한글을 입력했습니다." : true,
+              whiteSpaceCheck: value => (isWhiteSpaceCheck(value) ? "공백을 입력했습니다." : true),
+              isKoreaLengCheck: value => (isKoreaLengCheck(value) ? "한글을 입력했습니다." : true),
             },
             maxLength: {
               value: 11,

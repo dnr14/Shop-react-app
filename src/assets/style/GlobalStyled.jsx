@@ -48,12 +48,10 @@ export const getBoxShadow1 = () => css`
   box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
 `;
 export const getBoxShadow2 = () => css`
-  box-shadow: rgba(0, 0, 0, 0.1) 0px 1px 3px 0px,
-    rgba(0, 0, 0, 0.06) 0px 1px 2px 0px;
+  box-shadow: rgba(0, 0, 0, 0.1) 0px 1px 3px 0px, rgba(0, 0, 0, 0.06) 0px 1px 2px 0px;
 `;
 export const getBoxShadow3 = () => css`
-  box-shadow: rgba(0, 0, 0, 0.02) 0px 1px 3px 0px,
-    rgba(27, 31, 35, 0.15) 0px 0px 0px 1px;
+  box-shadow: rgba(0, 0, 0, 0.02) 0px 1px 3px 0px, rgba(27, 31, 35, 0.15) 0px 0px 0px 1px;
 `;
 
 export const getFlex = (justify, align, direction = "row") => css`
@@ -68,13 +66,10 @@ export const getBorderRedColor1 = () => css`
   border: 1px solid rgba(231, 76, 60, 1);
 `;
 
-export const tab = () =>
-  `@media only screen and (max-width: ${BREAK_POINT_TABLET}px)`;
-export const mobile = () =>
-  `@media only screen and (max-width: ${BREAK_POINT_MOBILE}px)`;
+export const tab = () => `@media only screen and (max-width: ${BREAK_POINT_TABLET}px)`;
+export const mobile = () => `@media only screen and (max-width: ${BREAK_POINT_MOBILE}px)`;
 
-export const smallMobile = () =>
-  `@media only screen and (max-width: ${BREAK_POINT_SMAILL_MOBILE}px)`;
+export const smallMobile = () => `@media only screen and (max-width: ${BREAK_POINT_SMAILL_MOBILE}px)`;
 
 const GlobalStyled = createGlobalStyle`
    *{

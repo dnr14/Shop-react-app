@@ -23,14 +23,12 @@ const PasswordModify = ({ id, email }) => {
   const { logout } = useLogout();
 
   const handleSubmit = useCallback(
-    (e) => {
+    e => {
       e.preventDefault();
       try {
-        if (isEmpty(password.value) || isEmpty(confirmPassword.value))
-          throw new Error("빈칸을 입력해주세요.");
+        if (isEmpty(password.value) || isEmpty(confirmPassword.value)) throw new Error("빈칸을 입력해주세요.");
 
-        if (password.isError || confirmPassword.isError)
-          throw new Error("옳바른 값을 입력해주세요.");
+        if (password.isError || confirmPassword.isError) throw new Error("옳바른 값을 입력해주세요.");
 
         fetchPasswordModify({
           id,
@@ -42,7 +40,7 @@ const PasswordModify = ({ id, email }) => {
         setVisible(true);
       }
     },
-    [password, confirmPassword, id, fetchPasswordModify]
+    [password, confirmPassword, id, fetchPasswordModify],
   );
 
   useEffect(() => {
@@ -56,12 +54,7 @@ const PasswordModify = ({ id, email }) => {
       <Input defaultValue={id} readOnly />
       <Label text="이메일" />
       <Input defaultValue={email} readOnly />
-      <NewPasswordForm
-        handleChange={handleChange}
-        handleSubmit={handleSubmit}
-        loading={loading}
-        form={form}
-      />
+      <NewPasswordForm handleChange={handleChange} handleSubmit={handleSubmit} loading={loading} form={form} />
       <Modal setVisible={setVisible} visible={visible} message={message} />
     </PasswordModifyWrapper>
   );

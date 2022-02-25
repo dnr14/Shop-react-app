@@ -7,11 +7,7 @@ import { getNewlineCount } from "utils/TextUtil";
 const Edit = ({ register, body, editWatch, error }) => {
   return (
     <EditWarpper>
-      <TextArea
-        placeholder="내용을 입력하세요."
-        defaultValue={body}
-        {...register}
-      />
+      <TextArea placeholder="내용을 입력하세요." defaultValue={body} {...register} />
       <TextShow>{editWatch?.length} / 300</TextShow>
       <TextShow>줄바꿈 {getNewlineCount(editWatch ?? "")}</TextShow>
       <ErrorMessage message={error?.message} margin="0" />

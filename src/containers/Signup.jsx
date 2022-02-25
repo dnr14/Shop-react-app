@@ -31,26 +31,16 @@ const Signup = () => {
   }, [history, signup]);
 
   const handleSubmit = useCallback(
-    async (e) => {
+    async e => {
       e.preventDefault();
       try {
         setIsLoading(true);
         const { id, email, password, confirmPassword } = signup;
-        if (
-          isEmpty(id.value) ||
-          isEmpty(email.value) ||
-          isEmpty(password.value) ||
-          isEmpty(confirmPassword.value)
-        ) {
+        if (isEmpty(id.value) || isEmpty(email.value) || isEmpty(password.value) || isEmpty(confirmPassword.value)) {
           throw new Error("입력 정보를 모두 써주세요.");
         }
 
-        if (
-          id.isError ||
-          email.isError ||
-          password.isError ||
-          confirmPassword.isError
-        )
+        if (id.isError || email.isError || password.isError || confirmPassword.isError)
           throw new Error("옳바른 값을 입력해주세요.");
 
         await getFetchSignup(id.value, email.value, password.value);
@@ -62,7 +52,7 @@ const Signup = () => {
         setIsLoading(false);
       }
     },
-    [signup, history, setMessage]
+    [signup, history, setMessage],
   );
 
   return (

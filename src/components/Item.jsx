@@ -1,7 +1,4 @@
-import {
-  getBrandColor1,
-  getBackGroundWhiteColor1,
-} from "assets/style/GlobalStyled";
+import { getBrandColor1, getBackGroundWhiteColor1 } from "assets/style/GlobalStyled";
 import { getFlex } from "assets/style/GlobalStyled";
 import React, { memo } from "react";
 import styled from "styled-components";

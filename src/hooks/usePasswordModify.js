@@ -1,11 +1,7 @@
 import axiosInstance from "api/http";
 import { useCallback, useReducer } from "react";
 import passwordModifyReducer from "modules/reducers/passwordModifyReducer";
-import {
-  passwordModify,
-  passwordModifyError,
-  passwordModifySuccess,
-} from "modules/actions/passwordModifyAction";
+import { passwordModify, passwordModifyError, passwordModifySuccess } from "modules/actions/passwordModifyAction";
 
 const usePasswordModify = () => {
   const [state, dispatch] = useReducer(passwordModifyReducer, {
@@ -14,7 +10,7 @@ const usePasswordModify = () => {
     error: null,
   });
 
-  const fetch = useCallback(async (data) => {
+  const fetch = useCallback(async data => {
     dispatch(passwordModify());
 
     try {

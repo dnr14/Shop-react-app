@@ -10,7 +10,7 @@ import ErrorMessage from "components/common/ErrorMessage";
 import styled from "styled-components";
 import Label from "components/common/Label";
 
-const LoginForm = ({ handleSubmit, handleChange, loginForm, visible }) => {
+const LoginForm = ({ handleSubmit, handleChange, loginForm }) => {
   const { id, password } = loginForm;
   const { path } = useRouteMatch();
   return (

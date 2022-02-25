@@ -8,21 +8,9 @@ import InsertWrapper from "./common/InsertWrapper";
 import DateSelect from "./DateSelect";
 import PriceInput from "./PriceInput";
 
-const InsertForm = ({
-  state,
-  handleSubmit,
-  handleChange,
-  handleBlur,
-  handleClick,
-  name,
-}) => {
+const InsertForm = ({ state, handleSubmit, handleChange, handleBlur, handleClick, name }) => {
   return (
-    <Form
-      onSubmit={handleSubmit}
-      onBlur={handleBlur}
-      onClick={handleClick}
-      name={name}
-    >
+    <Form onSubmit={handleSubmit} onBlur={handleBlur} onClick={handleClick} name={name}>
       <InsertWrapper>
         <DateSelect
           selectedDate={state.dates.selectedDate}
@@ -33,11 +21,7 @@ const InsertForm = ({
       </InsertWrapper>
       <ErrorMessage message={state.dateError} />
       <InsertWrapper>
-        <PriceInput
-          text={name === "expenditure" ? "지출" : "수입"}
-          price={state.price}
-          handleChange={handleChange}
-        />
+        <PriceInput text={name === "expenditure" ? "지출" : "수입"} price={state.price} handleChange={handleChange} />
       </InsertWrapper>
       <ErrorMessage message={state.priceError} />
       {name === "expenditure" && (

@@ -23,6 +23,4 @@ app.use("/public/:imgname", (req, res) => {
   res.sendFile(`${IMG_PATH}${req.params.imgname}`);
 });
 app.use("*", (_, res) => res.sendFile(`${ROOT}/index.html`));
-app.listen(PORT, () =>
-  console.log(`app listening at http://localhost:${PORT}`)
-);
+app.listen(PORT, () => console.log(`app listening at port ${PORT}`));

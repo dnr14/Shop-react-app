@@ -7,7 +7,10 @@ import Button from "./common/Button";
 
 const Item = ({ board, handleBoardDelete, handleModalOpen }) => {
   const { createAt, createId, fileName, gender, boardsId, body } = board;
-  const imgUrl = `http://localhost:5000/public/${fileName}`;
+  const imgUrl =
+    process.env.NODE_ENV === "production"
+      ? `http://15.165.133.236:5000/public/${fileName}`
+      : `http://localhost:5000/public/${fileName}`;
 
   return (
     <ItemWrapper>

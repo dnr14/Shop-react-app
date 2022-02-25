@@ -13,24 +13,20 @@ import PrivateRouter from "./PrivateRouter";
 const Routers = () => {
   return (
     <Switch>
-      <PublicRouter path="/login" component={Login} restricted />
       <PublicRouter path="/signup" component={Signup} restricted />
       <PrivateRouter path="/my" component={My} />
-      <Route path="/board" component={Board} />
-      <Route path="/insert" component={Insert} />
-      <Route path="/select" component={Select} />
+      <Route path={["/board", "/"]} component={Board} exact />
+      <PrivateRouter path="/insert" component={Insert} />
+      <PrivateRouter path="/select" component={Select} />
+      <PublicRouter path={"/login"} component={Login} restricted />
       <Route path="*" component={NotFount} />
     </Switch>
   );
 };
 
-const Home = () => {
-  // 프론트 이미지 요청 ===> express img url 보내줌 ===> 프론트 img url로 요청==> img 그려짐
-  // 프론트 요청 ==> express 이미지 읽고 ==> base64로 보내줌
-  // db에는 base64 저장 x
-  // s3로 이미지서버를 따로 두던지 해야된다.
-
-  return <div>홈</div>;
-};
+// 프론트 이미지 요청 ===> express img url 보내줌 ===> 프론트 img url로 요청==> img 그려짐
+// 프론트 요청 ==> express 이미지 읽고 ==> base64로 보내줌
+// db에는 base64 저장 x
+// s3로 이미지서버를 따로 두던지 해야된다.
 
 export default Routers;

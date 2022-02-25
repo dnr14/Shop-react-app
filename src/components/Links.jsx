@@ -29,12 +29,12 @@ const Links = ({ isMenuOpen, headerWidth }) => {
         },
         { text: "게시판", url: "/board" },
         { text: "입출 등록", url: "/insert/expenditure" },
-        { text: "입출 현황", url: "/select" },
+        { text: "입출 현황", url: "/select/income" },
       ].map(({ url, text }, idx) => {
         if (url === "/logout") {
           return (
             <li className="nav-item" key={idx} onClick={logout}>
-              <NavLink to={url}>{text}</NavLink>
+              <a href="#">{text}</a>
             </li>
           );
         }

@@ -23,10 +23,7 @@ const fileFilter = (req, file, callback) => {
   if (fileType === "jpg" || fileType === "jpeg" || fileType === "png") {
     callback(null, true);
   } else {
-    return callback(
-      { message: "*.jpg, *.jpeg, *.png 파일만 업로드가 가능합니다." },
-      false
-    );
+    return callback({ message: "*.jpg, *.jpeg, *.png 파일만 업로드가 가능합니다." }, false);
   }
 };
 
@@ -46,7 +43,7 @@ const upload = multer({
 
 // 게시글 생성
 router.post("/", (req, res) => {
-  upload(req, res, (err) => {
+  upload(req, res, err => {
     if (err) {
       res.status(503).json({ message: err.message });
       return;
@@ -65,9 +62,7 @@ router.post("/", (req, res) => {
     if (req.file === undefined || req.file === "undefined") {
       (async () => {
         try {
-          const indexes = await Indexes.findOne()
-            .where("name")
-            .equals("boards");
+          const indexes = await Indexes.findOne().where("name").equals("boards");
           if (indexes === null) {
             throw new Error("인덱스가 없습니다.");
           }
@@ -76,7 +71,7 @@ router.post("/", (req, res) => {
             boardsId: indexes.currentIndex,
             createId: id,
             password: password,
-            createAt: new Date().toLocaleString(),
+            createAt: new Date().toLocaleString("ko-KR"),
             body: comment,
             fileName: ``,
             format: ``,
@@ -91,7 +86,7 @@ router.post("/", (req, res) => {
             { name: "boards" },
             {
               $set: { currentIndex: indexes.currentIndex + 1 },
-            }
+            },
           );
         } catch (error) {
           res.status(400).json({ message: error });
@@ -103,9 +98,7 @@ router.post("/", (req, res) => {
 
       (async () => {
         try {
-          const indexes = await Indexes.findOne()
-            .where("name")
-            .equals("boards");
+          const indexes = await Indexes.findOne().where("name").equals("boards");
           if (indexes === null) {
             throw new Error("인덱스가 없습니다.");
           }
@@ -128,13 +121,13 @@ router.post("/", (req, res) => {
             { name: "boards" },
             {
               $set: { currentIndex: indexes.currentIndex + 1 },
-            }
+            },
           );
 
           res.status(200).json({ result });
         } catch (error) {
           console.log(error);
-          fs.unlink(`${STATIC_PATH}${filename}`, (err) => {
+          fs.unlink(`${STATIC_PATH}${filename}`, err => {
             if (err === null) {
               res.status(503).json({ message: " 서버에서 오류" });
             } else {
@@ -150,10 +143,7 @@ router.post("/", (req, res) => {
 // 게시글 가져오기
 router.get("/", async (req, res) => {
   try {
-    const boards = await Boards.find()
-      .sort({ boardsId: "desc" })
-      .limit(5)
-      .select("-password -_id -__v");
+    const boards = await Boards.find().sort({ boardsId: "desc" }).limit(5).select("-password -_id -__v");
 
     res.json({ boards });
   } catch (error) {
@@ -199,17 +189,12 @@ router.delete("/:boardsId", async (req, res) => {
       e.redirect = true;
       throw e;
     }
-    const result = await Boards.findOneAndRemove()
-      .where("boardsId")
-      .equals(boardsId)
-      .select("-_id -password -__v");
+    const result = await Boards.findOneAndRemove().where("boardsId").equals(boardsId).select("-_id -password -__v");
 
     const { fileName } = result;
     if (fileName) {
-      fs.unlink(`${STATIC_PATH}${fileName}`, (err) =>
-        err === null
-          ? res.json({ board: result })
-          : res.status(503).json({ message: " 파일 삭제에서 오류" })
+      fs.unlink(`${STATIC_PATH}${fileName}`, err =>
+        err === null ? res.json({ board: result }) : res.status(503).json({ message: " 파일 삭제에서 오류" }),
       );
     } else {
       res.json({ board: result });
@@ -252,7 +237,7 @@ router.put("/:boardsId", async (req, res) => {
       {
         $set: { body },
       },
-      { new: true }
+      { new: true },
     ).select("-_id -__v -password");
 
     res.json({ board: result });

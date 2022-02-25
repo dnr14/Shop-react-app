@@ -6,9 +6,10 @@
 .pnp.js
 /server/.env
 /server/node_modules
+/server/public/*
+!/server/public/*.html
 /server/public/static
 /server/public/uploads
-
 # testing
 /coverage
 

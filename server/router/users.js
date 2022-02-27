@@ -1,6 +1,6 @@
 import express from "express";
-import verifyToken from "../middleware/verifyToken";
-import Users from "../mongodb/models/Users";
+import verifyToken from "../middleware/verifyToken.js";
+import Users from "../mongodb/models/Users.js";
 import bcrypt from "bcrypt-nodejs";
 
 const router = express.Router();
@@ -15,10 +15,7 @@ router.post("/", async (req, res) => {
 
   try {
     // doc이 없다면 null 반환
-    const userID = await Users.findOne()
-      .where("id")
-      .equals(id)
-      .select("-_id id");
+    const userID = await Users.findOne().where("id").equals(id).select("-_id id");
 
     if (userID) {
       const error = new Error("이미 존재하는 ID입니다.");
@@ -57,7 +54,7 @@ router.put("/", verifyToken, async (req, res) => {
       { id },
       {
         $set: { password: bcrypt.hashSync(newPassword) },
-      }
+      },
     );
     res.json({ success: "비밀번호가 변경되었습니다." });
   } catch (error) {
@@ -88,16 +85,14 @@ router.delete("/:id", verifyToken, async (req, res) => {
   }
 });
 
-const log = (doc) => {
+const log = doc => {
   let message = "";
   const o = doc[`_doc`];
   const keys = Object.keys(o);
   keys.forEach((key, idx) => {
-    idx !== keys.length - 1
-      ? (message += ` ${key} = ${o[key]}, `)
-      : (message += ` ${key} = ${o[key]}`);
+    idx !== keys.length - 1 ? (message += ` ${key} = ${o[key]}, `) : (message += ` ${key} = ${o[key]}`);
   });
   console.log(message);
 };
 
-module.exports = router;
+export default router;

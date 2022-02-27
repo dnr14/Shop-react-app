@@ -4,25 +4,25 @@ const colors = {
   red: "\x1b[31m",
   yellow: "\x1b[33m",
   reset: "\x1b[0m",
-}
+};
 
 const methodColorMap = {
   get: colors.green,
   post: colors.cyan,
   put: colors.yellow,
   delete: colors.red,
-}
+};
 
 const logger = () => (req, res, next) => {
-
   const coloredMethod = (method = "") => {
-    return `${methodColorMap[method.toLowerCase()]}${method}${colors.reset}`
-  }
+    return `${methodColorMap[method.toLowerCase()]}${method}${colors.reset}`;
+  };
 
-  const log = `${coloredMethod(req.method)} ${req.url}`
-  console.debug('💥💥💥 request 💥💥💥');
+  const log = `${coloredMethod(req.method)} ${req.url}`;
+  console.debug("💥💥💥 request 💥💥💥");
   console.log(log);
-  next()
-}
+  next();
+};
 
-module.exports = logger;
+export default logger;
+// module.exports = logger;

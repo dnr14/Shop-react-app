@@ -1,6 +1,6 @@
 import express from "express";
-import Users from "../mongodb/models/Users";
-import verifyToken from "../middleware/verifyToken";
+import Users from "../mongodb/models/Users.js";
+import verifyToken from "../middleware/verifyToken.js";
 import jwt from "jsonwebtoken";
 import dotenv from "dotenv";
 import bcrypt from "bcrypt-nodejs";
@@ -14,12 +14,7 @@ router.post("/login", async (req, res) => {
   const user = await Users.findOne({ id }).select({ password: 1 });
 
   try {
-    if (
-      id === undefined ||
-      id === null ||
-      password === undefined ||
-      password === null
-    ) {
+    if (id === undefined || id === null || password === undefined || password === null) {
       const error = new Error("잘못된 값입니다.");
       error.status = 403;
       throw error;
@@ -76,10 +71,7 @@ router.get("/search/:email", async (req, res) => {
       throw error;
     }
 
-    const user = await Users.findOne()
-      .where("email")
-      .equals(email)
-      .select("-_id");
+    const user = await Users.findOne().where("email").equals(email).select("-_id");
 
     if (!user) {
       const error = new Error("없는 이메일입니다.");
@@ -110,12 +102,7 @@ router.post("/search", async (req, res) => {
       throw error;
     }
 
-    const user = await Users.findOne()
-      .where("id")
-      .equals(id)
-      .where("email")
-      .equals(email)
-      .select("-_id");
+    const user = await Users.findOne().where("id").equals(id).where("email").equals(email).select("-_id");
 
     if (!user) {
       const error = new Error("없는 정보 입니다.");
@@ -140,7 +127,7 @@ router.put("/search", async (req, res) => {
       { id, email },
       {
         $set: { password: bcrypt.hashSync(newPassword) },
-      }
+      },
     );
 
     if (reuslt.matchedCount === 0) {

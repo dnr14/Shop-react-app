@@ -1,10 +1,11 @@
 import express from "express";
 import path from "path";
-import logger from "./middleware/logger";
-import db from "./mongodb/db";
-import usersRouter from "./router/users";
-import authRouter from "./router/auth";
-import boardsRouter from "./router/boards";
+import logger from "./middleware/logger.js";
+import db from "./mongodb/db.js";
+import usersRouter from "./router/users.js";
+import authRouter from "./router/auth.js";
+import boardsRouter from "./router/boards.js";
+const __dirname = path.resolve();
 
 const app = express();
 const PORT = process.env.PORT || 5000;

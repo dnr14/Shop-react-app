@@ -1,7 +1,7 @@
 import express from "express";
 import multer from "multer";
-import Indexes from "../mongodb/models/Indexes";
-import Boards from "../mongodb/models/Boards";
+import Indexes from "../mongodb/models/Indexes.js";
+import Boards from "../mongodb/models/Boards.js";
 import fs from "fs";
 import path from "path";
 
